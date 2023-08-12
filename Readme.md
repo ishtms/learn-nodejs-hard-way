@@ -14,7 +14,7 @@ I highly recommend coding along with this guide rather than just reading it.
 
 # What the hell is a web server any way?
 
-If you do not wish to read about the basics of web/http, you can safely jump to the **coding section**.
+If you do not wish to read about the basics of web/http, you can safely jump to the **[coding section](#user-content-your-first-web-server-with-nodejs)**.
 
 Before diving straight into writing JavaScript code to create web servers, it's essential to grasp the fundamental concepts that are the basic building blocks of web server. Web servers are like the traffic controllers of the internet. They manage requests from users (like you!) and send back the right information. But what makes up a web server, and how does it even work? Let's break it down into simple terms.
 
