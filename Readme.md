@@ -1,8 +1,6 @@
 # Learn Node.js by building a backend framework
 
-```
-This is still a work in progress. It's barely 1% of the final content. I expect it to be ready pretty soon.
-```
+> This is still a work in progress. It's barely 1% of the final content. I expect it to be ready pretty soon.
 
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
