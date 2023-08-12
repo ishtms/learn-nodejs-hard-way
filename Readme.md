@@ -1,5 +1,9 @@
 # Learn Node.js by building a backend framework
 
+```
+This is still a work in progress. It's barely 1% of the final content. I expect it to be ready pretty soon.
+```
+
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
 This isn't your average Node.js tutorial or guide. It's a detailed walkthrough that shows you how to create a backend framework from the ground up while getting a solid grasp of Node.js's inner workings and it’s standard library.
@@ -415,6 +419,7 @@ fn_three; // undefined
 
 ```
 
+g
 This may clear up why we don't get an error if we try to include a function/property that is not being explicitly exported from a module. If that identifier isn't found, it's simply `undefined`.
 
 So, the `multiply` and `subtract` identifiers above are just `undefined`. However, if we try to add this line:
