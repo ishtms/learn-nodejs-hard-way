@@ -20,7 +20,7 @@ If you do not wish to read about the basics of web/http, you can safely jump to 
 
 Before diving straight into writing JavaScript code to create web servers, it's essential to grasp the fundamental concepts that are the basic building blocks of web server. Web servers are like the traffic controllers of the internet. They manage requests from users (like you!) and send back the right information. But what makes up a web server, and how does it even work? Let's break it down into simple terms.
 
-## \***\*Parts of a Web Server:\*\***
+## **Parts of a Web Server:**
 
 Web servers are like friendly translators that help computers understand each other. Imagine if you and a friend speak different languages. To have a conversation, you'd need a common language that both of you understand. In the same way, web servers and computers need a common set of rules to talk to each other effectively. These rules are called protocols, which are like languages specifically designed for computers. When you type a website address in your browser and hit "Enter," your computer sends a message to the web server. This message follows the web's language rules, known as the HTTP protocol (Hypertext Transfer Protocol).
 
@@ -34,7 +34,7 @@ But the protocol game isn't limited to HTTP. The web's secure version, HTTPS (Hy
 
 Protocols extend beyond web browsing too. Email, file sharing, and even the way your phone connects to Wi-Fi rely on various protocols to ensure reliable and efficient communication. Each protocol serves a specific purpose, just like different languages for different scenarios in real life.
 
-### \***\*Navigating the World of Protocols: A Quick Overview\*\***
+### **Navigating the World of Protocols: A Quick Overview**
 
 Like I explained above, to re-iterate - Protocols are like the rules that enable devices to communicate effectively on the internet. They define how data is formatted, transmitted, and understood by different systems. Just as people follow social etiquette during conversations, devices follow protocols to ensure smooth communication. Here's a glimpse into some major types of protocols:
 
@@ -50,10 +50,10 @@ Like I explained above, to re-iterate - Protocols are like the rules that enable
 
 In order to become a proficient backend engineer, it is important to have a solid understanding of different networking protocols. While HTTP(s) is the main focus of this guide, having knowledge of other protocols such as FTP, SMTP, and DNS can prove beneficial in the long run. FTP (File Transfer Protocol) is commonly used for transferring files between servers, while SMTP (Simple Mail Transfer Protocol) is used for sending emails. DNS (Domain Name System) is responsible for translating domain names into IP addresses.
 
-<aside>
+```
 💡 If you're programming game servers, it's important to have a solid understanding of UDP. UDP is faster but less reliable than TCP, making it ideal for applications that can tolerate occasional data loss, such as video streaming or online gaming. Unlike TCP, UDP is a "fire and forget" protocol, meaning data is sent without any error-checking or acknowledgment mechanisms.
 
-</aside>
+```
 
 ### **The Relationship Between HTTP and TCP: Ensuring Reliable Web Communication**
 
@@ -65,10 +65,10 @@ HTTP is used to send web content, like web pages, images, and videos, from a ser
 
 TCP helps with this. It was designed to make sure that data is delivered in the right order and without errors. TCP breaks up the data into small pieces called packets, sends them to the destination, and makes sure they arrive in the correct order. If any packet is lost during the process, TCP asks for it to be sent again. This is important for web pages because everything needs to be presented in a way that makes sense.
 
-<aside>
+```
 💡 A packet is a small unit of data that is sent over a network. In the context of web communication, TCP breaks up the data into small pieces called packets, sends them to the destination, and makes sure they arrive in the correct order. If any packet is lost during the process, TCP asks for it to be sent again.
 
-</aside>
+```
 
 ### 2. **Acknowledgment Mechanism**
 
@@ -86,7 +86,7 @@ TCP works well with HTTP for handling complex interactions. TCP's mechanisms gua
 
 TCP adds some extra information to every message to make sure it gets to its destination without errors. This extra information includes acknowledgments, sequence numbers, and error-checking. Even though it adds a little more data to every message, it's still worth it because it helps make sure the data is accurate and in the right order. This is especially important when communicating over the web.
 
-## \***\*Asking and Getting: How Web Servers Respond to Your Requests\*\***
+## **Asking and Getting: How Web Servers Respond to Your Requests**
 
 Imagine you're at home, sitting in front of your computer, and you decide to visit a website, let's say "**[www.example.com](http://www.example.com/)**." This simple action initiates a series of events that highlight the "Asking and Getting" process in web communication.
 
@@ -96,10 +96,10 @@ Imagine you're at home, sitting in front of your computer, and you decide to vis
 2. **Finding the Address:** Your computer knows the basics of websites, but it needs the exact address of "**[www.example.com](http://www.example.com/)**" to connect to it. So, it reaches out to a special helper called a DNS resolver.
 3. **Resolving the Address:** The DNS resolver is like a digital address book. It takes "**[www.example.com](http://www.example.com/)**" and looks up the actual IP address associated with it. This IP address is like the specific coordinates of the website's location on the internet.
 
-<aside>
+```
 💡 A website URL like https://google.com also be referred to as a **domain name**
 
-</aside>
+```
 
 ### The Response:
 
@@ -109,10 +109,10 @@ Imagine you're at home, sitting in front of your computer, and you decide to vis
 4. **Sending the Response:** The web server packages the content into a response and sends it back to your computer through the internet. It's like the server sending a digital package to your doorstep.
 5. **Enjoying the Content:** Your computer receives the response from the web server. Your browser interprets the HTML, displays images, and applies styles, creating a complete webpage. This is what you see on your screen – the final result of your request.
 
-<aside>
+```
 💡 A quick disclaimer: our learning approach will prioritize clarity and thoroughness. I will introduce a topic, break it down, and if we come across any unfamiliar concepts, we will explore them until everything is fully understood.
 
-</aside>
+```
 
 # Your first web server with [node.js](https://nodejs.org)
 
@@ -141,10 +141,10 @@ Simply put, when you write code in a programming language like JavaScript, you n
 
 For Node.js, being a JavaScript runtime environment means it has everything needed to execute JavaScript code **_outside of a web browser_**. It includes the V8 JavaScript engine (which compiles and executes JavaScript code), libraries, APIs for file, network, and other system-related tasks, and an event loop for asynchronous, non-blocking operations.
 
-<aside>
+```
 💡 We’ll discuss what exactly an event loop means, and implement our own version of event loop to understand how it works, later on in the guide.
 
-</aside>
+```
 
 ## Your first node.js program
 
@@ -171,10 +171,10 @@ This should output
 Let's learn Node.js
 ```
 
-<aside>
+```
 💡 You might also see a trailing `%` at the end due to the absence of a newline character (**`\n`**) at the end of the string you're writing to the standard output (stdout). You can modify the code as `process.stdout.write("Let's learn Node.js\n");` to get rid of that trailing modulo.
 
-</aside>
+```
 
 **What is the code above doing?**
 
@@ -211,12 +211,12 @@ The module exports two specific components:
 
 (Note that `Console` is not `console` (lowercase). `console` is a special instance of `Console`)
 
-<aside>
+```
 💡 You can use the global `console` without having to call `require('node:console')` or `require('console')`.  This global availability is a feature provided by the Node.js runtime environment. When your Node.js application starts running, certain objects and modules are automatically available in the global scope without the need for explicit importing.
 
 Here are some of the examples of globally available objects/modules in Node.js - `console`, `setTimeout`, `setInterval`, `__dirname`, `__filename`, `process`, `module`, `Buffer`, `exports`, and the `global` object.
 
-</aside>
+```
 
 As I mentioned earlier, Node.js provides the global `console` instance to output text to `process.stdout` and `process.stderr`. So if you’re writing this
 
@@ -279,10 +279,10 @@ console.log(process.pid);
 // 39328
 ```
 
-<aside>
+```
 💡 We will discuss most of these properties/functions further down the line when we talk about implementing our own framework.
 
-</aside>
+```
 
 ### The `stdout` **property of the `process` object**:
 
@@ -303,10 +303,10 @@ Node.js provides a comprehensive implementation of streams, which can be categor
 3. **Duplex Streams**: Duplex streams represent both a readable and a writable side. This means you can both read from and write to these streams concurrently. An example of a Duplex stream is a TCP socket. It can both receive data from the client and send data back to the client concurrently.
 4. **Transform Streams**: These are a specific type of duplex stream that allow you to modify or transform data as it's being read or written. They are often used for data manipulation tasks, like compression or encryption.
 
-<aside>
+```
 💡 Streams are incredibly versatile and efficient because they work with small chunks of data at a time, which is particularly useful when dealing with data that doesn't fit entirely into memory or when you want to process data in real-time. They also make it possible to start processing data before the entire dataset is available, reducing memory consumption and improving performance.
 
-</aside>
+```
 
 Now you know what streams are, and what is the standard output (`stdout`), we can simplify the code below.
 
@@ -318,10 +318,10 @@ We're simply writing to **`stdout`** or the standard output stream which Node.js
 
 Working with **`process.stdout`** can be rather cumbersome, and in practice, you tend to use it sparingly. Instead, developers frequently opt for the more user-friendly **`console.log`** method. Instances of code employing **`process.stdout`** are typically encountered when there's a need for a greater level of control over output formatting or when integrating with more complex logging mechanisms.
 
-<aside>
+```
 💡 ***Warning***: The methods of the global console object are not consistently synchronous like the browser APIs they resemble, nor are they consistently asynchronous like all other Node.js streams. For more information, see the [note on process I/O](https://nodejs.org/api/process.html#a-note-on-process-io).
 
-</aside>
+```
 
 ## Working with files
 
@@ -386,10 +386,10 @@ By specifying the `exports` property on the global `module` object, we declare w
 
 Note, we haven’t exported `multiply` and `divide` and we’ll see in a moment what happens when we try to access them and invoke/call those functions.
 
-<aside>
+```
 💡 Note: Provide the relative path to `calculator.js`. In my case, it is located in the same directory and at the same folder level.
 
-</aside>
+```
 
 In your `index.js` file, you can import the exported functions as shown below.
 
