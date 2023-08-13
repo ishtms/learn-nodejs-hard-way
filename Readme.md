@@ -652,9 +652,9 @@ export type PathLike = string | Buffer | URL;
     With the **`URL`** module in Node.js, you can also represent file paths using URLs. The URL must be of scheme file.
     Example URL path:
 
-        ```jsx
-        const url_path = new URL(**'file:///home/user/projects/calculator.js');**
-        ```
+    ```jsx
+    const url_path = new URL("file:///home/user/projects/calculator.js");
+    ```
 
 The `flag` argument indicates the mode (not to confused by `mode` argument) in which you wish to open the file. Here are the supported values as a `flag` -
 
@@ -700,7 +700,7 @@ node:internal/process/promises:288
 
 It’s a good practice to specify the `flag` argument.
 
-The `mode` argument specifies the permissions to set for the file when its created. **`mode`**s **are always interpreted in octal.** For example,
+The `mode` argument specifies the permissions to set for the file when its created. `mode`s **are always interpreted in octal.** For example,
 
 - **`0o400`** (read-only for the owner)
 - **`0o600`** (read and write for the owner)
