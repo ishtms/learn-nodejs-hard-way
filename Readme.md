@@ -591,21 +591,25 @@ Inside `files.js` add this snippet of code
 // files.js
 const fs = require("node:fs/promises");
 
-async function openFile() {
-  const fileHandle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
-  console.log(fileHandle);
+async function open_file() {
+  const file_handle = await fs.open(
+    "calculator.js",
+    "r",
+    fs.constants.O_RDONLY
+  );
+  console.log(file_handle);
 }
 
-module.exports = openFile;
+module.exports = open_file;
 ```
 
 and in `index.js`
 
 ```jsx
 // index.js
-const openFile = require("./files");
+const open_file = require("./files");
 
-openFile();
+open_file();
 
 /*
 FileHandle {
@@ -648,11 +652,11 @@ export type PathLike = string | Buffer | URL;
     With the **`URL`** module in Node.js, you can also represent file paths using URLs. The URL must be of scheme file.
     Example URL path:
 
-    ```jsx
-    const url_path = new URL("file:///home/user/projects/calculator.js");
-    ```
+        ```jsx
+        const url_path = new URL(**'file:///home/user/projects/calculator.js');**
+        ```
 
-The `flag` argument indicates the mode in which you wish to open the file. Here are the supported values as a `flag` -
+The `flag` argument indicates the mode (not to confused by `mode` argument) in which you wish to open the file. Here are the supported values as a `flag` -
 
 - `'a'`: Open file for appending. The file is created if it does not exist.
 - `'ax'`: Like `'a'` but fails if the path exists.
@@ -671,11 +675,11 @@ The `flag` argument indicates the mode in which you wish to open the file. Here 
 
 > You do not need to remember all of these, but it can be useful to write consistent APIs to ensure that no undefined behavior occurs.
 
-Let’s use `wx+` to show a small example. `wx+` will fail to open a file if it already exists, but if it doesn’t it will create a file and work just fine.
+Let’s use `wx+` to show a small example. `wx+` will open a file for read and write, but fail to open a file if it already exists. If teh file doesn’t exists it will create a file and work just fine.
 
 ```jsx
 // calculator.js
-const fileHandle = await fs.open(
+const file_handle = await fs.open(
     "calculator.js",
     "wx+",
     fs.constants.O_RDONLY
@@ -696,4 +700,193 @@ node:internal/process/promises:288
 
 It’s a good practice to specify the `flag` argument.
 
-The `mode` argument specifies the permissions to set for the file. In our case, the permissions are specified as `fs.constants.O_RDONLY`.
+The `mode` argument specifies the permissions to set for the file when its created. **`mode`**s **are always interpreted in octal.** For example,
+
+- **`0o400`** (read-only for the owner)
+- **`0o600`** (read and write for the owner)
+- **`0o644`** (read for everyone, write only for the owner)
+
+You don’t need to remember the octal representation. Simply use the `fs.constants.your_mode` to access it.
+
+In our case, the permissions are specified as `fs.constants.O_RDONLY`. Here is a list of available `modes` that can be used. Notice the `O_` prefix, which is short for `Open`. This prefix tells us that it will only work when used with `fs.open()`.
+
+**Modes to use with `fs.open()`**
+
+```jsx
+/** Flag indicating to open a file for read-only access. */
+const O_RDONLY: number;
+
+/** Flag indicating to open a file for write-only access. */
+const O_WRONLY: number;
+
+/** Flag indicating to open a file for read-write access. */
+const O_RDWR: number;
+
+/** Flag indicating to create the file if it does not already exist. */
+const O_CREAT: number;
+
+/** Flag indicating that opening a file should fail if the O_CREAT flag is set and the file already exists. */
+const O_EXCL: number;
+
+/** Flag indicating that if the file exists and is a regular file, and the file is opened successfully for write access, its length shall be truncated to zero. */
+const O_TRUNC: number;
+
+/** Flag indicating that data will be appended to the end of the file. */
+const O_APPEND: number;
+
+/** Flag indicating that the open should fail if the path is not a directory. */
+const O_DIRECTORY: number;
+
+/** Flag indicating that the open should fail if the path is a symbolic link. */
+const O_NOFOLLOW: number;
+
+/** Flag indicating that the file is opened for synchronous I/O. */
+const O_SYNC: number;
+
+/** Flag indicating that the file is opened for synchronous I/O with write operations waiting for data integrity. */
+const O_DSYNC: number;
+
+/** Flag indicating to open the symbolic link itself rather than the resource it is pointing to. */
+const O_SYMLINK: number;
+
+/** When set, an attempt will be made to minimize caching effects of file I/O. */
+const O_DIRECT: number;
+
+/** Flag indicating to open the file in nonblocking mode when possible. */
+const O_NONBLOCK: number;
+```
+
+Going back to the code we wrote in the `files` module
+
+```jsx
+// files.js
+const fs = require("node:fs/promises");
+
+async function open_file() {
+  const file_handle = await fs.open(
+    "calculator.js",
+    "r",
+    fs.constants.O_RDONLY
+  );
+  console.log(file_handle);
+}
+
+module.exports = open_file;
+```
+
+The return type of `[fs.open](http://fs.open)` is a `FileHandle`. A file handle is like a connection between the application and the file on the storage device. It lets the application work with files without worrying about the technical details of how files are stored on the device.
+
+We previously discussed **file descriptors**. You can check which descriptor is assigned to an opened file.
+
+```jsx
+// files.js
+
+..
+
+async function open_file() {
+	const file_handle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+  console.log(file_handle.fd); // Print the value of the file descriptor `fd`
+}
+
+..
+
+// Outputs -> 20
+```
+
+You may get the same integer value for the file descriptor if you try to run the program multiple times. But if you try to create another file handle, it should have a different file descriptor
+
+```jsx
+// files.js
+
+..
+
+async function open_file() {
+	const file_handle     = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+	const file_handle_two = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+  console.log(file_handle.fd);
+	console.log(file_handle_two.fd);
+}
+
+..
+
+// Outputs ->
+20
+21
+```
+
+> Note that if a `FileHandle` is not closed using the `file_handle.close()` method, it will try to automatically close the file descriptor and emit a process warning, helping to prevent memory leaks. It’s always good practice to call `file_handle.close()` to explicitly close it. However, in our case, the program exits just after running the `open_file` function, so it doesn't matter in our case.
+
+One import thing to note is, `open`ing a file can fail, and will throw an exception.
+
+`fs.open()` can throw errors in various scenarios, including:
+
+- `EACCES`: Access to the file is denied or permission is lacking, or the file doesn't exist and parent directory isn't writable.
+- `EBADF`: The directory file descriptor is invalid.
+- `EBUSY`: The file is a block device in use or mounted.
+- `EDQUOT`: Disk quota for user is exceeded when creating a file.
+- `EEXIST`: File already exists while trying to create it exclusively.
+- `EFAULT`: Path is outside accessible memory.
+- `EFBIG` / `EOVERFLOW`: File is too large to open.
+- `EINTR`: Opening a slow device is interrupted by a signal.
+- `EINVAL`: Invalid flags or unsupported operations.
+- `EISDIR`: Attempting to write to a directory, or using `O_TMPFILE` on a version that doesn't support it.
+- `ELOOP`: Too many symbolic links encountered.
+- `EMFILE`: Process reached its limit of open file descriptors.
+- `ENAMETOOLONG`: Pathname is too long.
+- `ENFILE`: System-wide limit on open files is reached.
+- `ENOENT`: File or component in path doesn't exist.
+- `ENOMEM`: Insufficient memory for FIFO buffer or kernel memory.
+- `ENOSPC`: No space left on device.
+- `ENOTDIR`: Component in path is not a directory.
+- `ENXIO`: File doesn't correspond to device, socket, or FIFO.
+- `EOPNOTSUPP`: Filesystem doesn't support `O_TMPFILE`.
+- `EROFS`: File is on read-only filesystem.
+- `ETXTBSY`: File is being executed, used as swap, or read by kernel.
+- `EPERM`: Operation prevented by file seal or mismatched privileges.
+- `EWOULDBLOCK`: `O_NONBLOCK` specified, incompatible lease held on the file.
+
+Make sure to handle errors gracefully. There may be cases where you don't need to handle the errors and want the program to fail, exit, or throw an error to the client. For example, if you're writing a CLI application that compresses an image using the `path/to/image` provided as an argument, you want it to fail to let the user know that there is an issue with the file/path provided.
+
+To catch errors, wrap the code inside a `try/catch` block.
+
+```jsx
+// files.js
+
+..
+
+async function open_file() {
+  try {
+    const file_handle = await fs.open("config", "r", fs.constants.O_WRONLY);
+		// do something with the `file_handle`
+  } catch (err) {
+    // Do somethign with the `err` object
+  }
+}
+
+..
+```
+
+### Reading from a file
+
+Too much of the theory. We’ll work on a real example now. Let’s try to read from a file. We’ll create a `log_config.json` file, in the `config` folder. The directory structure will look something like this (get rid of the `calculator` module)
+
+```
+.
+├── config
+│   └── log_config.json
+├── files.js
+└── index.js
+
+```
+
+Add these content inside the `log_config.json` file
+
+```jsx
+// log_config.json
+
+{
+  "log_prefix": "[LOG]: "
+}
+```
+
+## Reading from a file
