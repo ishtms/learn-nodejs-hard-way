@@ -1,7 +1,5 @@
 # Learn Node.js by building a backend framework
 
-> This is still a work in progress. It's barely 1% of the final content. I expect it to be ready pretty soon.
-
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
 This isn't your average Node.js tutorial or guide. It's a detailed walkthrough that shows you how to create a backend framework from the ground up while getting a solid grasp of Node.js's inner workings and it’s standard library.
@@ -14,7 +12,7 @@ I highly recommend coding along with this guide rather than just reading it.
 
 # What the hell is a web server any way?
 
-If you do not wish to read about the basics of web/http, you can safely jump to the **[coding section](#user-content-your-first-web-server-with-nodejs)**.
+If you do not wish to read about the basics of web/http, you can safely jump to the **coding section**.
 
 Before diving straight into writing JavaScript code to create web servers, it's essential to grasp the fundamental concepts that are the basic building blocks of web server. Web servers are like the traffic controllers of the internet. They manage requests from users (like you!) and send back the right information. But what makes up a web server, and how does it even work? Let's break it down into simple terms.
 
@@ -48,9 +46,7 @@ Like I explained above, to re-iterate - Protocols are like the rules that enable
 
 In order to become a proficient backend engineer, it is important to have a solid understanding of different networking protocols. While HTTP(s) is the main focus of this guide, having knowledge of other protocols such as FTP, SMTP, and DNS can prove beneficial in the long run. FTP (File Transfer Protocol) is commonly used for transferring files between servers, while SMTP (Simple Mail Transfer Protocol) is used for sending emails. DNS (Domain Name System) is responsible for translating domain names into IP addresses.
 
-> 💡 If you're programming game servers, it's important to have a solid understanding of UDP. UDP is faster but less reliable than TCP, making it ideal for applications that can tolerate occasional data loss, such as video streaming or online gaming. Unlike TCP, UDP is a "fire and forget" protocol, meaning data is sent without any error-checking or acknowledgment mechanisms.
-
-</aside>
+> If you're programming game servers, it's important to have a solid understanding of UDP. UDP is faster but less reliable than TCP, making it ideal for applications that can tolerate occasional data loss, such as video streaming or online gaming. Unlike TCP, UDP is a "fire and forget" protocol, meaning data is sent without any error-checking or acknowledgment mechanisms.
 
 ### **The Relationship Between HTTP and TCP: Ensuring Reliable Web Communication**
 
@@ -62,9 +58,7 @@ HTTP is used to send web content, like web pages, images, and videos, from a ser
 
 TCP helps with this. It was designed to make sure that data is delivered in the right order and without errors. TCP breaks up the data into small pieces called packets, sends them to the destination, and makes sure they arrive in the correct order. If any packet is lost during the process, TCP asks for it to be sent again. This is important for web pages because everything needs to be presented in a way that makes sense.
 
-> 💡 A packet is a small unit of data that is sent over a network. In the context of web communication, TCP breaks up the data into small pieces called packets, sends them to the destination, and makes sure they arrive in the correct order. If any packet is lost during the process, TCP asks for it to be sent again.
-
-</aside>
+> A packet is a small unit of data that is sent over a network. In the context of web communication, TCP breaks up the data into small pieces called packets, sends them to the destination, and makes sure they arrive in the correct order. If any packet is lost during the process, TCP asks for it to be sent again.
 
 ### 2. **Acknowledgment Mechanism**
 
@@ -92,9 +86,7 @@ Imagine you're at home, sitting in front of your computer, and you decide to vis
 2. **Finding the Address:** Your computer knows the basics of websites, but it needs the exact address of "**[www.example.com](http://www.example.com/)**" to connect to it. So, it reaches out to a special helper called a DNS resolver.
 3. **Resolving the Address:** The DNS resolver is like a digital address book. It takes "**[www.example.com](http://www.example.com/)**" and looks up the actual IP address associated with it. This IP address is like the specific coordinates of the website's location on the internet.
 
-> 💡 A website URL like https://google.com also be referred to as a **domain name**
-
-</aside>
+> A website URL like https://google.com also be referred to as a **domain name**
 
 ### The Response:
 
@@ -104,9 +96,7 @@ Imagine you're at home, sitting in front of your computer, and you decide to vis
 4. **Sending the Response:** The web server packages the content into a response and sends it back to your computer through the internet. It's like the server sending a digital package to your doorstep.
 5. **Enjoying the Content:** Your computer receives the response from the web server. Your browser interprets the HTML, displays images, and applies styles, creating a complete webpage. This is what you see on your screen – the final result of your request.
 
-> 💡 A quick disclaimer: our learning approach will prioritize clarity and thoroughness. I will introduce a topic, break it down, and if we come across any unfamiliar concepts, we will explore them until everything is fully understood.
-
-</aside>
+> A quick disclaimer: our learning approach will prioritize clarity and thoroughness. I will introduce a topic, break it down, and if we come across any unfamiliar concepts, we will explore them until everything is fully understood.
 
 # Your first web server with [node.js](https://nodejs.org)
 
@@ -125,9 +115,7 @@ If you see a `Command not found` error, that means you do not have nodejs instal
 
 From the official website -
 
-```bash
-Node.js® is an open-source, cross-platform JavaScript runtime environment.
-```
+> Node.js® is an open-source, cross-platform JavaScript runtime environment.
 
 What does a “runtime” mean?
 
@@ -135,15 +123,13 @@ Simply put, when you write code in a programming language like JavaScript, you n
 
 For Node.js, being a JavaScript runtime environment means it has everything needed to execute JavaScript code **_outside of a web browser_**. It includes the V8 JavaScript engine (which compiles and executes JavaScript code), libraries, APIs for file, network, and other system-related tasks, and an event loop for asynchronous, non-blocking operations.
 
-> 💡 We’ll discuss what exactly an event loop means, and implement our own version of event loop to understand how it works, later on in the guide.
-
-</aside>
+> We’ll discuss what exactly an event loop means, and implement our own version of event loop to understand how it works, later on in the guide.
 
 ## Your first node.js program
 
 Let’s begin by writing some code. Let’s create a new folder, and name it whatever you wish. I’ve named it `intro-to-node`. Inside it, create a new file `index.js` and add the following content inside it.
 
-```js
+```jsx
 // Write the string `Let's learn Nodejs` to the standard output.
 process.stdout.write("Let's learn Node.js");
 ```
@@ -164,9 +150,7 @@ This should output
 Let's learn Node.js
 ```
 
-> 💡 You might also see a trailing `%` at the end due to the absence of a newline character (**`\n`**) at the end of the string you're writing to the standard output (stdout). You can modify the code as `process.stdout.write("Let's learn Node.js\n");` to get rid of that trailing modulo.
-
-</aside>
+> You might also see a trailing `%` at the end due to the absence of a newline character (**`\n`**) at the end of the string you're writing to the standard output (stdout). You can modify the code as `process.stdout.write("Let's learn Node.js\n");` to get rid of that trailing modulo.
 
 **What is the code above doing?**
 
@@ -182,7 +166,7 @@ Simply put, `console.log` is a method that outputs a message to the web console 
 
 But if you change your code inside `index.js` to this
 
-```js
+```jsx
 console.log("Let's learn Node.js");
 
 // Outputs -> Let's learn Node.js
@@ -192,7 +176,7 @@ It works. However, isn't it the case that I just mentioned Node.js being unfamil
 
 Expanding upon this topic, it's important to understand that Node.js, despite its roots in server-side development, strives to bridge the gap between traditional web development and server-side scripting. By incorporating features commonly associated with browser-based JavaScript, Node.js has made it more accessible for developers who are already well-versed in the language but might be new to server-side programming.
 
-### How does console.log() work in Node.js?
+### How does `console.log()` work in Node.js?
 
 The **`node:console`** module offers a wrapper around the standard console functionalities that javascript provides. This wrapper aims to provide a consistent and familiar interface for logging and interacting with the Node.js environment, just as developers would in a web browser's developer console.
 
@@ -203,7 +187,8 @@ The module exports two specific components:
 
 (Note that `Console` is not `console` (lowercase). `console` is a special instance of `Console`)
 
-> 💡 You can use the global `console` without having to call `require('node:console')` or `require('console')`. This global availability is a feature provided by the Node.js runtime environment. When your Node.js application starts running, certain objects and modules are automatically available in the global scope without the need for explicit importing.
+<aside>
+💡 You can use the global `console` without having to call `require('node:console')` or `require('console')`.  This global availability is a feature provided by the Node.js runtime environment. When your Node.js application starts running, certain objects and modules are automatically available in the global scope without the need for explicit importing.
 
 Here are some of the examples of globally available objects/modules in Node.js - `console`, `setTimeout`, `setInterval`, `__dirname`, `__filename`, `process`, `module`, `Buffer`, `exports`, and the `global` object.
 
@@ -211,13 +196,13 @@ Here are some of the examples of globally available objects/modules in Node.js -
 
 As I mentioned earlier, Node.js provides the global `console` instance to output text to `process.stdout` and `process.stderr`. So if you’re writing this
 
-```js
+```jsx
 console.log("Something");
 ```
 
 the above code is just an abstraction of the code below.
 
-```js
+```jsx
 process.stdout.write("Something\n");
 ```
 
@@ -225,11 +210,11 @@ However, even after reading this, the code above may still be confusing. You may
 
 ### The **`process` Object**:
 
-The **`process`** object in Node.js tells you about the environment where the Node.js app is running. It has properties, methods, and event listeners to help you work with the process and access info about the runtime environment.
+The **`process`** object in Node.js tells you about the environment where the Node.js app is running. It has various properties, methods, and event listeners to help you work with the process and access info about the runtime environment.
 
 These are some of the useful properties and functions that are provided by the `process` object. Copy paste the code below and paste it inside your `index.js` file. Try to execute it, using `node path/to/index/file`.
 
-```js
+```jsx
 console.log(process.version);
 // v18.17.0
 
@@ -270,9 +255,7 @@ console.log(process.pid);
 // 39328
 ```
 
-> 💡 We will discuss most of these properties/functions further down the line when we talk about implementing our own framework.
-
-</aside>
+> We will discuss most of these properties/functions further down the line when we talk about implementing our own framework.
 
 ### The `stdout` **property of the `process` object**:
 
@@ -293,13 +276,11 @@ Node.js provides a comprehensive implementation of streams, which can be categor
 3. **Duplex Streams**: Duplex streams represent both a readable and a writable side. This means you can both read from and write to these streams concurrently. An example of a Duplex stream is a TCP socket. It can both receive data from the client and send data back to the client concurrently.
 4. **Transform Streams**: These are a specific type of duplex stream that allow you to modify or transform data as it's being read or written. They are often used for data manipulation tasks, like compression or encryption.
 
-> 💡 Streams are incredibly versatile and efficient because they work with small chunks of data at a time, which is particularly useful when dealing with data that doesn't fit entirely into memory or when you want to process data in real-time. They also make it possible to start processing data before the entire dataset is available, reducing memory consumption and improving performance.
-
-</aside>
+> Streams are incredibly versatile and efficient because they work with small chunks of data at a time, which is particularly useful when dealing with data that doesn't fit entirely into memory or when you want to process data in real-time. They also make it possible to start processing data before the entire dataset is available, reducing memory consumption and improving performance.
 
 Now you know what streams are, and what is the standard output (`stdout`), we can simplify the code below.
 
-```js
+```jsx
 process.stdout.write("Hello from Node.js");
 ```
 
@@ -307,9 +288,7 @@ We're simply writing to **`stdout`** or the standard output stream which Node.js
 
 Working with **`process.stdout`** can be rather cumbersome, and in practice, you tend to use it sparingly. Instead, developers frequently opt for the more user-friendly **`console.log`** method. Instances of code employing **`process.stdout`** are typically encountered when there's a need for a greater level of control over output formatting or when integrating with more complex logging mechanisms.
 
-> 💡 **_Warning_**: The methods of the global console object are not consistently synchronous like the browser APIs they resemble, nor are they consistently asynchronous like all other Node.js streams. For more information, see the [note on process I/O](https://nodejs.org/api/process.html#a-note-on-process-io).
-
-</aside>
+> **_Warning_**: The methods of the global console object are not consistently synchronous like the browser APIs they resemble, nor are they consistently asynchronous like all other Node.js streams. For more information, see the [note on process I/O](https://nodejs.org/api/process.html#a-note-on-process-io).
 
 ## Working with files
 
@@ -344,7 +323,7 @@ Let’s see an example by creating a module called `calculate`
 
 Create a file `calculator.js` and add the following contents inside it
 
-```js
+```jsx
 // calculator.js
 
 function add(num_one, num_two) {
@@ -374,13 +353,11 @@ By specifying the `exports` property on the global `module` object, we declare w
 
 Note, we haven’t exported `multiply` and `divide` and we’ll see in a moment what happens when we try to access them and invoke/call those functions.
 
-> 💡 Note: Provide the relative path to `calculator.js`. In my case, it is located in the same directory and at the same folder level.
-
-</aside>
+> Note: Provide the relative path to `calculator.js`. In my case, it is located in the same directory and at the same folder level.
 
 In your `index.js` file, you can import the exported functions as shown below.
 
-```js
+```jsx
 const { add, divide, multiply, subtract } = require("./calculator");
 
 // You may also write it this way, but it's preferred to omit the `.js` extension
@@ -393,7 +370,7 @@ The `module.exports` is basically a javascript `Object`, and when you `require` 
 
 So, you can think of it as something like this:
 
-```js
+```jsx
 const my_module = {
 	fn_one: function fn_one() {...},
 	fn_two: function fn_two() {...}
@@ -406,12 +383,11 @@ fn_three; // undefined
 
 ```
 
-g
 This may clear up why we don't get an error if we try to include a function/property that is not being explicitly exported from a module. If that identifier isn't found, it's simply `undefined`.
 
 So, the `multiply` and `subtract` identifiers above are just `undefined`. However, if we try to add this line:
 
-```js
+```jsx
 // index.js
 
 let num_two = multiply(1, 2);
@@ -419,7 +395,7 @@ let num_two = multiply(1, 2);
 
 the program crashes:
 
-```js
+```jsx
 /Users/ishtmeet/Code/intro-to-node/index.js:5
 let num_two = multiply(1, 2);
               ^
@@ -439,7 +415,7 @@ We cannot invoke an `undefined` value as a function. `undefined()` doesn't make 
 
 Let’s export all the functions from the `calculator` module.
 
-```js
+```jsx
 // calculator.js
 
 function add(num_one, num_two) {...}
@@ -461,7 +437,7 @@ module.exports = {
 
 In the `index.js` file, call all those functions to see if everything’s working as expected.
 
-```js
+```jsx
 // index.js
 
 const { add, divide, multiply, subtract } = require("./calculator");
@@ -481,7 +457,7 @@ Recall what was just stated above: `module.exports` is simply an object. We only
 
 So instead of doing `module.exports = { add, subtract, .. }`, you could also do this
 
-```js
+```jsx
 // calculator.js
 
 module.exports.add = function add(num_one, num_two) {
@@ -505,7 +481,7 @@ It’s a matter of preference. But there’s a big downside and nuance to this a
 
 _We’ll use the term `file` and `module` interchangeably, even though they’re not actually the same in theory_
 
-```js
+```jsx
 // calculator.js
 module.exports.add = function add(num_one, num_two) {..}
 module.exports.subtract = function subtract(num_one, num_two) {..}
@@ -534,7 +510,7 @@ ReferenceError: divide is not defined
 
 This is because `divide` and all the other functions declared in this module are a part of `module.exports` object, and they’re not available in the scope. Let’s break it down into an easy example
 
-```js
+```jsx
 let person = {};
 person.get_age = funtion get_age() {...}
 
@@ -545,7 +521,7 @@ get_age();
 
 I hope this makes it clear. Instead you could do something like this
 
-```js
+```jsx
 // calculator.js
 
 ...
@@ -568,3 +544,156 @@ module.exports = {
 But this isn’t the best way to create your library’s API. The second option is more concise and easier to read. It clearly shows that you're exporting a group of functions as properties of an object. This can be particularly useful when you have many functions to export. Also, everything is nicely placed at a single place. You don’t have to keep searching for `module.exports.export_name` to find out what this module exports.
 
 ### Let’s get back to `files`
+
+In Node.js, a `file` is a way to interact with the data in a file. The **`fs`** module is used to handle file operations. It works by using unique identifiers assigned by the operating system to each file, called [file descriptors](https://en.wikipedia.org/wiki/File_descriptor).
+
+With the **`fs`** module, you can perform several operations on files, such as reading, writing, updating, and deleting. Node.js provides both synchronous and asynchronous methods for these operations. The synchronous methods can slow down your application's responsiveness, while the asynchronous methods allow non-blocking execution.
+
+Node.js interacts (indirectly, through ) with the operating system's I/O subsystem to manage file operations, making system calls such as **`open`**, **`read`**, **`write`**, and **`close`**. When you open a file, Node.js requests the operating system to allocate a file descriptor, which is used to read or write data from the file. Once the operation is complete, the file descriptor is released.
+
+> A file descriptor is a way of representing an open file in a computer operating system. It's like a special number that identifies the file, and the operating system uses it to keep track of what's happening to the file. You can use the file descriptor to read, write, move around in the file, and close it.
+
+### A little more about file descriptors
+
+When a file is opened by a process, the operating system assigns a unique file descriptor to that open file. This descriptor is essentially an integer value that serves as an identifier for the open file within the context of that process. File descriptors are used in various [system calls](https://en.wikipedia.org/wiki/System_call) and APIs to perform operations like reading, writing, seeking, and closing files.
+
+In Unix-like systems, including Linux, file descriptors are often managed using a data structure called a [file table](https://man7.org/linux/man-pages/man5/table.5.html) or [file control block](https://en.wikipedia.org/wiki/File_Control_Block#:~:text=A%20File%20Control%20Block%20(FCB,not%20in%20operating%20system%20memory.). This table keeps track of the properties and status of each open file, such as the file's current position, permissions, and other relevant information. The file descriptor acts as an **_index_** or key into this table, allowing the operating system to quickly look up the details of the open file associated with a particular descriptor, which is more efficient, and more performant than to iterate over a vector/array of files and find a particular file.
+
+When you interact with files or file descriptors, you're typically dealing with numeric values. For instance, in C, the **`open()`** system call returns a file descriptor, and other functions like **`read()`**, **`write()`**, and **`close()`** require this descriptor to operate on the corresponding file. In a runtime like Node.js, the **`fs`** module abstracts the direct use of file descriptors by providing a more user-friendly API, but it still relies on them behind the scenes to manage file operations.
+
+> A file descriptor is a small, non-negative integer that serves as an index to an entry in the process's table of open file descriptors. This integer is used in subsequent system calls (such as read, write, lseek, fcntl, etc.) to refer to the open file. The successful call will **_return the lowest-numbered file_** descriptor that is not currently open for the process.
+
+### Creating our first file
+
+The `node:fs` module lets you work with the file system using standard [POSIX](https://en.wikipedia.org/wiki/POSIX) functions. Node.js provides multiple ways to work with files. It exposes many flavours of its FileSystem API. A _promise-based asynchronous_ _API_, a _callback-based API_ and a _synchronous API._
+
+Let’s create a new module, `files.js`, in the same folder where your `calculator` module and the `index.js` file lives. Let’s import the `fs` module to start working with files.
+
+```jsx
+// Promise based API
+const fs = require("node:fs/promises");
+
+// Sync/Callback based API
+const fs = require("node:fs");
+```
+
+A general rule of thumb is - always prefer asynchronous API, unless you’re dealing with a situation that specifically demands synchronous behaviour.
+
+Asynchronous APIs have two main benefits: they make your code more responsive and scalable. These APIs let your code keep running while it waits for slow tasks like I/O operations or network requests. By not blocking other operations, these APIs allow your application to handle many tasks at once, which improves its overall performance.
+
+Asynchronous code is better for managing multiple tasks happening at the same time than traditional callback-based approaches. With callbacks, it can be hard to keep track of what's going on, leading to a **callback hell**. Using promises and async/await helps make the code easier to read and manage, making it less likely to have issues with complex nested callbacks.
+
+> I will be using the promise-based API of Node.js. However, you may use other options to see what issues arise when your code becomes more complex.
+
+Inside `files.js` add this snippet of code
+
+```jsx
+// files.js
+const fs = require("node:fs/promises");
+
+async function openFile() {
+  const fileHandle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+  console.log(fileHandle);
+}
+
+module.exports = openFile;
+```
+
+and in `index.js`
+
+```jsx
+// index.js
+const openFile = require("./files");
+
+openFile();
+
+/*
+FileHandle {
+  _events: [Object: null prototype] {},
+  _eventsCount: 0,
+  _maxListeners: undefined,
+  close: [Function: close],
+  ..
+}
+ */
+```
+
+Let’s break this down.
+
+```jsx
+const fs = require("node:fs/promises");
+```
+
+This line brings in the **`fs`** module from Node.js. It specifically imports the **`fs/promises`** sub-module, which provides file system operations that can be executed asynchronously and are wrapped in Promises.
+
+```jsx
+fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+```
+
+The **`fs.open`** function is used to open a file. It takes three arguments - file’s `path`, `flag`, and a `mode`.
+
+The `path` takes an argument of type **`PathLike`** which is a type that represents a file path. It's a concept used in Node.js API to indicate that a value should be a string representing a valid file path. Let’s the see type definition of `PathLike`
+
+```jsx
+export type PathLike = string | Buffer | URL;
+```
+
+1.  String **Paths:**
+    The most common way to represent file paths is as strings. A string path can be either a relative or an absolute path. It's simply a sequence of characters that specifies the location of a file on the computer.
+    Example relative string path: **`"calculator.js"`**
+    Example absolute string path: **`"/Users/ishtmeet/Code/intro-to-node/calculator.js"`**
+2.  **Buffer Paths:**
+    While strings are the most common way to represent paths, Node.js also allows you to use **`Buffer`** objects to represent paths. A **`Buffer`** is a low-level data structure that can hold binary data. In reality, using **`Buffer`** objects for paths is less common.
+3.  **URL Paths:**
+    With the **`URL`** module in Node.js, you can also represent file paths using URLs. The URL must be of scheme file.
+    Example URL path:
+
+    ```jsx
+    const url_path = new URL("file:///home/user/projects/calculator.js");
+    ```
+
+The `flag` argument indicates the mode in which you wish to open the file. Here are the supported values as a `flag` -
+
+- `'a'`: Open file for appending. The file is created if it does not exist.
+- `'ax'`: Like `'a'` but fails if the path exists.
+- `'a+'`: Open file for reading and appending. The file is created if it does not exist.
+- `'ax+'`: Like `'a+'` but fails if the path exists.
+- `'as'`: Open file for appending in synchronous mode. The file is created if it does not exist.
+- `'as+'`: Open file for reading and appending in synchronous mode. The file is created if it does not exist.
+- `'r'`: Open file for reading. An exception occurs if the file does not exist.
+- `'rs'`: Open file for reading in synchronous mode. An exception occurs if the file does not exist.
+- `'r+'`: Open file for reading and writing. An exception occurs if the file does not exist.
+- `'rs+'`: Open file for reading and writing in synchronous mode. Instructs the operating system to bypass the local file system cache.
+- `'w'`: Open file for writing. The file is created (if it does not exist) or truncated (if it exists).
+- `'wx'`: Like `'w'` but fails if the path exists.
+- `'w+'`: Open file for reading and writing. The file is created (if it does not exist) or truncated (if it exists).
+- `'wx+'`: Like `'w+'` but fails if the path exists.
+
+> You do not need to remember all of these, but it can be useful to write consistent APIs to ensure that no undefined behavior occurs.
+
+Let’s use `wx+` to show a small example. `wx+` will fail to open a file if it already exists, but if it doesn’t it will create a file and work just fine.
+
+```jsx
+// calculator.js
+const fileHandle = await fs.open(
+    "calculator.js",
+    "wx+",
+    fs.constants.O_RDONLY
+  );
+
+// Outputs
+node:internal/process/promises:288
+            triggerUncaughtException(err, true /* fromPromise */);
+            ^
+
+[Error: EEXIST: file already exists, open 'calculator.js'] {
+  errno: -17,
+  code: 'EEXIST',
+  syscall: 'open',
+  path: 'calculator.js'
+}
+```
+
+It’s a good practice to specify the `flag` argument.
+
+The `mode` argument specifies the permissions to set for the file. In our case, the permissions are specified as `fs.constants.O_RDONLY`.
