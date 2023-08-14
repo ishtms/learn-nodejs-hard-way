@@ -845,8 +845,8 @@ We previously discussed **file descriptors**. You can check which descriptor is 
 ..
 
 async function open_file() {
-	const file_handle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
-  console.log(file_handle.fd); // Print the value of the file descriptor `fd`
+    const file_handle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+    console.log(file_handle.fd); // Print the value of the file descriptor `fd`
 }
 
 ..
@@ -862,10 +862,10 @@ You may get the same integer value for the file descriptor if you try to run the
 ..
 
 async function open_file() {
-	const file_handle     = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
-	const file_handle_two = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
-  console.log(file_handle.fd);
-	console.log(file_handle_two.fd);
+    const file_handle     = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+    const file_handle_two = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+    console.log(file_handle.fd);
+    console.log(file_handle_two.fd);
 }
 
 ..
