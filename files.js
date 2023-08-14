@@ -1,12 +1,18 @@
-const fs = require("node:fs/promises");
+// files.js
 
-async function open_file() {
+const fs = require("node:fs/promises");
+const path = require("path");
+async function read_file() {
   try {
-    const file_handle = await fs.open("config", "r", fs.constants.O_WRONLY);
-    // do something with the `file_handle`
+    const logPath = path.join(__dirname, "config", "log_config.json");
+    const stream = await (await fs.open(logPath)).readFile();
+    const config = JSON.parse(stream);
+
+    console.log('Log prefix is: "%s"', config.log_prefix);
   } catch (err) {
-    // Do somethign with the `err` object
+    console.error("Error occurred while reading file: %o", err);
   }
 }
 
-module.exports = open_file;
+// We export the open_file function so that it can be used in other modules.
+module.exports = read_file;

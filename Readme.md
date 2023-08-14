@@ -1,5 +1,9 @@
 # Learn Node.js by building a backend framework
 
+> There’s going to be 0 dependencies for our backend framework, as well as our logging library. Everything will be done using vanilla Node.js, the hard-way (the best way to learn).
+
+> This is still in a very early stage. It consists of almost 2-3% of the total content which it intends to cover. There will also be an pdf version of this to download, as well as a website for the documentation.
+
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
 This isn't your average Node.js tutorial or guide. It's a detailed walkthrough that shows you how to create a backend framework from the ground up while getting a solid grasp of Node.js's inner workings and it’s standard library.
@@ -12,11 +16,11 @@ I highly recommend coding along with this guide rather than just reading it.
 
 # What the hell is a web server any way?
 
-If you do not wish to read about the basics of web/http, you can safely jump to the **coding section**.
+If you do not wish to read about the basics of web/http, you can safely jump to the [coding section](#your-first-nodejs-program).
 
 Before diving straight into writing JavaScript code to create web servers, it's essential to grasp the fundamental concepts that are the basic building blocks of web server. Web servers are like the traffic controllers of the internet. They manage requests from users (like you!) and send back the right information. But what makes up a web server, and how does it even work? Let's break it down into simple terms.
 
-## **Parts of a Web Server:**
+## Parts of a Web Server:
 
 Web servers are like friendly translators that help computers understand each other. Imagine if you and a friend speak different languages. To have a conversation, you'd need a common language that both of you understand. In the same way, web servers and computers need a common set of rules to talk to each other effectively. These rules are called protocols, which are like languages specifically designed for computers. When you type a website address in your browser and hit "Enter," your computer sends a message to the web server. This message follows the web's language rules, known as the HTTP protocol (Hypertext Transfer Protocol).
 
@@ -30,7 +34,7 @@ But the protocol game isn't limited to HTTP. The web's secure version, HTTPS (Hy
 
 Protocols extend beyond web browsing too. Email, file sharing, and even the way your phone connects to Wi-Fi rely on various protocols to ensure reliable and efficient communication. Each protocol serves a specific purpose, just like different languages for different scenarios in real life.
 
-### **Navigating the World of Protocols: A Quick Overview**
+### Navigating the World of Protocols: A Quick Overview
 
 Like I explained above, to re-iterate - Protocols are like the rules that enable devices to communicate effectively on the internet. They define how data is formatted, transmitted, and understood by different systems. Just as people follow social etiquette during conversations, devices follow protocols to ensure smooth communication. Here's a glimpse into some major types of protocols:
 
@@ -48,7 +52,7 @@ In order to become a proficient backend engineer, it is important to have a soli
 
 > If you're programming game servers, it's important to have a solid understanding of UDP. UDP is faster but less reliable than TCP, making it ideal for applications that can tolerate occasional data loss, such as video streaming or online gaming. Unlike TCP, UDP is a "fire and forget" protocol, meaning data is sent without any error-checking or acknowledgment mechanisms.
 
-### **The Relationship Between HTTP and TCP: Ensuring Reliable Web Communication**
+### The Relationship Between HTTP and TCP: Ensuring Reliable Web Communication
 
 HTTP (Hypertext Transfer Protocol) and TCP (Transmission Control Protocol) form a strong partnership when it comes to web communication. The reason HTTP prefers TCP lies in the very nature of their roles and responsibilities within the world of networking.
 
@@ -76,7 +80,7 @@ TCP works well with HTTP for handling complex interactions. TCP's mechanisms gua
 
 TCP adds some extra information to every message to make sure it gets to its destination without errors. This extra information includes acknowledgments, sequence numbers, and error-checking. Even though it adds a little more data to every message, it's still worth it because it helps make sure the data is accurate and in the right order. This is especially important when communicating over the web.
 
-## **Asking and Getting: How Web Servers Respond to Your Requests**
+## \***\*Asking and Getting: How Web Servers Respond to Your Requests\*\***
 
 Imagine you're at home, sitting in front of your computer, and you decide to visit a website, let's say "**[www.example.com](http://www.example.com/)**." This simple action initiates a series of events that highlight the "Asking and Getting" process in web communication.
 
@@ -288,11 +292,11 @@ We're simply writing to **`stdout`** or the standard output stream which Node.js
 
 Working with **`process.stdout`** can be rather cumbersome, and in practice, you tend to use it sparingly. Instead, developers frequently opt for the more user-friendly **`console.log`** method. Instances of code employing **`process.stdout`** are typically encountered when there's a need for a greater level of control over output formatting or when integrating with more complex logging mechanisms.
 
-> **_Warning_**: The methods of the global console object are not consistently synchronous like the browser APIs they resemble, nor are they consistently asynchronous like all other Node.js streams. For more information, see the [note on process I/O](https://nodejs.org/api/process.html#a-note-on-process-io).
+> **_Warning_**: The ways of the global console object are not always synchronous like the browser APIs they resemble, nor are they always asynchronous like all other Node.js streams. For more information, please see the [note on process I/O](https://nodejs.org/api/process.html#a-note-on-process-io).
 
 ## Working with files
 
-Now that we've covered the basics of logging in Node.js, let's explore a real-world example. In this section, we'll build a logging library (`loggify`) that writes logs to a log file. We’ll use this library as the central mechanism of logging for our web framework, that we build further into this guide.
+Now that we've covered the basics of logging in Node.js, let's explore a real-world example. Let us understand the low level of files and how to interact with them. After that, we'll build a logging library [logtard](https://github.com/ishtms/logtard) that writes logs to a log file. It also has a support for tracing and rolling file creation. We’ll use this library as the central mechanism of logging for our web framework, that we build further into this guide.
 
 ### What will the logging library do
 
@@ -557,7 +561,7 @@ Node.js interacts (indirectly, through ) with the operating system's I/O subsyst
 
 When a file is opened by a process, the operating system assigns a unique file descriptor to that open file. This descriptor is essentially an integer value that serves as an identifier for the open file within the context of that process. File descriptors are used in various [system calls](https://en.wikipedia.org/wiki/System_call) and APIs to perform operations like reading, writing, seeking, and closing files.
 
-In Unix-like systems, including Linux, file descriptors are often managed using a data structure called a [file table](https://man7.org/linux/man-pages/man5/table.5.html) or [file control block](https://en.wikipedia.org/wiki/File_Control_Block). This table keeps track of the properties and status of each open file, such as the file's current position, permissions, and other relevant information. The file descriptor acts as an **_index_** or key into this table, allowing the operating system to quickly look up the details of the open file associated with a particular descriptor, which is more efficient, and more performant than to iterate over a vector/array of files and find a particular file.
+In Unix-like systems, including Linux, file descriptors are often managed using a data structure called a [file table](https://man7.org/linux/man-pages/man5/table.5.html) or [file control block](https://en.wikipedia.org/wiki/File_Control_Block#:~:text=A%20File%20Control%20Block%20(FCB,not%20in%20operating%20system%20memory.). This table keeps track of the properties and status of each open file, such as the file's current position, permissions, and other relevant information. The file descriptor acts as an **_index_** or key into this table, allowing the operating system to quickly look up the details of the open file associated with a particular descriptor, which is more efficient, and more performant than to iterate over a vector/array of files and find a particular file.
 
 When you interact with files or file descriptors, you're typically dealing with numeric values. For instance, in C, the **`open()`** system call returns a file descriptor, and other functions like **`read()`**, **`write()`**, and **`close()`** require this descriptor to operate on the corresponding file. In a runtime like Node.js, the **`fs`** module abstracts the direct use of file descriptors by providing a more user-friendly API, but it still relies on them behind the scenes to manage file operations.
 
@@ -652,9 +656,9 @@ export type PathLike = string | Buffer | URL;
     With the **`URL`** module in Node.js, you can also represent file paths using URLs. The URL must be of scheme file.
     Example URL path:
 
-    ```jsx
-    const url_path = new URL("file:///home/user/projects/calculator.js");
-    ```
+```jsx
+const url_path = new URL(**'file:///home/user/projects/calculator.js');**
+```
 
 The `flag` argument indicates the mode (not to confused by `mode` argument) in which you wish to open the file. Here are the supported values as a `flag` -
 
@@ -700,7 +704,7 @@ node:internal/process/promises:288
 
 It’s a good practice to specify the `flag` argument.
 
-The `mode` argument specifies the permissions to set for the file when its created. `mode`s **are always interpreted in octal.** For example,
+The `mode` argument specifies the permissions to set for the file when its created. `mode`s are always interpreted **in octal.** For example,
 
 - **`0o400`** (read-only for the owner)
 - **`0o600`** (read and write for the owner)
@@ -866,7 +870,7 @@ async function open_file() {
 ..
 ```
 
-### Reading from a file
+## Reading from a file
 
 Too much of the theory. We’ll work on a real example now. Let’s try to read from a file. We’ll create a `log_config.json` file, in the `config` folder. The directory structure will look something like this (get rid of the `calculator` module)
 
@@ -889,4 +893,334 @@ Add these content inside the `log_config.json` file
 }
 ```
 
-## Reading from a file
+Node.js provides many utility methods for reading from a specific file using the `file_handle`. There are different ways to handle interactions with the files from the `node:fs` and the `node:fs/promises` modules. But we’re specifically going to use a `file_handle` for now.
+
+```jsx
+// files.js
+
+const fs = require("node:fs/promises");
+
+// This function asynchronously opens a file, reads it line by line
+// and logs each line on the console.
+async function read_file() {
+  try {
+    // open the file in read-only mode.
+    const file_handle = await fs.open("./index.js", "r", fs.constants.O_RDONLY);
+
+    // create a stream to read the lines of the file.
+    let stream = file_handle.readLines({
+      // start reading from the beginning of the file.
+      start: 0,
+
+      // read till the end of the file.
+      end: Infinity,
+
+      // specify the encoding to be utf8, or else the stream
+      // will emit buffer objects instead of strings.
+      encoding: "utf8",
+
+      /**
+       * If autoClose is false, then the file descriptor won't be closed,
+       * even if there's an error. It is the application's responsibility
+       * to close it and make sure there's no file descriptor leak. If
+       * autoClose is set to true (default behavior), on 'error' or 'end' the
+       * file descriptor will be closed automatically.
+       */
+      autoClose: true,
+
+      /**
+       * If emitClose is true, then the `close` event will be emitted
+       * after reading is finished. Default is `true`.
+       */
+      emitClose: true,
+    });
+
+    // The 'close' event is emitted when the file_handle has been closed
+    // and can no longer be used.
+    stream.on("close", () => {
+      console.log("File handle %d closed", file_handle.fd);
+    });
+
+    // The 'line' event be fired whenver a line is read from the file.
+    stream.on("line", (line) => {
+      console.log("Getting line -> %s", line);
+    });
+  } catch (err) {
+    console.error("Error occurred while reading file: %o", err);
+  }
+}
+
+module.exports = read_file;
+```
+
+This outputs
+
+```
+Getting line -> const open_file = require("./files");
+Getting line ->
+Getting line -> open_file();
+File handle 20 closed
+```
+
+The code above has a function called `open_file` that does three things: open a file, read each line, and show each line on the console.
+
+This function uses the `fs` module. It opens a read-only file and creates a stream to read it. The function can read only some lines using the `start` and `end` options. The function also needs to know the file's characters using the `encoding` option.
+
+This function also sets two options to handle the file descriptor automatically when the reading is finished. Finally, this function creates two listeners to handle two events: `close` and `line`. The `close` event tells the function that the file handle has been closed. The `line` event tells the function that it has read a line from the file.
+
+If there's an error while reading the file, the function shows an error message on the console.
+
+One thing to note is that we used string substitution `%s` instead of template literals. When passing a string to one of the methods of the `console` object that accepts a string, you may use these substitution strings:
+
+- `%o` or `%O`: Outputs a JavaScript object. Clicking the object name opens more information about it in the inspector (browser).
+- `%d` or `%i`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %.2d", 1.1)` will output the number as two significant figures with a leading 0: `Foo 01`.
+- `%s`: Outputs a string.
+- `%f`: Outputs a floating-point value. Formatting is supported. For example, `console.log("Foo %.2f", 1.1)` will output the number to 2 decimal places: `Foo 1.10`.
+
+> Using `%o` to show the output on terminal, just prints the whole object as a string, this is something that the string substitution has an advantage over template literals.
+
+We can simplify the above code. I included all possible option keys previously just to show that they exist, and you could use them if you want to have more control over what you’re doing.
+
+The simplified version looks like this
+
+```jsx
+// files.js
+
+...
+
+async function read_file() {
+  try {
+    const file_handle = await fs.open("./index.js");
+    const stream = file_handle.readLines();
+
+    for await (const line of stream) {
+      console.log("Reading line of length %d -> %s", line.length, line);
+    }
+  } catch (err) {
+    console.error("Error occurred while reading file: %o", err);
+  }
+}
+
+...
+```
+
+This outputs
+
+```
+Reading line of length 59 -> const { read_entire_file, read_file } = require("./files");
+Reading line of length 0 ->
+Reading line of length 12 -> read_file();
+```
+
+Notice that we get rid of all those options since they are already set to default values for our convenience. Only specify them if you wish to choose values other than the defaults.
+
+## Reading the `json` file
+
+However, reading a json file line by line isn’t the best way. The `readLine` is a very memory-efficient way to read files. It does not load all the contents of the file into memory, which is usually what we want. But if the file is small, and you know before hand, that the file is not really big, it’s usually quicker, and more performant to load the entire file at once into the memory.
+
+> If you're dealing with large files, it's usually better to use a buffered version, i.e `createReadStream()` or `readLines()`
+
+Let’s update the code
+
+```jsx
+...
+
+async function read_file() {
+  try {
+    const file_handle = await fs.open("./config/log_config.json");
+    const stream = await file_handle.readFile();
+
+    console.log("[File contents] ->\n %s", stream);
+  } catch (err) {
+    console.error("Error occurred while reading file: %o", err);
+  }
+}
+
+...
+```
+
+Outputs
+
+```jsx
+[File contents] ->
+ {
+  "log_prefix": "[LOG]: "
+}
+```
+
+Nice. But what happens, if we do not use the string substitution with `%s`?
+
+```jsx
+console.log("[File contents] ->\n", stream);
+```
+
+Strangely, this outputs some weird looking stuff
+
+```
+[File contents] ->
+ <Buffer 7b 0a 20 20 22 6c 6f 67 5f 70 72 65 66 69 78 22 3a 20 22 5b 4c 4f 47 5d 3a 20 22 0a 7d 0a>
+```
+
+Why is it so? And what is a `Buffer`? This is one of the most unvisited topic of programming. Let’s take a minute to understand it.
+
+# Buffers
+
+`Buffer` objects are used to represent a fixed-length sequence of bytes, in memory. **`Buffer`** objects are more memory-efficient compared to JavaScript strings when dealing with data, especially very large datasets. This is because strings in JavaScript are UTF-16 encoded, which can lead to higher memory consumption for certain types of data.
+
+Q: But why does the `readLines()` method returned strings if it’s not “efficient”?
+
+Well turns out, they do indeed use buffers internally to efficiently read and process data from files or streams. `readLines()` is a special variant of `createReadStream()` which is designed to provide a convenient interface for working with lines of text content, making it easier for developers to interact with the data without needing to handle low-level buffer operations directly.
+
+So, what you're looking at when you see the value of a buffer is just a raw representation of binary data in **_hexadecimal format_**. This raw data might not make much sense to us as humans because it's not in a readable format like text.
+
+To print the json file to the console, we have 3 ways.
+
+**First method**
+
+```jsx
+console.log("[File contents] ->\n", stream.toString("utf-8"));
+```
+
+**Second method**
+
+String substitution to the rescue again
+
+```jsx
+console.log("[File contents] ->\n %s", stream);
+```
+
+The second method is much more user friendly. They automatically serialize the binary content into a string. But, to use and manipulate the string contents, we’ll have to fall back to the first method.
+
+**Third method**
+
+Set the `encoding` option to `utf-8`
+
+```jsx
+const stream = await file_handle.readFile({ encoding: "utf-8" });
+console.log("[File contents] ->\n", stream);
+```
+
+### Parsing the `json` file
+
+To read the `log_prefix` property that we specified into the `config/log_config.json` file, let’s parse the contents of the file.
+
+> Many people use the `require('file.json')` way, but there are several drawbacks to it. First, the entire file is loaded into memory when your program encounters the require statement. Second, if you update the json file during runtime, the program will still refer to the old data. It is recommended to use `require()` only when you expect the file not to change, and it is not excessively large; otherwise, it will always remain in memory.
+
+```jsx
+// files.js
+
+...
+
+const stream = await (await fs.open("./config/log_config.json")).readFile();
+const config = JSON.parse(stream);
+
+console.log('Log prefix is: "%s"', config.log_prefix);
+
+...
+
+// Outputs ->
+// Log prefix is: "[LOG]: "
+```
+
+This looks fine, but it is not a very good practice to specify paths like this. Using **`"./config/log_config.json"`** assumes that the **`config`** directory is located in the same directory as the current working directory of the terminal. This might not always be the case, especially if your script is being run from a different working directory, eg. from the config folder. To test this behavior, `cd config` and run `node ../index.js`
+
+```jsx
+Error occurred while reading file: [Error: ENOENT: no such file or directory, open './config/log_config.json'] {
+  [stack]: "Error: ENOENT: no such file or directory, open './config/log_config.json'",
+  [message]: "ENOENT: no such file or directory, open './config/log_config.json'",
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: './config/log_config.json'
+}
+```
+
+This expects the path is relative to the current working directory, hence not what we expect. We should be able to run the script from anywhere, no matter what folder we are in. This is very useful for large projects having folders multiple levels deep.
+
+Update the code to include the `path` module in scope
+
+```jsx
+// files.js
+
+const path = require('path');
+
+...
+
+const log_path = path.join(__dirname , 'config' , 'log_config.json');
+const stream = await (await fs.open(log_path)).readFile();
+
+...
+```
+
+Using **`__dirname`** and the **`path`** module ensures that you are referencing the correct path regardless of the current working directory you’re in.
+
+`__dirname` is a special (module-level) variable that represents the absolute path of the directory containing the current JavaScript file. Isn’t it magic?
+
+`path.join()` method joins all given `path` segments together using the **platform-specific separator** as a delimiter, then normalizes the resulting path. Zero-length `path` segments are ignored. If the joined path string is a zero-length string then `'.'` will be returned, representing the current working directory.
+
+The full code of `files.js` looks like this now.
+
+```jsx
+const fs = require("node:fs/promises");
+const path = require("path");
+async function read_file() {
+  try {
+    const log_path = path.join(__dirname, "config", "log_config.json");
+    const stream = await (await fs.open(log_path)).readFile();
+    const config = JSON.parse(stream);
+
+    console.log('Log prefix is: "%s"', config.log_prefix);
+  } catch (err) {
+    console.error("Error occurred while reading file: %o", err);
+  }
+}
+```
+
+Now you can run the code from whatever directory, no matter how much deeply nested it is, it is going to work fine unless you move the `files.js` file to a different location.
+
+# logtard - Our own logging library
+
+Logging is an important part of creating robust and scaleable application. It helps developers find and fix problems, keep an eye on how the application is working, and see what users are doing.
+
+## Initialising a new project
+
+Let’s create a new project. Close your current working directory, or scrap it.
+
+```bash
+# Create a new directory, and cd into it
+mkdir logtard && cd logtard
+
+# Initializes a new package
+npm init -y
+```
+
+This creates a new npm package/project, creates a `package.json` file and sets up some basic config inside it. This should be the contents of your `package.json`
+
+```jsx
+{
+  "name": "logtard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+```
+
+Let's change the version from `1.0.0` to `0.0.1`.
+
+## A little about `SemVer`
+
+Starting versioning from **`0.0.1`** is a good practice in software development because version numbers have semantic meaning. Using **`0.0.1`** as the initial version indicates that the software is in its initial development stages or that it's undergoing rapid changes and improvements. This convention aligns with Semantic Versioning ([SemVer](https://semver.org/)), which is a widely adopted versioning scheme that helps developers understand the compatibility and significance of changes in software releases.
+
+Starting with **`0.0.1`** is particularly beneficial for a few reasons:
+
+1. **Clarity of Development Stage**: Starting with **`0.0.1`** clearly communicates that the software is in its early stages of development. This helps other developers and users understand that the API and features might change more rapidly and might not yet be stable.
+2. **Semantic Versioning**: Semantic Versioning consists of three numbers separated by dots: **`MAJOR.MINOR.PATCH`**. Starting from **`0.0.1`** indicates that you're in the process of making minor patches and potentially significant changes as you develop the software.
+3. **Incremental Progress**: Starting with **`0.0.1`** allows for a clear sequence of version increments as development progresses. Each release can follow the rules of [SemVer](https://semver.org/): incrementing the **`MAJOR`** version for backward-incompatible changes, the **`MINOR`** version for backward-compatible additions, and the **`PATCH`** version for backward-compatible bug fixes.
+4. **User Expectations**: When users or other developers encounter a software version that starts with **`0.0.1`**, they'll understand that the software might not be feature-complete or entirely stable. This helps manage expectations and reduces confusion.
+5. **Preventing Confusion**: If you started with version **`1.0.0`**, there might be an expectation of stability and feature completeness that could lead to confusion if the software is actually in an early stage of development.

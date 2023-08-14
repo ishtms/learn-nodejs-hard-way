@@ -1,3 +1,3 @@
-const open_file = require("./files");
+const read_file = require("./files");
 
-open_file();
+read_file();
