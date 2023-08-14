@@ -1030,7 +1030,8 @@ If there's an error while reading the file, the function shows an error message 
 One thing to note is that we used string substitution `%s` instead of template literals. When passing a string to one of the methods of the `console` object that accepts a string, you may use these substitution strings:
 
 - `%o` or `%O`: Outputs a JavaScript object. Clicking the object name opens more information about it in the inspector (browser).
-- `%d` or `%i`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %.2d", 1.1)` will output the number as two significant figures with a leading 0: `Foo 01`.
+- `%d`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %d", 1)` will output the number as an number (will retain floating point value).
+- `%i`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %i", 1.1)` will output the number as an integer (will truncate the floating point value).
 - `%s`: Outputs a string.
 - `%f`: Outputs a floating-point value. Formatting is supported. For example, `console.log("Foo %.2f", 1.1)` will output the number to 2 decimal places: `Foo 1.10`.
 
