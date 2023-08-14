@@ -835,7 +835,7 @@ async function open_file() {
 module.exports = open_file;
 ```
 
-The return type of `[fs.open](http://fs.open)` is a `FileHandle`. A file handle is like a connection between the application and the file on the storage device. It lets the application work with files without worrying about the technical details of how files are stored on the device.
+The return type of `fs.open()` is a `FileHandle`. A file handle is like a connection between the application and the file on the storage device. It lets the application work with files without worrying about the technical details of how files are stored on the device.
 
 We previously discussed **file descriptors**. You can check which descriptor is assigned to an opened file.
 
