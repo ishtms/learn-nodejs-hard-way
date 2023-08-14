@@ -15,15 +15,15 @@
       - [Transmission Overhead](#4-transmission-overhead)
     - [How Web Servers Respond to Your Requests](#asking-and-getting-how-web-servers-respond-to-your-requests)
       - [The Request](#the-request)
-        - [Your Request](#your-request)
-        - [Finding the Address](#finding-the-address)
-        - [Resolving the Address](#resolving-the-address)
+        - [Your Request](#1-your-request)
+        - [Finding the Address](#2-finding-the-address)
+        - [Resolving the Address](#3-resolving-the-address)
       - [The Response](#the-response)
-        - [Return Address](#return-address)
-        - [Sending the Request](#sending-the-request)
-        - [Preparing the Content](#preparing-the-content)
-        - [Sending the Response](#sending-the-response)
-        - [Enjoying the Content](#enjoying-the-content)
+        - [Return Address](#1-return-address)
+        - [Sending the Request](#2-sending-the-request)
+        - [Preparing the Content](#3-preparing-the-content)
+        - [Sending the Response](#4-sending-the-response)
+        - [Enjoying the Content](#5-enjoying-the-content)
 * [Your first web server with node.js](#your-first-web-server-with-nodejs)
   - [What exactly is node or nodejs?](#what-exactly-is-node-or-nodejs)
   - [Your first node.js program](#your-first-nodejs-program)
@@ -129,19 +129,27 @@ Imagine you're at home, sitting in front of your computer, and you decide to vis
 
 ### The Request:
 
-1. **Your Request:** You type "**[www.example.com](http://www.example.com/)**" into your browser's address bar and hit Enter. This is like you telling your computer, "Hey, I want to see what's on this website!"
-2. **Finding the Address:** Your computer knows the basics of websites, but it needs the exact address of "**[www.example.com](http://www.example.com/)**" to connect to it. So, it reaches out to a special helper called a DNS resolver.
-3. **Resolving the Address:** The DNS resolver is like a digital address book. It takes "**[www.example.com](http://www.example.com/)**" and looks up the actual IP address associated with it. This IP address is like the specific coordinates of the website's location on the internet.
+#### 1. **Your Request:** 
+You type "**[www.example.com](http://www.example.com/)**" into your browser's address bar and hit Enter. This is like you telling your computer, "Hey, I want to see what's on this website!"
+#### 2. **Finding the Address:** 
+Your computer knows the basics of websites, but it needs the exact address of "**[www.example.com](http://www.example.com/)**" to connect to it. So, it reaches out to a special helper called a DNS resolver.
+#### 3. **Resolving the Address:** 
+The DNS resolver is like a digital address book. It takes "**[www.example.com](http://www.example.com/)**" and looks up the actual IP address associated with it. This IP address is like the specific coordinates of the website's location on the internet.
 
 > A website URL like https://google.com also be referred to as a **domain name**
 
 ### The Response:
 
-1. **Return Address:** The DNS resolver finds the IP address linked to "**[www.example.com](http://www.example.com/)**" and sends it back to your computer. It's like the DNS resolver telling your computer, "The website is located at this IP address."
-2. **Sending the Request:** Now that your computer knows the IP address, it can send a request to the web server that holds the website's content. This request includes the IP address and a message saying, "Hey, can you please give me the content of your website?"
-3. **Preparing the Content:** The web server receives your request and understands that you want to see the content of "**[www.example.com](http://www.example.com/)**." It then gathers the necessary files – HTML, images, stylesheets, scripts – to create the webpage.
-4. **Sending the Response:** The web server packages the content into a response and sends it back to your computer through the internet. It's like the server sending a digital package to your doorstep.
-5. **Enjoying the Content:** Your computer receives the response from the web server. Your browser interprets the HTML, displays images, and applies styles, creating a complete webpage. This is what you see on your screen – the final result of your request.
+#### 1. **Return Address:** 
+The DNS resolver finds the IP address linked to "**[www.example.com](http://www.example.com/)**" and sends it back to your computer. It's like the DNS resolver telling your computer, "The website is located at this IP address."
+#### 2. **Sending the Request:** 
+Now that your computer knows the IP address, it can send a request to the web server that holds the website's content. This request includes the IP address and a message saying, "Hey, can you please give me the content of your website?"
+#### 3. **Preparing the Content:** 
+The web server receives your request and understands that you want to see the content of "**[www.example.com](http://www.example.com/)**." It then gathers the necessary files – HTML, images, stylesheets, scripts – to create the webpage.
+#### 4. **Sending the Response:** 
+The web server packages the content into a response and sends it back to your computer through the internet. It's like the server sending a digital package to your doorstep.
+#### 5. **Enjoying the Content:** 
+Your computer receives the response from the web server. Your browser interprets the HTML, displays images, and applies styles, creating a complete webpage. This is what you see on your screen – the final result of your request.
 
 > A quick disclaimer: our learning approach will prioritize clarity and thoroughness. I will introduce a topic, break it down, and if we come across any unfamiliar concepts, we will explore them until everything is fully understood.
 
