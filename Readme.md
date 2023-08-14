@@ -701,7 +701,7 @@ export type PathLike = string | Buffer | URL;
 
 1.  String **Paths:**
     The most common way to represent file paths is as strings. A string path can be either a relative or an absolute path. It's simply a sequence of characters that specifies the location of a file on the computer.
-    - Example of relative string path: **`"calculator.js"`**
+    - Example of relative string path: **`"./calculator.js"`**
     - Example of absolute string path: **`"/Users/ishtmeet/Code/intro-to-node/calculator.js"`**
 2.  **Buffer Paths:**
     While strings are the most common way to represent paths, Node.js also allows you to use **`Buffer`** objects to represent paths. A **`Buffer`** is a low-level data structure that can hold binary data. In reality, using **`Buffer`** objects for paths is less common. Read about [Buffers](#buffers) here
@@ -710,7 +710,7 @@ export type PathLike = string | Buffer | URL;
     Example URL path:
 
 ```jsx
-const url_path = new URL(**'file:///home/user/projects/calculator.js');**
+const url_path = new URL('file:///home/user/projects/calculator.js');
 ```
 
 ### `flag` argument
