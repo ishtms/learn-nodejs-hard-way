@@ -1033,7 +1033,7 @@ One thing to note is that we used string substitution `%s` instead of template l
 - `%d`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %d", 1)` will output the number as an number (will retain floating point value).
 - `%i`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %i", 1.1)` will output the number as an integer (will truncate the floating point value).
 - `%s`: Outputs a string.
-- `%f`: Outputs a floating-point value. Formatting is supported. For example, `console.log("Foo %.2f", 1.1)` will output the number to 2 decimal places: `Foo 1.10`.
+- `%f`: Outputs a floating-point value. Formatting is supported. For example, `console.log("Foo %f", 1.1)` will output "Foo 1.1".
 
 > Using `%o` to show the output on terminal, just prints the whole object as a string, this is something that the string substitution has an advantage over template literals.
 
