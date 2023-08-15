@@ -1334,7 +1334,7 @@ module.exports.Debug = 0
 ...
 ```
 
-You could do something like this too, and that’s totally fine. But instead, I chose a different, using a utility class `LogLevel` which encapsulates all log levels within a class, you create a clear namespace for these constants. This helps avoid potential naming conflicts with other variables or constants in your application. There’s more to this!
+You could do something like this too, and that’s totally fine. But instead, I chose a different method i.e using a utility class `LogLevel` which encapsulates all log levels within a class, you create a clear namespace for these constants. This helps avoid potential naming conflicts with other variables or constants in your application. There’s more to this!
 
 You will see another powerful feature by using this method, in a bit.
 
@@ -1420,12 +1420,8 @@ Let’s make use of the `LogLevel.assert()` static method that we just defined.
 class LogLevel {...}
 
 class Logger {
-    /* Set the default value of `log_level` to be `LogLevel.Debug` for every
-    * new instance of the `Logger` class
-    */
     log_level = LogLevel.Debug;
 
-    // Sets the log level to whatever user passed as an argument to `new Logger()`
     constructor(log_level) {
         // Throw an error if the `log_level` is an unsupported value.
         LogLevel.assert(log_level);
