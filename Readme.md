@@ -43,7 +43,7 @@
   - [Reading the json file](#reading-the-json-file)
   - [Buffers](#buffers)
   - [Parsing the json file](#parsing-the-json-file)
-* [`logtard` - Our Own logging library](#logtard-our-own-logging-library)
+* [`logtar` - Our Own logging library](#logtar-our-own-logging-library)
   - [Initializing a new project](#initialising-a-new-project)
   - [A little about `SemVer`](#a-little-about-semver)
   - [Creating a LogLevel class](#creating-a-loglevel-class)
@@ -349,7 +349,7 @@ Working with **`process.stdout`** can be rather cumbersome, and in practice, you
 
 ## Working with files
 
-Now that we've covered the basics of logging in Node.js, let's explore a real-world example. Let us understand the low level of files and how to interact with them. After that, we'll build a logging library [logtard](https://github.com/ishtms/logtard) that writes logs to a log file. It also has a support for tracing and rolling file creation. We’ll use this library as the central mechanism of logging for our web framework, that we build further into this guide.
+Now that we've covered the basics of logging in Node.js, let's explore a real-world example. Let us understand the low level of files and how to interact with them. After that, we'll build a logging library [logtar](https://github.com/ishtms/logtar) that writes logs to a log file. It also has a support for tracing and rolling file creation. We’ll use this library as the central mechanism of logging for our web framework, that we build further into this guide.
 
 ### What will the logging library do
 
@@ -1237,7 +1237,7 @@ async function read_file() {
 ```
 
 Now you can run the code from whatever directory, no matter how much deeply nested it is, it is going to work fine unless you move the `files.js` file to a different location.
-# `logtard` our own logging library
+# `logtar` our own logging library
 
 Logging is an important part of creating robust and scaleable application. It helps developers find and fix problems, keep an eye on how the application is working, and see what users are doing.
 
@@ -1247,7 +1247,7 @@ Let’s create a new project. Close your current working directory, or scrap it.
 
 ```bash
 # Create a new directory, and cd into it
-mkdir logtard && cd logtard
+mkdir logtar && cd logtar
 
 # Initializes a new package
 npm init -y
@@ -1257,7 +1257,7 @@ This creates a new npm package/project, creates a `package.json` file and sets u
 
 ```jsx
 {
-  "name": "logtard",
+  "name": "logtar",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -1302,7 +1302,7 @@ When building a complex system or anticipating scalability, it's best to start s
 
 The process should be: write code, make it work, test it, and then refactor it.
 
-Let’s create a new file `index.js` inside the `logtard` directory, and add a new class `LogLevel`
+Let’s create a new file `index.js` inside the `logtar` directory, and add a new class `LogLevel`
 
 ```jsx
 // index.js
@@ -1437,9 +1437,9 @@ const logger = new Logger(6);
 
 // outputs
 Error: log_level must be an instance of LogLevel. Unsupported param "6"
-    at LogLevel.assert (/Users/ishtmeet/Code/logtard/index.js:10:13)
-    at new __Logger (/Users/ishtmeet/Code/logtard/index.js:86:14)
-    at Object.<anonymous> (/Users/ishtmeet/Code/logtard/index.js:91:16)
+    at LogLevel.assert (/Users/ishtmeet/Code/logtar/index.js:10:13)
+    at new __Logger (/Users/ishtmeet/Code/logtar/index.js:86:14)
+    at Object.<anonymous> (/Users/ishtmeet/Code/logtar/index.js:91:16)
     at Module._compile (node:internal/modules/cjs/loader:1256:14)
     at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
     at Module.load (node:internal/modules/cjs/loader:1119:32)
