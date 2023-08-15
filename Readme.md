@@ -1694,7 +1694,10 @@ Think of the Builder Pattern as a way to create complex objects step by step. Im
 Just for a minute think that you're creating a web application where users can create personal profiles. Each profile has a `name`, an `age`, and a `description`. The Builder Pattern would be a great fit here because users might not provide all the information at once. Here's how it could work
 
 ```js
-const user = new ProfileBuilder().with_name("Alice").with_age(25).with_description("Loves hiking and painting").build();
+const user = new ProfileBuilder()
+  .with_name("Alice")
+  .with_age(25)
+  .with_description("Loves hiking and painting").build();
 ```
 
 Doesn't this look so natural? Having to specify steps, without any specific order, and you get what you desired. Compare this to a traditional way of building using an object
