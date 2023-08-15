@@ -5,50 +5,51 @@
 > This is still in a very early stage. It consists of almost 2-3% of the total content which it intends to cover. There will also be an pdf version of this to download, as well as a website for the documentation.
 
 # Table of contents
-  * [What the hell is a web server any way?](#what-the-hell-is-a-web-server-any-way)
-    - [Parts of a Web Server](#parts-of-a-web-server)
-    - [Navigating the World of Protocols: A Quick Overview](#navigating-the-world-of-protocols-a-quick-overview)
-    - [The Relationship Between HTTP and TCP](#the-relationship-between-http-and-tcp-ensuring-reliable-web-communication)
-      - [Data Integrity and Order](#1-data-integrity-and-order)
-      - [Acknowledgment Mechanism](#2-acknowledgment-mechanism)
-      - [Complex Interactions](#3-complex-interactions)
-      - [Transmission Overhead](#4-transmission-overhead)
-    - [How Web Servers Respond to Your Requests](#asking-and-getting-how-web-servers-respond-to-your-requests)
-      - [The Request](#the-request)
-        - [Your Request](#1-your-request)
-        - [Finding the Address](#2-finding-the-address)
-        - [Resolving the Address](#3-resolving-the-address)
-      - [The Response](#the-response)
-        - [Return Address](#1-return-address)
-        - [Sending the Request](#2-sending-the-request)
-        - [Preparing the Content](#3-preparing-the-content)
-        - [Sending the Response](#4-sending-the-response)
-        - [Enjoying the Content](#5-enjoying-the-content)
-* [Your first web server with node.js](#your-first-web-server-with-nodejs)
-  - [What exactly is node or nodejs?](#what-exactly-is-node-or-nodejs)
-  - [Your first node.js program](#your-first-nodejs-program)
-  - [How does console.log() work in Node.js?](#how-does-consolelog-work-in-nodejs)
-  - [The process Object](#the-process-object)
-  - [The stdout property of the process object](#the-stdout-property-of-the-process-object)
-* [Working with files](#working-with-files)
-  - [What will the logging library do](#what-will-the-logging-library-do)
-  - [How do you work with files anyway?](#how-do-you-work-with-files-anyway)
-  - [Let's get back to files](#lets-get-back-to-files)
-  - [A little more about file descriptors](#a-little-more-about-file-descriptors)
-  - [Creating our first file](#creating-our-first-file)
-    - [`path` argument](#path-argument)
-    - [`flag` argument](#flag-argument)
-    - [`mode` argument](#mode-argument)
-  - [Reading from a file](#reading-from-a-file)
-  - [Reading the json file](#reading-the-json-file)
-  - [Buffers](#buffers)
-  - [Parsing the json file](#parsing-the-json-file)
-* [`logtar` - Our Own logging library](#logtar-our-own-logging-library)
-  - [Initializing a new project](#initialising-a-new-project)
-  - [A little about `SemVer`](#a-little-about-semver)
-  - [Creating a LogLevel class](#creating-a-loglevel-class)
-  - [The Logger class](#the-logger-class)
-  - [Encapsulation with private fields](#encapsulation-with-private-fields)
+
+-   [What the hell is a web server any way?](#what-the-hell-is-a-web-server-any-way)
+    -   [Parts of a Web Server](#parts-of-a-web-server)
+    -   [Navigating the World of Protocols: A Quick Overview](#navigating-the-world-of-protocols-a-quick-overview)
+    -   [The Relationship Between HTTP and TCP](#the-relationship-between-http-and-tcp-ensuring-reliable-web-communication)
+        -   [Data Integrity and Order](#1-data-integrity-and-order)
+        -   [Acknowledgment Mechanism](#2-acknowledgment-mechanism)
+        -   [Complex Interactions](#3-complex-interactions)
+        -   [Transmission Overhead](#4-transmission-overhead)
+    -   [How Web Servers Respond to Your Requests](#asking-and-getting-how-web-servers-respond-to-your-requests)
+        -   [The Request](#the-request)
+            -   [Your Request](#1-your-request)
+            -   [Finding the Address](#2-finding-the-address)
+            -   [Resolving the Address](#3-resolving-the-address)
+        -   [The Response](#the-response)
+            -   [Return Address](#1-return-address)
+            -   [Sending the Request](#2-sending-the-request)
+            -   [Preparing the Content](#3-preparing-the-content)
+            -   [Sending the Response](#4-sending-the-response)
+            -   [Enjoying the Content](#5-enjoying-the-content)
+-   [Your first web server with node.js](#your-first-web-server-with-nodejs)
+    -   [What exactly is node or nodejs?](#what-exactly-is-node-or-nodejs)
+    -   [Your first node.js program](#your-first-nodejs-program)
+    -   [How does console.log() work in Node.js?](#how-does-consolelog-work-in-nodejs)
+    -   [The process Object](#the-process-object)
+    -   [The stdout property of the process object](#the-stdout-property-of-the-process-object)
+-   [Working with files](#working-with-files)
+    -   [What will the logging library do](#what-will-the-logging-library-do)
+    -   [How do you work with files anyway?](#how-do-you-work-with-files-anyway)
+    -   [Let's get back to files](#lets-get-back-to-files)
+    -   [A little more about file descriptors](#a-little-more-about-file-descriptors)
+    -   [Creating our first file](#creating-our-first-file)
+        -   [`path` argument](#path-argument)
+        -   [`flag` argument](#flag-argument)
+        -   [`mode` argument](#mode-argument)
+    -   [Reading from a file](#reading-from-a-file)
+    -   [Reading the json file](#reading-the-json-file)
+    -   [Buffers](#buffers)
+    -   [Parsing the json file](#parsing-the-json-file)
+-   [`logtar` - Our Own logging library](#logtar-our-own-logging-library)
+    -   [Initializing a new project](#initialising-a-new-project)
+    -   [A little about `SemVer`](#a-little-about-semver)
+    -   [Creating a LogLevel class](#creating-a-loglevel-class)
+    -   [The Logger class](#the-logger-class)
+    -   [Encapsulation with private fields](#encapsulation-with-private-fields)
 
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
@@ -84,15 +85,15 @@ Protocols extend beyond web browsing too. Email, file sharing, and even the way 
 
 Like I explained above, to re-iterate - Protocols are like the rules that enable devices to communicate effectively on the internet. They define how data is formatted, transmitted, and understood by different systems. Just as people follow social etiquette during conversations, devices follow protocols to ensure smooth communication. Here's a glimpse into some major types of protocols:
 
-- **TCP/IP (Transmission Control Protocol/Internet Protocol):** a set of rules for exchanging data over a network.
-- **HTTP (Hypertext Transfer Protocol):** a protocol for transmitting data between a web server and a web client.
-- **HTTPS (Hypertext Transfer Protocol Secure):** an extension of HTTP that encrypts data in transit.
-- **UDP (User Datagram Protocol):** a protocol for transmitting data between networked devices without requiring a connection or reliability guarantees.
-- **FTP (File Transfer Protocol):** a protocol for transferring files between computers on a network.
-- **SMTP (Simple Mail Transfer Protocol):** a protocol for sending email messages between servers.
-- **POP3 (Post Office Protocol 3) and IMAP (Internet Message Access Protocol):** protocols for retrieving email messages from a server.
-- **DNS (Domain Name System):** a protocol for translating domain names into IP addresses.
-- **DHCP (Dynamic Host Configuration Protocol):** a protocol for automatically assigning IP addresses to devices on a network.
+-   **TCP/IP (Transmission Control Protocol/Internet Protocol):** a set of rules for exchanging data over a network.
+-   **HTTP (Hypertext Transfer Protocol):** a protocol for transmitting data between a web server and a web client.
+-   **HTTPS (Hypertext Transfer Protocol Secure):** an extension of HTTP that encrypts data in transit.
+-   **UDP (User Datagram Protocol):** a protocol for transmitting data between networked devices without requiring a connection or reliability guarantees.
+-   **FTP (File Transfer Protocol):** a protocol for transferring files between computers on a network.
+-   **SMTP (Simple Mail Transfer Protocol):** a protocol for sending email messages between servers.
+-   **POP3 (Post Office Protocol 3) and IMAP (Internet Message Access Protocol):** protocols for retrieving email messages from a server.
+-   **DNS (Domain Name System):** a protocol for translating domain names into IP addresses.
+-   **DHCP (Dynamic Host Configuration Protocol):** a protocol for automatically assigning IP addresses to devices on a network.
 
 In order to become a proficient backend engineer, it is important to have a solid understanding of different networking protocols. While HTTP(s) is the main focus of this guide, having knowledge of other protocols such as FTP, SMTP, and DNS can prove beneficial in the long run. FTP (File Transfer Protocol) is commonly used for transferring files between servers, while SMTP (Simple Mail Transfer Protocol) is used for sending emails. DNS (Domain Name System) is responsible for translating domain names into IP addresses.
 
@@ -132,26 +133,40 @@ Imagine you're at home, sitting in front of your computer, and you decide to vis
 
 ### The Request:
 
-#### 1. **Your Request:** 
+#### 1. **Your Request:**
+
 You type "**[www.example.com](http://www.example.com/)**" into your browser's address bar and hit Enter. This is like you telling your computer, "Hey, I want to see what's on this website!"
-#### 2. **Finding the Address:** 
+
+#### 2. **Finding the Address:**
+
 Your computer knows the basics of websites, but it needs the exact address of "**[www.example.com](http://www.example.com/)**" to connect to it. So, it reaches out to a special helper called a [DNS resolver](https://en.wikipedia.org/wiki/Domain_Name_System#Address_resolution_mechanism).
-#### 3. **Resolving the Address:** 
+
+#### 3. **Resolving the Address:**
+
 The DNS resolver is like a digital address book. It takes "**[www.example.com](http://www.example.com/)**" and looks up the actual IP address associated with it. This IP address is like the specific coordinates of the website's location on the internet.
 
 > A website URL like https://google.com also be referred to as a **domain name**
 
 ### The Response:
 
-#### 1. **Return Address:** 
+#### 1. **Return Address:**
+
 The DNS resolver finds the IP address linked to "**[www.example.com](http://www.example.com/)**" and sends it back to your computer. It's like the DNS resolver telling your computer, "The website is located at this IP address."
-#### 2. **Sending the Request:** 
+
+#### 2. **Sending the Request:**
+
 Now that your computer knows the IP address, it can send a request to the web server that holds the website's content. This request includes the IP address and a message saying, "Hey, can you please give me the content of your website?"
-#### 3. **Preparing the Content:** 
+
+#### 3. **Preparing the Content:**
+
 The web server receives your request and understands that you want to see the content of "**[www.example.com](http://www.example.com/)**." It then gathers the necessary files – HTML, images, stylesheets, scripts – to create the webpage.
-#### 4. **Sending the Response:** 
+
+#### 4. **Sending the Response:**
+
 The web server packages the content into a response and sends it back to your computer through the internet. It's like the server sending a digital package to your doorstep.
-#### 5. **Enjoying the Content:** 
+
+#### 5. **Enjoying the Content:**
+
 Your computer receives the response from the web server. Your browser interprets the HTML, displays images, and applies styles, creating a complete webpage. This is what you see on your screen – the final result of your request.
 
 > A quick disclaimer: our learning approach will prioritize clarity and thoroughness. I will introduce a topic, break it down, and if we come across any unfamiliar concepts, we will explore them until everything is fully understood.
@@ -240,8 +255,8 @@ The **`node:console`** module offers a wrapper around the standard console funct
 
 The module exports two specific components:
 
-- A `Console` class with methods like `console.log()`, `console.error()`, and `console.warn()`. These can be used to write to any Node.js **stream**.
-- A global `console` instance that is set up to write to `process.stdout` and `process.stderr`.
+-   A `Console` class with methods like `console.log()`, `console.error()`, and `console.warn()`. These can be used to write to any Node.js **stream**.
+-   A global `console` instance that is set up to write to `process.stdout` and `process.stderr`.
 
 (Note that `Console` is not `console` (lowercase). `console` is a special instance of `Console`)
 
@@ -354,14 +369,14 @@ Now that we've covered the basics of logging in Node.js, let's explore a real-wo
 
 ### What will the logging library do
 
-- Log messages to a file
-- Choose log location, or simply generate a new file
-- Support for log levels (debug, info, warning, error, critical)
-- Timestamps on log messages
-- Customizable log message format
-- Automatic log rotation based on file size or time interval
-- Support for console output in addition to log files
-- Simple and easy-to-use API for logging messages
+-   Log messages to a file
+-   Choose log location, or simply generate a new file
+-   Support for log levels (debug, info, warning, error, critical)
+-   Timestamps on log messages
+-   Customizable log message format
+-   Automatic log rotation based on file size or time interval
+-   Support for console output in addition to log files
+-   Simple and easy-to-use API for logging messages
 
 ### How do you work with files anyway?
 
@@ -385,25 +400,25 @@ Create a file `calculator.js` and add the following contents inside it
 // calculator.js
 
 function add(num_one, num_two) {
-  return num_one + num_two;
+    return num_one + num_two;
 }
 
 function subtract(num_one, num_two) {
-  return num_one - num_two;
+    return num_one - num_two;
 }
 
 function multiply(num_one, num_two) {
-  return num_one * num_two;
+    return num_one * num_two;
 }
 
 function divide(num_one, num_two) {
-  return num_one / num_two;
+    return num_one / num_two;
 }
 
 // Only export add and subtract
 module.exports = {
-  add,
-  subtract,
+    add,
+    subtract,
 };
 ```
 
@@ -519,19 +534,19 @@ So instead of doing `module.exports = { add, subtract, .. }`, you could also do 
 // calculator.js
 
 module.exports.add = function add(num_one, num_two) {
-  return num_one + num_two;
+    return num_one + num_two;
 };
 
 module.exports.subtract = function subtract(num_one, num_two) {
-  return num_one - num_two;
+    return num_one - num_two;
 };
 
 module.exports.multiply = function multiply(num_one, num_two) {
-  return num_one * num_two;
+    return num_one * num_two;
 };
 
 module.exports.divide = function divide(num_one, num_two) {
-  return num_one / num_two;
+    return num_one / num_two;
 };
 ```
 
@@ -650,12 +665,8 @@ Inside `files.js` add this snippet of code
 const fs = require("node:fs/promises");
 
 async function open_file() {
-  const file_handle = await fs.open(
-    "calculator.js",
-    "r",
-    fs.constants.O_RDONLY
-  );
-  console.log(file_handle);
+    const file_handle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+    console.log(file_handle);
 }
 
 module.exports = open_file;
@@ -704,8 +715,8 @@ export type PathLike = string | Buffer | URL;
 
 1.  String **Paths:**
     The most common way to represent file paths is as strings. A string path can be either a relative or an absolute path. It's simply a sequence of characters that specifies the location of a file on the computer.
-    - Example of relative string path: **`"./calculator.js"`**
-    - Example of absolute string path: **`"/Users/ishtmeet/Code/intro-to-node/calculator.js"`**
+    -   Example of relative string path: **`"./calculator.js"`**
+    -   Example of absolute string path: **`"/Users/ishtmeet/Code/intro-to-node/calculator.js"`**
 2.  **Buffer Paths:**
     While strings are the most common way to represent paths, Node.js also allows you to use **`Buffer`** objects to represent paths. A **`Buffer`** is a low-level data structure that can hold binary data. In reality, using **`Buffer`** objects for paths is less common. Read about [Buffers](#buffers) here
 3.  **URL Paths:**
@@ -713,27 +724,27 @@ export type PathLike = string | Buffer | URL;
     Example URL path:
 
 ```jsx
-const url_path = new URL('file:///home/user/projects/calculator.js');
+const url_path = new URL("file:///home/user/projects/calculator.js");
 ```
 
 ### `flag` argument
 
 The `flag` argument indicates the mode (not to confused by `mode` argument) in which you wish to open the file. Here are the supported values as a `flag` -
 
-- `'a'`: Open file for appending. The file is created if it does not exist.
-- `'ax'`: Like `'a'` but fails if the path exists.
-- `'a+'`: Open file for reading and appending. The file is created if it does not exist.
-- `'ax+'`: Like `'a+'` but fails if the path exists.
-- `'as'`: Open file for appending in synchronous mode. The file is created if it does not exist.
-- `'as+'`: Open file for reading and appending in synchronous mode. The file is created if it does not exist.
-- `'r'`: Open file for reading. An exception occurs if the file does not exist.
-- `'rs'`: Open file for reading in synchronous mode. An exception occurs if the file does not exist.
-- `'r+'`: Open file for reading and writing. An exception occurs if the file does not exist.
-- `'rs+'`: Open file for reading and writing in synchronous mode. Instructs the operating system to bypass the local file system cache.
-- `'w'`: Open file for writing. The file is created (if it does not exist) or truncated (if it exists).
-- `'wx'`: Like `'w'` but fails if the path exists.
-- `'w+'`: Open file for reading and writing. The file is created (if it does not exist) or truncated (if it exists).
-- `'wx+'`: Like `'w+'` but fails if the path exists.
+-   `'a'`: Open file for appending. The file is created if it does not exist.
+-   `'ax'`: Like `'a'` but fails if the path exists.
+-   `'a+'`: Open file for reading and appending. The file is created if it does not exist.
+-   `'ax+'`: Like `'a+'` but fails if the path exists.
+-   `'as'`: Open file for appending in synchronous mode. The file is created if it does not exist.
+-   `'as+'`: Open file for reading and appending in synchronous mode. The file is created if it does not exist.
+-   `'r'`: Open file for reading. An exception occurs if the file does not exist.
+-   `'rs'`: Open file for reading in synchronous mode. An exception occurs if the file does not exist.
+-   `'r+'`: Open file for reading and writing. An exception occurs if the file does not exist.
+-   `'rs+'`: Open file for reading and writing in synchronous mode. Instructs the operating system to bypass the local file system cache.
+-   `'w'`: Open file for writing. The file is created (if it does not exist) or truncated (if it exists).
+-   `'wx'`: Like `'w'` but fails if the path exists.
+-   `'w+'`: Open file for reading and writing. The file is created (if it does not exist) or truncated (if it exists).
+-   `'wx+'`: Like `'w+'` but fails if the path exists.
 
 > You do not need to remember all of these, but it can be useful to write consistent APIs to ensure that no undefined behavior occurs.
 
@@ -766,9 +777,9 @@ It’s a good practice to specify the `flag` argument.
 
 The `mode` argument specifies the permissions to set for the file when its created. `mode`s are always interpreted **in octal.** For example,
 
-- **`0o400`** (read-only for the owner)
-- **`0o600`** (read and write for the owner)
-- **`0o644`** (read for everyone, write only for the owner)
+-   **`0o400`** (read-only for the owner)
+-   **`0o600`** (read and write for the owner)
+-   **`0o644`** (read for everyone, write only for the owner)
 
 You don’t need to remember the octal representation. Simply use the `fs.constants.your_mode` to access it.
 
@@ -827,12 +838,8 @@ Going back to the code we wrote in the `files` module
 const fs = require("node:fs/promises");
 
 async function open_file() {
-  const file_handle = await fs.open(
-    "calculator.js",
-    "r",
-    fs.constants.O_RDONLY
-  );
-  console.log(file_handle);
+    const file_handle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+    console.log(file_handle);
 }
 
 module.exports = open_file;
@@ -884,30 +891,30 @@ One import thing to note is, `open`ing a file can fail, and will throw an except
 
 `fs.open()` can throw errors in various scenarios, including:
 
-- `EACCES`: Access to the file is denied or permission is lacking, or the file doesn't exist and parent directory isn't writable.
-- `EBADF`: The directory file descriptor is invalid.
-- `EBUSY`: The file is a block device in use or mounted.
-- `EDQUOT`: Disk quota for user is exceeded when creating a file.
-- `EEXIST`: File already exists while trying to create it exclusively.
-- `EFAULT`: Path is outside accessible memory.
-- `EFBIG` / `EOVERFLOW`: File is too large to open.
-- `EINTR`: Opening a slow device is interrupted by a signal.
-- `EINVAL`: Invalid flags or unsupported operations.
-- `EISDIR`: Attempting to write to a directory, or using `O_TMPFILE` on a version that doesn't support it.
-- `ELOOP`: Too many symbolic links encountered.
-- `EMFILE`: Process reached its limit of open file descriptors.
-- `ENAMETOOLONG`: Pathname is too long.
-- `ENFILE`: System-wide limit on open files is reached.
-- `ENOENT`: File or component in path doesn't exist.
-- `ENOMEM`: Insufficient memory for FIFO buffer or kernel memory.
-- `ENOSPC`: No space left on device.
-- `ENOTDIR`: Component in path is not a directory.
-- `ENXIO`: File doesn't correspond to device, socket, or FIFO.
-- `EOPNOTSUPP`: Filesystem doesn't support `O_TMPFILE`.
-- `EROFS`: File is on read-only filesystem.
-- `ETXTBSY`: File is being executed, used as swap, or read by kernel.
-- `EPERM`: Operation prevented by file seal or mismatched privileges.
-- `EWOULDBLOCK`: `O_NONBLOCK` specified, incompatible lease held on the file.
+-   `EACCES`: Access to the file is denied or permission is lacking, or the file doesn't exist and parent directory isn't writable.
+-   `EBADF`: The directory file descriptor is invalid.
+-   `EBUSY`: The file is a block device in use or mounted.
+-   `EDQUOT`: Disk quota for user is exceeded when creating a file.
+-   `EEXIST`: File already exists while trying to create it exclusively.
+-   `EFAULT`: Path is outside accessible memory.
+-   `EFBIG` / `EOVERFLOW`: File is too large to open.
+-   `EINTR`: Opening a slow device is interrupted by a signal.
+-   `EINVAL`: Invalid flags or unsupported operations.
+-   `EISDIR`: Attempting to write to a directory, or using `O_TMPFILE` on a version that doesn't support it.
+-   `ELOOP`: Too many symbolic links encountered.
+-   `EMFILE`: Process reached its limit of open file descriptors.
+-   `ENAMETOOLONG`: Pathname is too long.
+-   `ENFILE`: System-wide limit on open files is reached.
+-   `ENOENT`: File or component in path doesn't exist.
+-   `ENOMEM`: Insufficient memory for FIFO buffer or kernel memory.
+-   `ENOSPC`: No space left on device.
+-   `ENOTDIR`: Component in path is not a directory.
+-   `ENXIO`: File doesn't correspond to device, socket, or FIFO.
+-   `EOPNOTSUPP`: Filesystem doesn't support `O_TMPFILE`.
+-   `EROFS`: File is on read-only filesystem.
+-   `ETXTBSY`: File is being executed, used as swap, or read by kernel.
+-   `EPERM`: Operation prevented by file seal or mismatched privileges.
+-   `EWOULDBLOCK`: `O_NONBLOCK` specified, incompatible lease held on the file.
 
 Make sure to handle errors gracefully. There may be cases where you don't need to handle the errors and want the program to fail, exit, or throw an error to the client. For example, if you're writing a CLI application that compresses an image using the `path/to/image` provided as an argument, you want it to fail to let the user know that there is an issue with the file/path provided.
 
@@ -963,51 +970,51 @@ const fs = require("node:fs/promises");
 // This function asynchronously opens a file, reads it line by line
 // and logs each line on the console.
 async function read_file() {
-  try {
-    // open the file in read-only mode.
-    const file_handle = await fs.open("./index.js", "r", fs.constants.O_RDONLY);
+    try {
+        // open the file in read-only mode.
+        const file_handle = await fs.open("./index.js", "r", fs.constants.O_RDONLY);
 
-    // create a stream to read the lines of the file.
-    let stream = file_handle.readLines({
-      // start reading from the beginning of the file.
-      start: 0,
+        // create a stream to read the lines of the file.
+        let stream = file_handle.readLines({
+            // start reading from the beginning of the file.
+            start: 0,
 
-      // read till the end of the file.
-      end: Infinity,
+            // read till the end of the file.
+            end: Infinity,
 
-      // specify the encoding to be utf8, or else the stream
-      // will emit buffer objects instead of strings.
-      encoding: "utf8",
+            // specify the encoding to be utf8, or else the stream
+            // will emit buffer objects instead of strings.
+            encoding: "utf8",
 
-      /**
-       * If autoClose is false, then the file descriptor won't be closed,
-       * even if there's an error. It is the application's responsibility
-       * to close it and make sure there's no file descriptor leak. If
-       * autoClose is set to true (default behavior), on 'error' or 'end' the
-       * file descriptor will be closed automatically.
-       */
-      autoClose: true,
+            /**
+             * If autoClose is false, then the file descriptor won't be closed,
+             * even if there's an error. It is the application's responsibility
+             * to close it and make sure there's no file descriptor leak. If
+             * autoClose is set to true (default behavior), on 'error' or 'end' the
+             * file descriptor will be closed automatically.
+             */
+            autoClose: true,
 
-      /**
-       * If emitClose is true, then the `close` event will be emitted
-       * after reading is finished. Default is `true`.
-       */
-      emitClose: true,
-    });
+            /**
+             * If emitClose is true, then the `close` event will be emitted
+             * after reading is finished. Default is `true`.
+             */
+            emitClose: true,
+        });
 
-    // The 'close' event is emitted when the file_handle has been closed
-    // and can no longer be used.
-    stream.on("close", () => {
-      console.log("File handle %d closed", file_handle.fd);
-    });
+        // The 'close' event is emitted when the file_handle has been closed
+        // and can no longer be used.
+        stream.on("close", () => {
+            console.log("File handle %d closed", file_handle.fd);
+        });
 
-    // The 'line' event be fired whenver a line is read from the file.
-    stream.on("line", (line) => {
-      console.log("Getting line -> %s", line);
-    });
-  } catch (err) {
-    console.error("Error occurred while reading file: %o", err);
-  }
+        // The 'line' event be fired whenver a line is read from the file.
+        stream.on("line", (line) => {
+            console.log("Getting line -> %s", line);
+        });
+    } catch (err) {
+        console.error("Error occurred while reading file: %o", err);
+    }
 }
 
 module.exports = read_file;
@@ -1032,11 +1039,11 @@ If there's an error while reading the file, the function shows an error message 
 
 One thing to note is that we used string substitution `%s` instead of template literals. When passing a string to one of the methods of the `console` object that accepts a string, you may use these substitution strings:
 
-- `%o` or `%O`: Outputs a JavaScript object. Clicking the object name opens more information about it in the inspector (browser).
-- `%d`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %d", 1)` will output the number as an number (will retain floating point value).
-- `%i`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %i", 1.1)` will output the number as an integer (will truncate the floating point value).
-- `%s`: Outputs a string.
-- `%f`: Outputs a floating-point value. Formatting is supported. For example, `console.log("Foo %f", 1.1)` will output "Foo 1.1".
+-   `%o` or `%O`: Outputs a JavaScript object. Clicking the object name opens more information about it in the inspector (browser).
+-   `%d`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %d", 1)` will output the number as an number (will retain floating point value).
+-   `%i`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %i", 1.1)` will output the number as an integer (will truncate the floating point value).
+-   `%s`: Outputs a string.
+-   `%f`: Outputs a floating-point value. Formatting is supported. For example, `console.log("Foo %f", 1.1)` will output "Foo 1.1".
 
 > Using `%o` to show the output on terminal, just prints the whole object as a string, this is something that the string substitution has an advantage over template literals.
 
@@ -1225,19 +1232,20 @@ The full code of `files.js` looks like this now.
 const fs = require("node:fs/promises");
 const path = require("path");
 async function read_file() {
-  try {
-    const log_path = path.join(__dirname, "config", "log_config.json");
-    const stream = await (await fs.open(log_path)).readFile();
-    const config = JSON.parse(stream);
+    try {
+        const log_path = path.join(__dirname, "config", "log_config.json");
+        const stream = await (await fs.open(log_path)).readFile();
+        const config = JSON.parse(stream);
 
-    console.log('Log prefix is: "%s"', config.log_prefix);
-  } catch (err) {
-    console.error("Error occurred while reading file: %o", err);
-  }
+        console.log('Log prefix is: "%s"', config.log_prefix);
+    } catch (err) {
+        console.error("Error occurred while reading file: %o", err);
+    }
 }
 ```
 
 Now you can run the code from whatever directory, no matter how much deeply nested it is, it is going to work fine unless you move the `files.js` file to a different location.
+
 # `logtar` our own logging library
 
 Logging is an important part of creating robust and scaleable application. It helps developers find and fix problems, keep an eye on how the application is working, and see what users are doing.
@@ -1309,16 +1317,16 @@ Let’s create a new file `index.js` inside the `logtar` directory, and add a ne
 // index.js
 
 class LogLevel {
-  static Debug = 0;
-  static Info = 1;
-  static Warn = 2;
-  static Error = 3;
-  static Critical = 5;
+    static Debug = 0;
+    static Info = 1;
+    static Warn = 2;
+    static Error = 3;
+    static Critical = 5;
 }
 
 module.exports = {
-    LogLevel
-}
+    LogLevel,
+};
 ```
 
 You might be wondering about the use of a class `LogLevel` instead of an object, or maybe some constants that can be easily exported, like this -
@@ -1453,7 +1461,7 @@ Everything looks good! No, not yet. What if we try to do
 
 ```jsx
 const logger = new Logger(LogLevel.Error);
-logger.log_level = 1000
+logger.log_level = 1000;
 ```
 
 Again, this breaks our whole library’s functionality. How do we prevent this? Seems like Javascript has us covered.
@@ -1554,11 +1562,12 @@ class Logger {
     #level = LogLevel.Info;
 
     constructor(log_level) {
-        if (arguments.length === 0) {
-            log_level = LogLevel.Debug;
+        // only set/check the log level if the client has provided it
+        // otherwise use the default value, i.e `LogLevel.Info`
+        if (arguments.length > 0) {
+            LogLevel.assert(log_level);
+            this.#level = log_level;
         }
-        LogLevel.assert(log_level);
-        this.#level = log_level;
     }
 
     get level() {
@@ -1568,14 +1577,13 @@ class Logger {
 
 module.exports = {
     Logger,
-    LogLevel
-}
+    LogLevel,
+};
 ```
 
 Let's try to test this.
 
 ```js
-
 new Logger("OK"); // throws error
 new Logger(LogLevel.Debug); // works fine
 new Logger(); // works fine
