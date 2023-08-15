@@ -73,6 +73,7 @@ If you do not wish to read about the basics of web/http, you can safely jump to 
 Before diving straight into writing JavaScript code to create web servers, it's essential to grasp the fundamental concepts that are the basic building blocks of web server. Web servers are like the traffic controllers of the internet. They manage requests from users (like you!) and send back the right information. But what makes up a web server, and how does it even work? Let's break it down into simple terms.
 
 ## Parts of a Web Server:
+[Go back to index 👆🏻](#table-of-contents)
 
 Web servers are like friendly translators that help computers understand each other. Imagine if you and a friend speak different languages. To have a conversation, you'd need a common language that both of you understand. In the same way, web servers and computers need a common set of rules to talk to each other effectively. These rules are called protocols, which are like languages specifically designed for computers. When you type a website address in your browser and hit "Enter," your computer sends a message to the web server. This message follows the web's language rules, known as the HTTP protocol (Hypertext Transfer Protocol).
 
@@ -108,7 +109,7 @@ In order to become a proficient backend engineer, it is important to have a soli
 
 HTTP (Hypertext Transfer Protocol) and TCP (Transmission Control Protocol) form a strong partnership when it comes to web communication. The reason HTTP prefers TCP lies in the very nature of their roles and responsibilities within the world of networking.
 
-### 1. **Data Integrity and Order**
+### 1. Data Integrity and Order
 
 HTTP is used to send web content, like web pages, images, and videos, from a server to a user's browser. Imagine if you requested a webpage and the images were missing or the text was scrambled. That wouldn't be a good experience, right? HTTP has to make sure that the data is delivered correctly and in order.
 
@@ -116,61 +117,62 @@ TCP helps with this. It was designed to make sure that data is delivered in the 
 
 > A packet is a small unit of data that is sent over a network. In the context of web communication, TCP breaks up the data into small pieces called packets, sends them to the destination, and makes sure they arrive in the correct order. If any packet is lost during the process, TCP asks for it to be sent again.
 
-### 2. **Acknowledgment Mechanism**
+### 2. Acknowledgment Mechanism
 
 HTTP is a way to request a webpage, and the server sends back the content you asked for. To make sure the data is received correctly, an [acknowledgment mechanism](<https://en.wikipedia.org/wiki/Acknowledgement_(data_networks)>) is needed.
 
 TCP provides this mechanism by waiting for your browser to confirm that it has received each packet of data sent from the server. If your browser does not confirm, TCP sends the packet again, so that both the server and browser can be sure that the data is being received properly.
 
-### 3. **Complex Interactions**
+### 3. Complex Interactions
 
 HTTP transactions involve multiple steps, like requesting a webpage, receiving the HTML structure, fetching linked assets (images, stylesheets), and more. These interactions require precise data handling and sequencing.
 
 TCP works well with HTTP for handling complex interactions. TCP's mechanisms guarantee that every piece of data reaches its intended destination and fits into the bigger interaction. For instance, when you visit a webpage, your browser makes several HTTP requests for different assets. TCP helps ensure that these requests and responses occur in an orderly and dependable manner.
 
-### 4. **Transmission Overhead**
+### 4. Transmission Overhead
 
 TCP adds some extra information to every message to make sure it gets to its destination without errors. This extra information includes acknowledgments, sequence numbers, and error-checking. Even though it adds a little more data to every message, it's still worth it because it helps make sure the data is accurate and in the right order. This is especially important when communicating over the web.
 
-## \***\*Asking and Getting: How Web Servers Respond to Your Requests\*\***
+## Asking and Getting: How Web Servers Respond to Your Requests
+[Go back to index 👆🏻](#table-of-contents)
 
-Imagine you're at home, sitting in front of your computer, and you decide to visit a website, let's say "**[www.example.com](http://www.example.com/)**." This simple action initiates a series of events that highlight the "Asking and Getting" process in web communication.
+Imagine you're at home, sitting in front of your computer, and you decide to visit a website, let's say "example.com." This simple action initiates a series of events that highlight the "Asking and Getting" process in web communication.
 
 ### The Request:
 
-#### 1. **Your Request:**
+#### 1. Your Request:
 
-You type "**[www.example.com](http://www.example.com/)**" into your browser's address bar and hit Enter. This is like you telling your computer, "Hey, I want to see what's on this website!"
+You type "example.com" into your browser's address bar and hit Enter. This is like you telling your computer, "Hey, I want to see what's on this website!"
 
-#### 2. **Finding the Address:**
+#### 2. Finding the Address:
 
-Your computer knows the basics of websites, but it needs the exact address of "**[www.example.com](http://www.example.com/)**" to connect to it. So, it reaches out to a special helper called a [DNS resolver](https://en.wikipedia.org/wiki/Domain_Name_System#Address_resolution_mechanism).
+Your computer knows the basics of websites, but it needs the exact address of "example.com" to connect to it. So, it reaches out to a special helper called a [DNS resolver](https://en.wikipedia.org/wiki/Domain_Name_System#Address_resolution_mechanism).
 
-#### 3. **Resolving the Address:**
+#### 3. Resolving the Address:
 
-The DNS resolver is like a digital address book. It takes "**[www.example.com](http://www.example.com/)**" and looks up the actual IP address associated with it. This IP address is like the specific coordinates of the website's location on the internet.
+The DNS resolver is like a digital address book. It takes "example.com" and looks up the actual IP address associated with it. This IP address is like the specific coordinates of the website's location on the internet.
 
 > A website URL like https://google.com also be referred to as a **domain name**
 
 ### The Response:
 
-#### 1. **Return Address:**
+#### 1. Return Address:
 
-The DNS resolver finds the IP address linked to "**[www.example.com](http://www.example.com/)**" and sends it back to your computer. It's like the DNS resolver telling your computer, "The website is located at this IP address."
+The DNS resolver finds the IP address linked to "example.com" and sends it back to your computer. It's like the DNS resolver telling your computer, "The website is located at this IP address."
 
-#### 2. **Sending the Request:**
+#### 2. Sending the Request:
 
 Now that your computer knows the IP address, it can send a request to the web server that holds the website's content. This request includes the IP address and a message saying, "Hey, can you please give me the content of your website?"
 
-#### 3. **Preparing the Content:**
+#### 3. Preparing the Content:
 
-The web server receives your request and understands that you want to see the content of "**[www.example.com](http://www.example.com/)**." It then gathers the necessary files – HTML, images, stylesheets, scripts – to create the webpage.
+The web server receives your request and understands that you want to see the content of "example.com." It then gathers the necessary files – HTML, images, stylesheets, scripts – to create the webpage.
 
-#### 4. **Sending the Response:**
+#### 4. Sending the Response:
 
 The web server packages the content into a response and sends it back to your computer through the internet. It's like the server sending a digital package to your doorstep.
 
-#### 5. **Enjoying the Content:**
+#### 5. Enjoying the Content:
 
 Your computer receives the response from the web server. Your browser interprets the HTML, displays images, and applies styles, creating a complete webpage. This is what you see on your screen – the final result of your request.
 
@@ -190,6 +192,7 @@ node --version
 If you see a `Command not found` error, that means you do not have nodejs installed. Follow the instructions [here to download and install it](https://nodejs.org/en/download).
 
 ## What exactly is node or nodejs?
+[Go back to index 👆🏻](#table-of-contents)
 
 From the official website -
 
@@ -204,6 +207,7 @@ For Node.js, being a JavaScript runtime environment means it has everything need
 > We’ll discuss what exactly an event loop means, and implement our own version of event loop to understand how it works, later on in the guide.
 
 ## Your first node.js program
+[Go back to index 👆🏻](#table-of-contents)
 
 Let’s begin by writing some code. Let’s create a new folder, and name it whatever you wish. I’ve named it `intro-to-node`. Inside it, create a new file `index.js` and add the following content inside it.
 
@@ -369,6 +373,7 @@ Working with **`process.stdout`** can be rather cumbersome, and in practice, you
 > **_Warning_**: The ways of the global console object are not always synchronous like the browser APIs they resemble, nor are they always asynchronous like all other Node.js streams. For more information, please see the [note on process I/O](https://nodejs.org/api/process.html#a-note-on-process-io).
 
 ## Working with files
+[Go back to index 👆🏻](#table-of-contents)
 
 Now that we've covered the basics of logging in Node.js, let's explore a real-world example. Let us understand the low level of files and how to interact with them. After that, we'll build a logging library [logtar](https://github.com/ishtms/logtar) that writes logs to a log file. It also has a support for tracing and rolling file creation. We’ll use this library as the central mechanism of logging for our web framework, that we build further into this guide.
 
@@ -943,6 +948,7 @@ async function open_file() {
 ```
 
 ## Reading from a file
+[Go back to index 👆🏻](#table-of-contents)
 
 Too much of the theory. We’ll work on a real example now. Let’s try to read from a file. We’ll create a `log_config.json` file, in the `config` folder. The directory structure will look something like this (get rid of the `calculator` module)
 
@@ -1088,6 +1094,7 @@ Reading line of length 12 -> read_file();
 Notice that we get rid of all those options since they are already set to default values for our convenience. Only specify them if you wish to choose values other than the defaults.
 
 ## Reading the `json` file
+[Go back to index 👆🏻](#table-of-contents)
 
 However, reading a json file line by line isn’t the best way. The `readLine` is a very memory-efficient way to read files. It does not load all the contents of the file into memory, which is usually what we want. But if the file is small, and you know before hand, that the file is not really big, it’s usually quicker, and more performant to load the entire file at once into the memory.
 
@@ -1256,6 +1263,7 @@ Now you can run the code from whatever directory, no matter how much deeply nest
 Logging is an important part of creating robust and scaleable application. It helps developers find and fix problems, keep an eye on how the application is working, and see what users are doing.
 
 ## Initialising a new project
+[Go back to index 👆🏻](#table-of-contents)
 
 Let’s create a new project. Close your current working directory, or scrap it.
 
@@ -1287,6 +1295,7 @@ This creates a new npm package/project, creates a `package.json` file and sets u
 Let's change the version from `1.0.0` to `0.0.1`.
 
 ## A little about `SemVer`
+[Go back to index 👆🏻](#table-of-contents)
 
 Starting versioning from **`0.0.1`** is a good practice in software development because version numbers have semantic meaning. Using **`0.0.1`** as the initial version indicates that the software is in its initial development stages or that it's undergoing rapid changes and improvements. This convention aligns with Semantic Versioning ([SemVer](https://semver.org/)), which is a widely adopted versioning scheme that helps developers understand the compatibility and significance of changes in software releases.
 
@@ -1299,6 +1308,7 @@ Starting with **`0.0.1`** is particularly beneficial for a few reasons:
 5. **Preventing Confusion**: If you started with version **`1.0.0`**, there might be an expectation of stability and feature completeness that could lead to confusion if the software is actually in an early stage of development.
 
 ## Creating a `LogLevel` class
+[Go back to index 👆🏻](#table-of-contents)
 
 Log level is a basic concept in logging libraries. It helps control how much detail the application's log messages show. Developers use log levels to filter and manage the output. This is especially useful when debugging issues or dealing with complex systems.
 
@@ -1398,6 +1408,7 @@ Also, even if the user is unaware of the values we’re using for each log level
 The `LogLevel` looks fine for now. Let’s introduce a new class `Logger` which will be the backbone of our logging library.
 
 ## The `Logger` class
+[Go back to index 👆🏻](#table-of-contents)
 
 ```jsx
 // index.js
@@ -1603,6 +1614,7 @@ logger.level = 10; // throws error
 Perfect! This all looks really good. We are confident that neither clients nor our own library's code will affect the internals of the library. Please note that only the `#level` member variable can be changed from within the class Logger's scope, which is exactly what we want.
 
 ## The `LogConfig` class
+[Go back to index 👆🏻](#table-of-contents)
 
 We have a bare bones `Logger` setup, which isn't helpful at all. Let's make it a bit more useful.
 
@@ -1682,6 +1694,7 @@ class Logger {
 Awesome. Let's pause for a moment before adding further functionality inside the `LogConfig` class. Let me quickly introduce you to a very important topic in software engineering.
 
 ## Design patterns
+[Go back to index 👆🏻](#table-of-contents)
 
 Software design patterns are a solution to a common problem that software engineers face while writing code. It's like a blueprint that shows how to solve a couple problem that can be used in many different situations. Those problems are - maintainability and organizing code.
 
@@ -1694,10 +1707,7 @@ Think of the Builder Pattern as a way to create complex objects step by step. Im
 Just for a minute think that you're creating a web application where users can create personal profiles. Each profile has a `name`, an `age`, and a `description`. The Builder Pattern would be a great fit here because users might not provide all the information at once. Here's how it could work
 
 ```js
-const user = new ProfileBuilder()
-  .with_name("Alice")
-  .with_age(25)
-  .with_description("Loves hiking and painting").build();
+const user = new ProfileBuilder().with_name("Alice").with_age(25).with_description("Loves hiking and painting").build();
 ```
 
 Doesn't this look so natural? Having to specify steps, without any specific order, and you get what you desired. Compare this to a traditional way of building using an object
@@ -1758,6 +1768,7 @@ class ProfileBuilder {
 Do you notice the difference? All of the related validations and logic for each field are separated and placed in their respective locations. This approach is much easier to maintain over time, and reason about.
 
 ## Using `builder` pattern with the `LogConfig` class
+[Go back to index 👆🏻](#table-of-contents)
 
 Here's what I'd like the API of `LogConfig` to look like
 
@@ -1861,6 +1872,7 @@ class LogConfig {
 You may notice a difference now. Every method that we added is only responsible to validate a single input/argument. It does not care about any other options, whether they are correct or not.
 
 ## jsdoc comments
+[Go back to index 👆🏻](#table-of-contents)
 
 If you're writing vanilla javascript, you may have trouble with the auto-completion or intellisense feature that most IDE provide, when working with multiple files. This is because javascript has no types (except primitives). Everything is an object. But don't we deserve those quality of life features if we're writing vanilla JS? Of course, we do. That's where `jsdoc` saves us.
 
