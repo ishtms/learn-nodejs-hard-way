@@ -43,7 +43,7 @@
   - [Reading the json file](#reading-the-json-file)
   - [Buffers](#buffers)
   - [Parsing the json file](#parsing-the-json-file)
-* [`logtard` - Our Own logging library](#logtard---our-own-logging-library)
+* [`logtard` - Our Own logging library](#logtard-our-own-logging-library)
   - [Initializing a new project](#initialising-a-new-project)
   - [A little about `SemVer`](#a-little-about-semver)
   - [Creating a LogLevel class](#creating-a-loglevel-class)
