@@ -48,6 +48,7 @@
   - [A little about `SemVer`](#a-little-about-semver)
   - [Creating a LogLevel class](#creating-a-loglevel-class)
   - [The Logger class](#the-logger-class)
+  - [Encapsulation with private fields](#encapsulation-with-private-fields)
 
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
@@ -1458,3 +1459,132 @@ logger.log_level = 1000
 Again, this breaks our whole library’s functionality. How do we prevent this? Seems like Javascript has us covered.
 
 ### Encapsulation with `private` fields
+
+Class fields are public by default, which means anyone can change it from anywhere in the code. Even the clients of our library can change it too. However, you can create private class features by adding a hash `#` prefix. JavaScript enforces the privacy encapsulation of these class features.
+
+Before this syntax existed, private members were not native to the language. In prototypical inheritance, their behavior can be emulated with `WeakMap` objects or closures. But using `#` syntax is more ergonomic than these methods.
+
+> `members` of a class mean any thing that is defined inside the `class` block. That includes variables, static variables, or even methods. Note that if a function is defined inside a class, it's referred to as a `method` and not a `function`
+
+Let's update the code above by incorporating `encapsulation`.
+
+```javascript
+// index.js
+
+class LogLevel {...}
+
+class Logger {
+    // introduce a new `private` variable `#level`
+    #level;
+
+    constructor(log_level) {
+        // You refer to private variables using the `#` prefix.
+        this.#log_level = log_level;
+    }
+}
+
+const logger = new Logger(LogLevel.Debug);
+console.log(logger.#level); // Error: Private field '#level' must be declared in an enclosing class
+logger.#level = LogLevel.Info; // Error: Private field '#level' must be declared in an enclosing class
+```
+
+This is looking good. We can refer to `#level` member variable only inside the class. No one can change it. But we do need to provide a way to know the current log level of our logger. Let's add a `getter` method.
+
+```js
+// index.js
+
+class LogLevel {...}
+
+class Logger {
+    ...
+
+    get level() {
+        return this.#level;
+    }
+}
+
+const logger = new Logger(LogLevel.Debug);
+console.log(logger.#level); // Error: Private field '#level' must be declared in an enclosing class
+console.log(logger.level); // Good. Calls the `get level()` method
+```
+
+> Note: If you create a getter using `get()`, you do not need to specify the parenthesis after `level`. Javascript knows that we're referring to the `get level()` getter.
+
+Now, add the `LogLevel.assert` method inside the constructor, to make sure the clients pass in a correct value for `log_level`
+
+```js
+// index.js
+class Logger {
+    ..
+    constructor(log_level) {
+        LogLevel.assert(log_level);
+        this.#level = log_level;
+    }
+    ..
+}
+
+const logger = new Logger(100); // Throws an error
+const logger  = new Logger(3); // Good
+const logger = new Logger(LogLevel.Debug); // Best practice
+```
+
+It's always a good practice to allow clients create an object without specifying a value in the constructor, in that case we should use some set defaults. The full code of the `index.js` should look like this
+
+```js
+// index.js
+
+class LogLevel {
+    static Debug = 0;
+    static Info = 1;
+    static Warn = 2;
+    static Error = 3;
+    static Critical = 4;
+
+    static assert(log_level) {
+        if (![LogLevel.Debug, LogLevel.Info, LogLevel.Warn, LogLevel.Error, LogLevel.Critical].includes(log_level)) {
+            throw new Error(
+                `log_level must be an instance of LogLevel. Unsupported param ${JSON.stringify(log_level)}`
+            );
+        }
+    }
+}
+
+class Logger {
+    // set a default value for the log level
+    #level = LogLevel.Info;
+
+    constructor(log_level) {
+        if (arguments.length === 0) {
+            log_level = LogLevel.Debug;
+        }
+        LogLevel.assert(log_level);
+        this.#level = log_level;
+    }
+
+    get level() {
+        return this.#level;
+    }
+}
+
+module.exports = {
+    Logger,
+    LogLevel
+}
+```
+
+Let's try to test this.
+
+```js
+
+new Logger("OK"); // throws error
+new Logger(LogLevel.Debug); // works fine
+new Logger(); // works fine
+
+let logger = new Logger(LogLevel.Warning);
+logger.level; // returns the `log_level` because of the getter `level()`
+logger.#level; // throws error
+logger.#level = LogLevel.Warning; // throws error
+logger.level = 10; // throws error
+```
+
+Perfect! This all looks really good. We are confident that neither clients nor our own library's code will affect the internals of the library. Please note that only the `#level` member variable can be changed from within the class Logger's scope, which is exactly what we want.
