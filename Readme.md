@@ -50,6 +50,11 @@
     -   [Creating a LogLevel class](#creating-a-loglevel-class)
     -   [The Logger class](#the-logger-class)
     -   [Encapsulation with private fields](#encapsulation-with-private-fields)
+    -   [The `LogConfig` class](#the-logconfig-class)
+    -   [Design Patterns](#design-patterns)
+        -   [The `Builder` pattern](#the-builder-pattern)
+        -  [Using the `Builder` pattern with the `LogConfig` class](#using-builder-pattern-with-the-logconfig-class)
+    - [`jsdoc` comments](#jsdoc-comments)
 
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
@@ -1596,3 +1601,308 @@ logger.level = 10; // throws error
 ```
 
 Perfect! This all looks really good. We are confident that neither clients nor our own library's code will affect the internals of the library. Please note that only the `#level` member variable can be changed from within the class Logger's scope, which is exactly what we want.
+
+## The `LogConfig` class
+
+We have a bare bones `Logger` setup, which isn't helpful at all. Let's make it a bit more useful.
+
+You see, setting the log level inside the logger is fine until we start adding a lot of config settings. For example, we may add a `file_prefix` member variable, as well as `max_file_size` too. The `Logger` class will get cluttered too much, and that's not what we want.
+Let's start refactoring now. Create a new class `LogConfig` that will contain all the utility helpers to deal with log config. Everything that take cares about the configuration will live inside it.
+
+```js
+// index.js
+
+class LogConfig {
+    /** Define necessary member variables, and make them private. */
+
+    // log level will live here, instead of the `Logger` class.
+    #level = LogLevel.Info;
+
+    // how often should the log file be rolled. rolled means a new file is created after every x minutes/hours/days/weeks/months/years
+    #rolling_config = RollingConfig.Hourly;
+
+    // the prefix to be added to new files.
+    #file_prefix = "Logtar_";
+
+    // max size of the log file in bytes
+    #max_file_size = 5 * 1024 * 1024; // 5 MB
+
+    /**
+     * We're going to follow the convention of creating a static assert
+     * method wherver we deal with objects. This is one way to write
+     * safe code in vanilla javascript.
+     */
+    static assert(log_config) {
+        // if there's an argument, check whether the `log_config` is an instance
+        // of the `LogConfig` class? If there's no argument, no checks required
+        // as we'll be using defaults.
+        if (arguments.length > 0 && !(log_config instanceof LogConfig)) {
+            throw new Error(
+                `log_config must be an instance of LogConfig. Unsupported param ${JSON.stringify(log_config)}`
+            );
+        }
+    }
+
+    get level() {
+        return this.#level;
+    }
+
+    get rolling_config() {
+        return this.#rolling_config;
+    }
+
+    get file_prefix() {
+        return this.#file_prefix;
+    }
+
+    get max_file_size() {
+        return this.#max_file_size;
+    }
+}
+```
+
+All looks okay. We have a `LogConfig` class setup. Now, instead of using `#level` for storing the log level inside the `Logger` class, let's replace it with `#config`
+
+```js
+// before
+
+class Logger {
+    #level = LogLevel.Info;
+    ...
+}
+
+// now
+
+class Logger {
+    #config;
+    ...
+}
+```
+
+Awesome. Let's pause for a moment before adding further functionality inside the `LogConfig` class. Let me quickly introduce you to a very important topic in software engineering.
+
+## Design patterns
+
+Software design patterns are a solution to a common problem that software engineers face while writing code. It's like a blueprint that shows how to solve a couple problem that can be used in many different situations. Those problems are - maintainability and organizing code.
+
+This is a vast topic, and people have dedicated books for explaining the use of these patterns. However, we aren't going to explain each one of those. We'll use the one that suits best for our project. Always find the right tool for the right job. For us, the most reasonable design pattern to build our web framework, as well as our logging library will be the [`Builder pattern`](https://en.wikipedia.org/wiki/Builder_pattern)
+
+### The `Builder` pattern
+
+Think of the Builder Pattern as a way to create complex objects step by step. Imagine you're building a house. Instead of gathering all the materials and putting them together at once, you start by laying the foundation, then building the walls, adding the roof, and so on. The Builder Pattern lets you do something similar. It helps you construct objects by adding parts or attributes one by one, ultimately creating a complete and well-structured object.
+
+Just for a minute think that you're creating a web application where users can create personal profiles. Each profile has a `name`, an `age`, and a `description`. The Builder Pattern would be a great fit here because users might not provide all the information at once. Here's how it could work
+
+```js
+const user = new ProfileBuilder().with_name("Alice").with_age(25).with_description("Loves hiking and painting").build();
+```
+
+Doesn't this look so natural? Having to specify steps, without any specific order, and you get what you desired. Compare this to a traditional way of building using an object
+
+```js
+const user = create_profile({
+    name: "Alice",
+    age: 25,
+    description: "Loves hiking and painting",
+});
+```
+
+The object solution looks fine, and even has less characters. Then why the builder pattern? Imagine your library in a future update changes the `name` property to `first_name` and include a secondary `last_name` property. The code with object will fail to work properly. But in our builder pattern, it's obvious that the `name` means full name. That might not sound convincing. Let's see at a different example.
+
+In a language like javascript (typescript solves this) you need to make sure that the params you pass as an argument are valid.
+
+Here's a common way you'll write the function `create_profile`
+
+```js
+function create_profile({ name, age, description }) {
+    let profile = {
+        name: Defaults.name,
+        age: Defaults.age
+        description: Defaults.description
+    }
+    if (typeof name === 'string') { profile.name = name }
+    if (typeof age === 'number' && age > 0) { profile.age = age }
+    if (typeof description === 'string') { profile.description = description }
+}
+```
+
+Notice how cluttered this code becomes if there are 10 fields? The function `create_profile` should not be responsible for testing. Its role is to create a profile. We could group other functions, such as `validate_name` and `validate_email`, and call them inside the `create_profile` function. However, this code would not be reusable. I have made this mistake in the past and ended up with code that was difficult to refactor.
+
+Instead, let's use the builder pattern to validate whether the fields are valid:
+
+```js
+class ProfileBuilder {
+    name = Defaults.name;
+    age = Defaults.age;
+    description = Defaults.description;
+
+    with_name(name) {
+        validate_name(name);
+        this.name = name;
+        return this;
+    }
+
+     with_age(age) {
+        validate_age(age);
+        this.age = age;
+        return this;
+    }
+
+    with_description(description) {...}
+}
+```
+
+Do you notice the difference? All of the related validations and logic for each field are separated and placed in their respective locations. This approach is much easier to maintain over time, and reason about.
+
+## Using `builder` pattern with the `LogConfig` class
+
+Here's what I'd like the API of `LogConfig` to look like
+
+```js
+const config = LogConfig.with_defaults()
+    .with_file_prefix("LogTar_")
+    .with_log_level(LogLevel.Critical)
+    .with_rolling_config(RollingConfig.from_initials("m"))
+    .with_max_file_size(1000);
+```
+
+Our current `LogConfig` class looks like this
+
+```js
+// index.js
+
+class LogConfig {
+    #level = LogLevel.Info;
+    #rolling_config = RollingConfig.Hourly;
+    #file_prefix = "Logtar_";
+    #max_file_size = 5 * 1024 * 1024; // 5 MB
+
+    static assert(log_config) {
+        if (arguments.length > 0 && !(log_config instanceof LogConfig)) {
+            throw new Error(
+                `log_config must be an instance of LogConfig. Unsupported param ${JSON.stringify(log_config)}`
+            );
+        }
+    }
+
+    get level() {
+        return this.#level;
+    }
+
+    get rolling_config() {
+        return this.#rolling_config;
+    }
+
+    get file_prefix() {
+        return this.#file_prefix;
+    }
+
+    get max_file_size() {
+        return this.#max_file_size;
+    }
+}
+```
+
+Add the required methods
+
+```js
+// index.js
+
+class LogConfig {
+    ...
+    // This can be called without a `LogConfig` object
+    // eg. `LogConfig.with_defaults()`
+    static with_defaults() {
+        return new LogConfig();
+    }
+
+    // Validate the `log_level` argument, set it to the private `#level` variable
+    // and return this instance of the class back. So that other methods can mutate
+    // the same object, instead of creating a new one.
+    with_log_level(log_level) {
+        LogLevel.assert(log_level);
+        this.#level = log_level;
+        return this;
+    }
+
+    with_rolling_config(rolling_config) {
+        RollingConfig.assert(rolling_config);
+        this.#rolling_config = rolling_config;
+        return this;
+    }
+
+    with_file_prefix(file_prefix) {
+        if (typeof file_prefix !== "string") {
+            throw new Error(`file_prefix must be a string. Unsupported param ${JSON.stringify(file_prefix)}`);
+        }
+
+        this.#file_prefix = file_prefix;
+        return this;
+    }
+
+    with_max_file_size(max_file_size) {
+        if (typeof max_file_size !== "number" || max_file_size < 100 || max_file_size === Infinity) {
+            throw new Error(
+                `max_file_size must be a number greater than 100 bytes. Unsupported param ${JSON.stringify(
+                    max_file_size
+                )}`
+            );
+        }
+        this.#max_file_size = max_file_size;
+        return this;
+    }
+    ...
+}
+```
+
+You may notice a difference now. Every method that we added is only responsible to validate a single input/argument. It does not care about any other options, whether they are correct or not.
+
+## jsdoc comments
+
+If you're writing vanilla javascript, you may have trouble with the auto-completion or intellisense feature that most IDE provide, when working with multiple files. This is because javascript has no types (except primitives). Everything is an object. But don't we deserve those quality of life features if we're writing vanilla JS? Of course, we do. That's where `jsdoc` saves us.
+
+We will not cover the entire feature set of `jsdoc`, but only focus on what we need for this particular purpose. We are concerned with two things: the parameter and the return type. This is because if a function returns a type, our auto-completion feature will not work across multiple files and will not display other associated methods of that return type in the dropdown.
+
+Let's fix it.
+
+```js
+   /**
+     * @param {number} max_file_size The max file size to be set, in bytes.
+     * @returns {LogConfig} The current instance of LogConfig.
+     */
+    with_max_file_size(max_file_size) {
+        if (typeof max_file_size !== "number" || max_file_size < 100 || max_file_size === Infinity) {
+            throw new Error(
+                `max_file_size must be a number greater than 100 bytes. Unsupported param ${JSON.stringify(
+                    max_file_size
+                )}`
+            );
+        }
+        this.#max_file_size = max_file_size;
+        return this;
+    }
+```
+
+We create `jsdoc` comments with multi-line comment format using `/** ... */`. Then specify a tag using `@`. In the code snippet above, we specified two tags - `@params` and `@returns`. The tags have the following syntax
+
+```textile
+@tag {Type} <argument> <description>
+```
+
+The `Type` is the actual type of the `argument` you specified. that you're referring to. In our case it's the argument for `with_max_file_size` method is `max_file_size`. And the type for that is `number`. The description is the documentation part for that particular parameter.
+
+Here's the `jsdoc` comments with `with_log_level` method
+
+```js
+    /**
+     * @param {LogLevel} log_level The log level to be set.
+     * @returns {LogConfig} The current instance of LogConfig.
+     */
+    with_log_level(log_level) {
+        LogLevel.assert(log_level);
+        this.#level = log_level;
+        return this;
+    }
+```
+
+I'll be not including the `jsdoc` comments to make the code snippets short, and easier to read. However, if you're writing vanilla javascript, it's a good practice to start incorporating these into your work flow. They'll save you a lot of time! There's much more than this that `jsdoc` helps us with. You can go through the documentation of `jsdoc` [here](https://jsdoc.app/).
