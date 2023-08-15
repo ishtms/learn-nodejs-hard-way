@@ -53,8 +53,8 @@
     -   [The `LogConfig` class](#the-logconfig-class)
     -   [Design Patterns](#design-patterns)
         -   [The `Builder` pattern](#the-builder-pattern)
-        -  [Using the `Builder` pattern with the `LogConfig` class](#using-builder-pattern-with-the-logconfig-class)
-    - [`jsdoc` comments](#jsdoc-comments)
+        -   [Using the `Builder` pattern with the `LogConfig` class](#using-builder-pattern-with-the-logconfig-class)
+    -   [`jsdoc` comments](#jsdoc-comments)
 
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
