@@ -45,7 +45,9 @@
   - [Parsing the json file](#parsing-the-json-file)
 * [`logtard` - Our Own logging library](#logtard---our-own-logging-library)
   - [Initializing a new project](#initialising-a-new-project)
-  - [A little about `SemVer`](a-little-about-semver)
+  - [A little about `SemVer`](#a-little-about-semver)
+  - [Creating a LogLevel class](#creating-a-loglevel-class)
+  - [The Logger class](#the-logger-class)
 
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
@@ -1235,8 +1237,7 @@ async function read_file() {
 ```
 
 Now you can run the code from whatever directory, no matter how much deeply nested it is, it is going to work fine unless you move the `files.js` file to a different location.
-
-# logtard - Our own logging library
+# `logtard` our own logging library
 
 Logging is an important part of creating robust and scaleable application. It helps developers find and fix problems, keep an eye on how the application is working, and see what users are doing.
 
@@ -1261,7 +1262,7 @@ This creates a new npm package/project, creates a `package.json` file and sets u
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \\"Error: no test specified\\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -1282,3 +1283,182 @@ Starting with **`0.0.1`** is particularly beneficial for a few reasons:
 3. **Incremental Progress**: Starting with **`0.0.1`** allows for a clear sequence of version increments as development progresses. Each release can follow the rules of [SemVer](https://semver.org/): incrementing the **`MAJOR`** version for backward-incompatible changes, the **`MINOR`** version for backward-compatible additions, and the **`PATCH`** version for backward-compatible bug fixes.
 4. **User Expectations**: When users or other developers encounter a software version that starts with **`0.0.1`**, they'll understand that the software might not be feature-complete or entirely stable. This helps manage expectations and reduces confusion.
 5. **Preventing Confusion**: If you started with version **`1.0.0`**, there might be an expectation of stability and feature completeness that could lead to confusion if the software is actually in an early stage of development.
+
+## Creating a `LogLevel` class
+
+Log level is a basic concept in logging libraries. It helps control how much detail the application's log messages show. Developers use log levels to filter and manage the output. This is especially useful when debugging issues or dealing with complex systems.
+
+Usually logging libraries have these 5 log levels (from least to most severe):
+
+1. **Debug**: Detailed debugging information. Usually not used in production environments because it generates too much data.
+2. **Info**: Informative messages about the regular flow of the application. Shows what the application is doing.
+3. **Warning**: Indicates potential issues that might require attention. Warnings suggest that something might be going wrong.
+4. **Error**: Reports errors or exceptional conditions that need to be addressed. These messages indicate that something has gone wrong and might affect the application's functionality.
+5. **Critical/Fatal**: For severe errors that might crash the application or cause major malfunctions. These messages require immediate attention as they indicate critical failures.
+
+> I prefer using `Class` over functions or objects to provide a better API. It's a powerful system in JavaScript, and I find it superior to factory functions. `Class` do have some draw backs but for our use case, they’re the best possible solution. If you’re un-aware of how classes work in javascript, just [go through this page quickly.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_classes) This should be enough to follow along.
+
+When building a complex system or anticipating scalability, it's best to start simply and refactor as necessary. You don't need to use best practices from day one.
+
+The process should be: write code, make it work, test it, and then refactor it.
+
+Let’s create a new file `index.js` inside the `logtard` directory, and add a new class `LogLevel`
+
+```jsx
+// index.js
+
+class LogLevel {
+  static Debug = 0;
+  static Info = 1;
+  static Warn = 2;
+  static Error = 3;
+  static Critical = 5;
+}
+
+module.exports = {
+    LogLevel
+}
+```
+
+You might be wondering about the use of a class `LogLevel` instead of an object, or maybe some constants that can be easily exported, like this -
+
+```jsx
+module.exports.LogLevel = {
+    Debug: 0
+    ...
+}
+
+// or
+
+module.exports.Debug = 0
+...
+```
+
+You could do something like this too, and that’s totally fine. But instead, I chose a different, using a utility class `LogLevel` which encapsulates all log levels within a class, you create a clear namespace for these constants. This helps avoid potential naming conflicts with other variables or constants in your application. There’s more to this!
+
+You will see another powerful feature by using this method, in a bit.
+
+Let’s add a helper method to our `LogLevel` class which checks and verifies whether the `LogLevel` provided by our client (user of our library) is correct and supported.
+
+```jsx
+// index.js
+
+class LogLevel {
+    ...
+
+    static assert(log_level) {
+       if (
+      log_level !== LogLevel.Debug ||
+      log_level !== LogLevel.Info ||
+      log_level !== LogLevel.Warn ||
+      log_level !== LogLevel.Error ||
+      log_level !== LogLevel.Critical
+        ) {
+            throw new Error(
+            `log_level must be an instance of LogLevel. Unsupported param ${JSON.stringify(log_level)}`);
+        }
+     }
+}
+```
+
+What is this `assert` method going to do? `assert` will be a method used inside our library, which verifies that the value of type `LogLevel` provided as an argument is valid and supported.
+
+However, we can refactor the code above to look more readable, and not repeat too much.
+
+```jsx
+// index.js
+
+static assert(log_level) {
+    if (![LogLevel.Debug, LogLevel.Info, LogLevel.Warn, LogLevel.Error, LogLevel.Critical].includes(log_level)) {
+        throw new Error(`log_level must be an instance of LogLevel. Unsupported param ${JSON.stringify(log_level)}`);
+    }
+ }
+```
+
+This way, if we wish to add more log levels, we can simply add them to the array. This is another powerful use-case of classes over normal object values. Everything is namespace’d. Even without typescript, we can tell the client (someone who uses our library) what arguments are we expecting. If they fail to provide an invalid argument, our `assert` method will throw an error.
+
+Also, even if the user is unaware of the values we’re using for each log level, it does not matter as long as they’re using the `LogLevel.any_level` syntax. If we in future change the internals of the library, as long as the public API is consistent, everyone will be good. This is a key to build reliable APIs.
+
+> I am going to use the terms `client` and `user` interchangeably. A `client` is someone who uses our library’s API.
+
+The `LogLevel` looks fine for now. Let’s introduce a new class `Logger` which will be the backbone of our logging library.
+
+## The `Logger` class
+
+```jsx
+// index.js
+
+class LogLevel {...}
+
+class Logger {
+    /* Set the default value of `log_level` to be `LogLevel.Debug` for every
+    * new instance of the `Logger` class
+    */
+    log_level = LogLevel.Debug;
+
+    // Sets the log level to whatever user passed as an argument to `new Logger()`
+    constructor(log_level) {
+      this.level = log_level;
+    }
+}
+```
+
+There’s an issue. The user may construct the `Logger` with whatever value they want. This can be some useless value like `100000` or `“Hello”` and that’s not what we would expect.
+
+For example
+
+```jsx
+const my_logger = new Logger("test");
+// makes no sense
+```
+
+Let’s make use of the `LogLevel.assert()` static method that we just defined.
+
+```jsx
+// index.js
+
+class LogLevel {...}
+
+class Logger {
+    /* Set the default value of `log_level` to be `LogLevel.Debug` for every
+    * new instance of the `Logger` class
+    */
+    log_level = LogLevel.Debug;
+
+    // Sets the log level to whatever user passed as an argument to `new Logger()`
+    constructor(log_level) {
+        // Throw an error if the `log_level` is an unsupported value.
+        LogLevel.assert(log_level);
+        this.level = log_level;
+    }
+}
+```
+
+Now if we try to pass an invalid argument to the construction of `Logger` we get an error. Exactly what we want
+
+```jsx
+const logger = new Logger(6);
+
+// outputs
+Error: log_level must be an instance of LogLevel. Unsupported param "6"
+    at LogLevel.assert (/Users/ishtmeet/Code/logtard/index.js:10:13)
+    at new __Logger (/Users/ishtmeet/Code/logtard/index.js:86:14)
+    at Object.<anonymous> (/Users/ishtmeet/Code/logtard/index.js:91:16)
+    at Module._compile (node:internal/modules/cjs/loader:1256:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
+    at Module.load (node:internal/modules/cjs/loader:1119:32)
+    at Module._load (node:internal/modules/cjs/loader:960:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+    at node:internal/main/run_main_module:23:47
+```
+
+Everything looks good! No, not yet. What if we try to do
+
+```jsx
+const logger = new Logger(LogLevel.Error);
+logger.log_level = 1000
+```
+
+Again, this breaks our whole library’s functionality. How do we prevent this? Seems like Javascript has us covered.
+
+### Encapsulation with `private` fields
