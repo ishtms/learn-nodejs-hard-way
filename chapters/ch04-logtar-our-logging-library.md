@@ -1,9 +1,11 @@
 [![Read Prev](/assets/imgs/prev.png)](/chapters/ch03-working-with-files.md)
 # `logtar` our own logging library
 
+> Note: The entire code we write here can be found [here](/code/chapter_04/index.js). This will be a single file, and we'll refactor in subsequent chapters.
+
 Logging is an important part of creating robust and scaleable application. It helps developers find and fix problems, keep an eye on how the application is working, and see what users are doing.
 
-## Initialising a new project
+## Initializing a new project
 
 Let’s create a new project. Close your current working directory, or scrap it.
 
@@ -366,14 +368,11 @@ class LogConfig {
     // log level will live here, instead of the `Logger` class.
     #level = LogLevel.Info;
 
-    // how often should the log file be rolled. rolled means a new file is created after every x minutes/hours/days/weeks/months/years
-    #rolling_config = RollingConfig.Hourly;
+    // We do not initialise it here, we'll do it inside the constructor.
+    #rolling_config;
 
     // the prefix to be added to new files.
     #file_prefix = "Logtar_";
-
-    // max size of the log file in bytes
-    #max_file_size = 5 * 1024 * 1024; // 5 MB
 
     /**
      * We're going to follow the convention of creating a static assert
@@ -509,9 +508,7 @@ Here's what I'd like the API of `LogConfig` to look like
 ```js
 const config = LogConfig.with_defaults()
     .with_file_prefix("LogTar_")
-    .with_log_level(LogLevel.Critical)
-    .with_rolling_config(RollingConfig.from_initials("m"))
-    .with_max_file_size(1000);
+    .with_log_level(LogLevel.Critical);
 ```
 
 Our current `LogConfig` class looks like this
@@ -523,7 +520,6 @@ class LogConfig {
     #level = LogLevel.Info;
     #rolling_config = RollingConfig.Hourly;
     #file_prefix = "Logtar_";
-    #max_file_size = 5 * 1024 * 1024; // 5 MB
 
     static assert(log_config) {
         if (arguments.length > 0 && !(log_config instanceof LogConfig)) {
@@ -531,22 +527,6 @@ class LogConfig {
                 `log_config must be an instance of LogConfig. Unsupported param ${JSON.stringify(log_config)}`
             );
         }
-    }
-
-    get level() {
-        return this.#level;
-    }
-
-    get rolling_config() {
-        return this.#rolling_config;
-    }
-
-    get file_prefix() {
-        return this.#file_prefix;
-    }
-
-    get max_file_size() {
-        return this.#max_file_size;
     }
 }
 ```
@@ -573,10 +553,10 @@ class LogConfig {
         return this;
     }
 
+    // We'll talk about rolling config in just a bit, bare with me for now.
     with_rolling_config(rolling_config) {
-        RollingConfig.assert(rolling_config);
-        this.#rolling_config = rolling_config;
-        return this;
+       this.#rolling_config = RollingConfig.from_json(config);
+       return this;
     }
 
     with_file_prefix(file_prefix) {
@@ -585,18 +565,6 @@ class LogConfig {
         }
 
         this.#file_prefix = file_prefix;
-        return this;
-    }
-
-    with_max_file_size(max_file_size) {
-        if (typeof max_file_size !== "number" || max_file_size < 100 || max_file_size === Infinity) {
-            throw new Error(
-                `max_file_size must be a number greater than 100 bytes. Unsupported param ${JSON.stringify(
-                    max_file_size
-                )}`
-            );
-        }
-        this.#max_file_size = max_file_size;
         return this;
     }
     ...
@@ -615,18 +583,16 @@ Let's fix it.
 
 ```js
    /**
-     * @param {number} max_file_size The max file size to be set, in bytes.
+     * @param {string} file_prefix The file prefix to be set.
      * @returns {LogConfig} The current instance of LogConfig.
+     * @throws {Error} If the file_prefix is not a string.
      */
-    with_max_file_size(max_file_size) {
-        if (typeof max_file_size !== "number" || max_file_size < 100 || max_file_size === Infinity) {
-            throw new Error(
-                `max_file_size must be a number greater than 100 bytes. Unsupported param ${JSON.stringify(
-                    max_file_size
-                )}`
-            );
+    with_file_prefix(file_prefix) {
+        if (typeof file_prefix !== "string") {
+            throw new Error(`file_prefix must be a string. Unsupported param ${JSON.stringify(file_prefix)}`);
         }
-        this.#max_file_size = max_file_size;
+   
+        this.#file_prefix = file_prefix;
         return this;
     }
 ```
@@ -654,3 +620,292 @@ Here's the `jsdoc` comments with `with_log_level` method
 ```
 
 I'll be not including the `jsdoc` comments to make the code snippets short, and easier to read. However, if you're writing vanilla javascript, it's a good practice to start incorporating these into your work flow. They'll save you a lot of time! There's much more than this that `jsdoc` helps us with. You can go through the documentation of `jsdoc` [here](https://jsdoc.app/).
+
+## The `RollingConfig` class
+
+The **`RollingConfig`** class is going to be a vital part of our logging system that helps manage log files. It does this by rotating or rolling log files based on a set time interval or the size of file. This ensures that log files don't become too large and hard to handle.
+
+The **`RollingConfig`** class's main purpose is to define settings for the log file's rolling process. This includes how often log files should be rolled, the maximum size of log files before they are rolled, and other relevant settings. By doing this, it helps keep log files organized and manageable while still preserving the historical data needed for analysis, debugging, and monitoring.
+
+The **`RollingConfig`** class typically includes the two key features:
+
+1. **Rolling Time Interval:** This setting determines how frequently log files are rolled. For example, you might set the logger to roll log files every few minutes, hours, or days, depending on how detailed you need your logs to be.
+2. **Maximum File Size:** In addition to time-based rolling, the **`RollingConfig`** class may also support size-based rolling. When a log file exceeds a certain size limit, a new log file is created, with a new prefix to let you distinguish between different log files.
+
+Before creating the `RollingConfig` class. Let's create 2 utility helper classes - `RollingSizeOptions` and `RollingTimeOptions`. As the name suggests, they are only going to support the `RollingConfig` class.
+
+### The `RollingSizeOptions` class
+
+```js
+// index.js
+
+class RollingSizeOptions {
+    static OneKB = 1024;
+    static FiveKB = 5 * 1024;
+    static TenKB = 10 * 1024;
+    static TwentyKB = 20 * 1024;
+    static FiftyKB = 50 * 1024;
+    static HundredKB = 100 * 1024;
+
+    static HalfMB = 512 * 1024;
+    static OneMB = 1024 * 1024;
+    static FiveMB = 5 * 1024 * 1024;
+    static TenMB = 10 * 1024 * 1024;
+    static TwentyMB = 20 * 1024 * 1024;
+    static FiftyMB = 50 * 1024 * 1024;
+    static HundredMB = 100 * 1024 * 1024;
+
+    static assert(size_threshold) {
+        if (typeof size_threshold !== "number" || size_threshold < RollingSizeOptions.OneKB) {
+            throw new Error(
+                `size_threshold must be at-least 1 KB. Unsupported param ${JSON.stringify(size_threshold)}`
+            );
+        }
+    }
+}
+```
+
+I've set some defaults, to make it easy for the clients of our library to use them. Instead of them having to declare an extra constant, they can quickly use `RollingSizeOptions.TenKB` or whatever they wish. However, they can also specify a number as a value, and that's where our `RollingSizeOptions.assert()` helper is going to do the validation for us.
+
+### The `RollingTimeOptions` class
+
+```js
+// index.js
+
+class RollingTimeOptions {
+    static Minutely = 60; // Every 60 seconds
+    static Hourly = 60 * this.Minutely;
+    static Daily = 24 * this.Hourly;
+    static Weekly = 7 * this.Daily;
+    static Monthly = 30 * this.Daily;
+    static Yearly = 12 * this.Monthly;
+
+    static assert(time_option) {
+        if (
+            ![this.Minutely, this.Hourly, this.Daily, this.Weekly, this.Monthly, this.Yearly].includes(time_option)
+        ) {
+            throw new Error(
+                `time_option must be an instance of RollingConfig. Unsupported param ${JSON.stringify(
+                    time_option
+                )}`
+            );
+        }
+    }
+}
+```
+
+## Finishing up the `RollingConfig` class
+
+It's time to create our `RollingConfig` class. Let's add some basic functionality in it for now.
+
+```js
+// index.js
+class RollingConfig {
+    #time_threshold = RollingTimeOptions.Hourly;
+    #size_threshold = RollingSizeOptions.FiveMB;
+
+    static assert(rolling_config) {
+        if (!(rolling_config instanceof RollingConfig)) {
+            throw new Error(
+                `rolling_config must be an instance of RollingConfig. Unsupported param ${JSON.stringify(
+                    rolling_config
+                )}`
+            );
+        }
+    }
+
+    // Provide a helper method for the clients, so instead of doing `new RollingConfig()`
+    // they can simply use `RollingConfig.with_defaults()` that too without specifying the
+    // `new` keyword.
+    static with_defaults() {
+        return new RollingConfig();
+    }
+
+    // Utilizing the `Builder` pattern here, to first verify that the size is valid.
+    // If yes, set the size, and return the current instance of the class.
+    // If it's not valid, throw an error.
+    with_size_threshold(size_threshold) {
+        RollingTimeOptions.assert_size(size_threshold);
+        this.#size_threshold = size_threshold;
+        return this;
+    }
+
+    // Same like above, but with `time`.
+    with_time_threshold(time_threshold) {
+        RollingTimeOptions.assert_time(time_threshold);
+        this.#time_threshold = time_threshold;
+        return this;
+    }
+    
+     // Build from a `json` object instead of the `Builder`
+     static from_json(json) {
+        let rolling_config = new RollingConfig();
+
+        Object.keys(json).forEach((key) => {
+            switch (key) {
+                case "size_threshold":
+                    rolling_config = rolling_config.with_size_threshold(json[key]);
+                    break;
+                case "time_threshold":
+                    rolling_config = rolling_config.with_time_threshold(json[key]);
+                    break;
+            }
+        });
+        
+        return rolling_config;
+    }
+}
+```
+
+The `RollingConfig` class is ready to be used. It has no functionality, and is merely a configuration for our logger. It's useful to add a suffix like `Config`, `Options` for things that have no business logic inside them. It's generally a good design practice to stay focused on your naming conventions.
+
+### Let's recap
+
+- `RollingConfig` - A class that maintains the configuration on how often a new log file file should be rolled out. It is based on the `RollingTimeOptions` and `RollingSizeOptions` utility classes which define some useful constants as well as an `assert()` method for the validation.
+  
+- `LogConfig` - A class that groups all other configurations into one giant class. This has a couple of private member variables - `#level` which is going to be of type `LogLevel` and keeps track of what logs should be written and what ignored; `#rolling_config` which is going to store the `RolllingConfig` for our logger; `#file_prefix` will be used to prefix log files.
+  
+  - `with_defaults` constructs and returns a new `LogConfig` object with some default values.
+    
+  - `with_log_level`, `with_file_prefix` and `with_rolling_config` mutates the current object after testing whether the input provided is valid. The example of what we learnt above - a `Builder` pattern.
+    
+  - `assert` validation for the `LogConfig` class.
+    
+- `Logger` - The backbone of our logger. It hardly has any functionality now, but this is the main class of our library. This is responsible to do all the hard work.
+  
+
+## Adding more useful methods in the `LogConfig` class
+
+The `LogConfig` class looks fine. But it's missing out on a lot of other features. Let's add them one by one.
+
+Firstly, not everyone is a fan of builder pattern, many people would like to pass in an object and ask the library to parse something useful out of it. It's generally a very good practice to expose various ways to do a particular task.
+
+We are going to provide an ability to create a `LogConfig` object from a json object.
+
+```js
+// index.js
+
+...
+
+class LogConfig {
+    ...
+    
+    with_rolling_config(config) {
+        this.#rolling_config = RollingConfig.from_json(config);
+        return this;
+    }
+
+    static from_json(json) {
+        // Create an empty LogConfig object.
+        let log_config = new LogConfig();
+        
+        // ignore the keys that aren't needed for our purposes.
+        // if a key matches, let's set it to the provided value.
+        Object.keys(json).forEach((key) => {
+            switch (key) {
+                case "level":
+                    log_config = log_config.with_log_level(json[key]);
+                    break;
+                case "rolling_config":
+                    log_config = log_config.with_rolling_config(json[key]);
+                    break;
+                case "file_prefix":
+                    log_config = log_config.with_file_prefix(json[key]);
+                    break;
+            }
+        });
+
+        // return the mutated log_config object
+        return log_config;
+    }
+
+    ...
+}
+
+...
+```
+
+Now we can call it like this -
+
+```js
+const json_config = { level: LogLevel.Debug };
+const config = LogConfig.from_json(json_config).with_file_prefix("Testing");
+
+// or
+
+const config = LogConfig.from_json({ level: LogLevel.Debug }).with_file_prefix('Test');
+
+// or 
+
+const config = LogConfig.with_defaults().with_log_level(LogLevel.Critical);
+
+// Try to add an invalid value
+const config = LogConfig.from_json({ level: 'eh?' }); // fails
+
+Error: log_level must be an instance of LogLevel. Unsupported param "eh?"
+    at LogLevel.assert (/Users/ishtmeet/Code/logtar/index.js:251:19)
+    at LogConfig.with_log_level (/Users/ishtmeet/Code/logtar/index.js:177:18)
+    at /Users/ishtmeet/Code/logtar/index.js:143:45
+```
+
+The API of our library is already looking solid. But there's one last thing that we wish to have as a convenience method to build `LogConfig` from. It's from a config file. Let's add that method
+
+```js
+// import the `node:fs` module to use the `readFileSync`
+const fs = require('node:fs')
+
+class LogConfig {
+    ...
+
+    /**
+     * @param {string} file_path The path to the config file.
+     * @returns {LogConfig} A new instance of LogConfig with values from the config file.
+     * @throws {Error} If the file_path is not a string.
+     */
+    static from_file(file_path) {
+        // `fs.readFileSync` throws an error if the path is invalid. 
+        // It takes care of the OS specific path handling for us. No need to
+        // validate paths by ourselves.
+        const file_contents = fs.readFileSync(file_path);
+
+        // Send this over to our `from_json` method to do the rest
+        return LogConfig.from_json(JSON.parse(file_contents));
+    }    
+
+    ...
+}
+```
+
+Do you notice how we reused the `from_json` method to parse the json into a `LogConfig` object? This is one thing you have to keep in mind while building good and maintainable APIs. Avoid code duplication, and make the methods/helpers re-usable. As much as you can.
+
+### Why `readFileSync`?
+
+Loggers are usually initialized once when the program starts, and are not usually created after the initialization phase. As such, using `readFileSync` over the asynchronous version (readFile) can provide several benefits in this specific case.
+
+`readFileSync` operates synchronously, meaning it blocks the execution of the code until the file reading is complete. For logger configuration setup, this is often desired because the configuration is needed to initialize the logger properly before any logging activity begins, since our application will be using the logger internally.
+
+We cannot let the application start before initializing the logger. Using asynchronous operations like `readFile` could introduce complexities in managing the timing of logger initialization.
+
+Let's test using a config file. Create a `config.demo.json` file with the following contents
+
+```json
+{
+    "level": 3,
+    "file_prefix": "My_Prefix_",
+    "rolling_config": {
+        "size_threshold": 1024,
+        "time_threshold": 3600
+    }
+}
+```
+
+Since we have added the support for files, the following code will work now
+
+```js
+const config = LogConfig.from_file('./config.demo.json')
+const logger = Logger.with_config(config)
+```
+
+Everything works as expected.
+
+> Note: The entire code we write here can be found [here](/code/chapter_04/index.js). This will be a single file, and we'll refactor in subsequent chapters.
