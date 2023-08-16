@@ -73,7 +73,7 @@ const { add, divide, multiply, subtract } = require("./calculator");
 const { add, divide, multiply, subtract } = require("./calculator.js");
 ```
 
-Notice that we're importing the functions `multiply` and `subtract` even though we're not exporting them from the `calculator` module. This won't cause any issues until we try to use them. If you run the code above with `node index`, it runs fine but produces no output. Let’s try to understand why it doesn't fail.
+Notice that we're importing the functions `multiply` and `divide` even though we're not exporting them from the `calculator` module. This won't cause any issues until we try to use them. If you run the code above with `node index`, it runs fine but produces no output. Let’s try to understand why it doesn't fail.
 
 The `module.exports` is basically a javascript `Object`, and when you `require` it from another file, it tries to evaluate the fields with the names provided (destructuring in short).
 
@@ -93,7 +93,7 @@ fn_three; // undefined
 
 This may clear up why we don't get an error if we try to include a function/property that is not being explicitly exported from a module. If that identifier isn't found, it's simply `undefined`.
 
-So, the `multiply` and `subtract` identifiers above are just `undefined`. However, if we try to add this line:
+So, the `multiply` and `divide` identifiers above are just `undefined`. However, if we try to add this line:
 
 ```jsx
 // index.js
