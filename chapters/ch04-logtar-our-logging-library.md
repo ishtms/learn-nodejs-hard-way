@@ -1,4 +1,5 @@
 [![Read Prev](/assets/imgs/prev.png)](/chapters/ch03-working-with-files.md)
+
 # `logtar` our own logging library
 
 > Note: The entire code we write here can be found [here](/code/chapter_04/index.js). This will be a single file, and we'll refactor in subsequent chapters.
@@ -762,23 +763,22 @@ The `RollingConfig` class is ready to be used. It has no functionality, and is m
 ### Let's recap
 
 - `RollingConfig` - A class that maintains the configuration on how often a new log file file should be rolled out. It is based on the `RollingTimeOptions` and `RollingSizeOptions` utility classes which define some useful constants as well as an `assert()` method for the validation.
-  
+
 - `LogConfig` - A class that groups all other configurations into one giant class. This has a couple of private member variables - `#level` which is going to be of type `LogLevel` and keeps track of what logs should be written and what ignored; `#rolling_config` which is going to store the `RolllingConfig` for our logger; `#file_prefix` will be used to prefix log files.
   
   - `with_defaults` constructs and returns a new `LogConfig` object with some default values.
-    
-  - `with_log_level`, `with_file_prefix` and `with_rolling_config` mutates the current object after testing whether the input provided is valid. The example of what we learnt above - a `Builder` pattern.
-    
-  - `assert` validation for the `LogConfig` class.
-    
-- `Logger` - The backbone of our logger. It hardly has any functionality now, but this is the main class of our library. This is responsible to do all the hard work.
   
+  - `with_log_level`, `with_file_prefix` and `with_rolling_config` mutates the current object after testing whether the input provided is valid. The example of what we learnt above - a `Builder` pattern.
+  
+  - `assert` validation for the `LogConfig` class.
+
+- `Logger` - The backbone of our logger. It hardly has any functionality now, but this is the main class of our library. This is responsible to do all the hard work.
 
 ## Adding more useful methods in the `LogConfig` class
 
-The `LogConfig` class looks fine. But it's missing out on a lot of other features. Let's add them one by one.
+The `LogConfig` class looks fine. But it's missing out on a lot of other features. Let's add them one by one. 
 
-Firstly, not everyone is a fan of builder pattern, many people would like to pass in an object and ask the library to parse something useful out of it. It's generally a very good practice to expose various ways to do a particular task.
+Firstly, not everyone is a fan of builder pattern, many people would like to pass in an object and ask the library to parse something useful out of it. It's generally a very good practice to expose various ways to do a particular task. 
 
 We are going to provide an ability to create a `LogConfig` object from a json object.
 
@@ -882,7 +882,7 @@ Do you notice how we reused the `from_json` method to parse the json into a `Log
 
 Loggers are usually initialized once when the program starts, and are not usually created after the initialization phase. As such, using `readFileSync` over the asynchronous version (readFile) can provide several benefits in this specific case.
 
-`readFileSync` operates synchronously, meaning it blocks the execution of the code until the file reading is complete. For logger configuration setup, this is often desired because the configuration is needed to initialize the logger properly before any logging activity begins, since our application will be using the logger internally.
+`readFileSync` operates synchronously, meaning it blocks the execution of the code until the file reading is complete. For logger configuration setup, this is often desired because the configuration is needed to initialize the logger properly before any logging activity begins, since our application will be using the logger internally. 
 
 We cannot let the application start before initializing the logger. Using asynchronous operations like `readFile` could introduce complexities in managing the timing of logger initialization.
 
@@ -906,6 +906,6 @@ const config = LogConfig.from_file('./config.demo.json')
 const logger = Logger.with_config(config)
 ```
 
-Everything works as expected.
+Everything works as expected. 
 
 > Note: The entire code we write here can be found [here](/code/chapter_04/index.js). This will be a single file, and we'll refactor in subsequent chapters.
