@@ -910,4 +910,4 @@ Everything works as expected.
 
 > Note: The entire code we write here can be found [here](/code/chapter_04/index.js). This will be a single file, and we'll refactor in subsequent chapters.
 
-[![Demo](https://uddrapi.com/api/img?page=ch04)](/chapters/ch01-what-is-a-web-server-anyway.md)
+![](https://uddrapi.com/api/img?page=ch04)

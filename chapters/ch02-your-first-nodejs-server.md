@@ -191,4 +191,4 @@ Working with **`process.stdout`** can be rather cumbersome, and in practice, you
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch03-working-with-files.md)
 
-[![Demo](https://uddrapi.com/api/img?page=ch02)](/chapters/ch01-what-is-a-web-server-anyway.md)
+![](https://uddrapi.com/api/img?page=ch02)

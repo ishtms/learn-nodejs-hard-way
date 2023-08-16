@@ -75,4 +75,4 @@ I highly recommend coding along with this guide rather than just reading it.
     - [Adding more useful methods in the `LogConfig` class](/chapters/ch04-logtar-our-logging-library.md#adding-more-useful-methods-in-the-logconfig-class)
     - [Why `readFileSync`?](/chapters/ch04-logtar-our-logging-library.md#why-readfilesync)
 
-[![Demo](https://uddrapi.com/api/img?page=readme)](/chapters/ch01-what-is-a-web-server-anyway.md)
+![](https://uddrapi.com/api/img?page=readme)

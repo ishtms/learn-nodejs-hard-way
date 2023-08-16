@@ -113,4 +113,4 @@ Your computer receives the response from the web server. Your browser interprets
 
 [![Read Prev](/assets/imgs/next.png)](/chapters/ch02-your-first-nodejs-server.md)
 
-[![Demo](https://uddrapi.com/api/img?page=ch01)](/chapters/ch01-what-is-a-web-server-anyway.md)
+![](https://uddrapi.com/api/img?page=ch01)
