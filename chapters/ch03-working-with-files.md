@@ -1,8 +1,4 @@
-<div style="display: flex; margin-bottom:20px; justify-content: space-between; align-items: center;">
-    <a href='/chapters/ch02-your-first-nodejs-server.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;"> &larr;&nbsp;&nbsp; Read previous chapter</a>
-    <a href='/chapters/ch04-logtar-our-logging-library.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;">Read next chapter &nbsp;&nbsp; &rarr;</a>
-</div>
-
+[![Read Prev](/assets/imgs/prev.png)](/chapters/ch02-your-first-nodejs-server.md)
 ## Working with files
 
 Now that we've covered the basics of logging in Node.js, let's explore a real-world example. Let us understand the low level of files and how to interact with them. After that, we'll build a logging library [logtar](https://github.com/ishtms/logtar) that writes logs to a log file. It also has a support for tracing and rolling file creation. We’ll use this library as the central mechanism of logging for our web framework, that we build further into this guide.
@@ -883,7 +879,4 @@ async function read_file() {
 
 Now you can run the code from whatever directory, no matter how much deeply nested it is, it is going to work fine unless you move the `files.js` file to a different location.
 
-<div style="display: flex; margin-bottom:20px; justify-content: space-between; align-items: center;">
-    <a href='/chapters/ch02-your-first-nodejs-server.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;"> &larr;&nbsp;&nbsp; Read previous chapter</a>
-    <a href='/chapters/ch04-logtar-our-logging-library.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;">Read next chapter &nbsp;&nbsp; &rarr;</a>
-</div>
+[![Read Next](/assets/imgs/next.png)](/chapters/ch04-logtar-our-logging-library.md)

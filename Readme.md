@@ -14,9 +14,7 @@ We will cover topics like error handling, security, and testing to ensure that o
 
 I highly recommend coding along with this guide rather than just reading it.
 
-<div style="display: flex; margin-bottom:20px; justify-content: space-between; align-items: center;">
-    <a href='/chapters/ch01-what-is-a-web-server-anyway.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;">Read first chapter &nbsp;&nbsp; &rarr;</a>
-</div>
+[![Read Next](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
 
 # Table of contents
 

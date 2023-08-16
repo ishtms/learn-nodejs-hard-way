@@ -1,7 +1,5 @@
 
-<div style="display: flex; margin-bottom:20px; justify-content: flex-end; align-items: center;">
-    <a href='/chapters/ch02-your-first-nodejs-server.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;">Read next chapter &nbsp;&nbsp; &rarr;</a>
-</div>
+[![Read Prev](/assets/imgs/prev.png)](/Readme.md)
 
 # What the hell is a web server any way?
 
@@ -113,7 +111,4 @@ Your computer receives the response from the web server. Your browser interprets
 
 > A quick disclaimer: our learning approach will prioritize clarity and thoroughness. I will introduce a topic, break it down, and if we come across any unfamiliar concepts, we will explore them until everything is fully understood.
 
-
-<div style="display: flex; margin-bottom:20px; justify-content: flex-end; align-items: center;">
-    <a href='/chapters/ch02-your-first-nodejs-server.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;">Read next chapter &nbsp;&nbsp; &rarr;</a>
-</div>
+[![Read Prev](/assets/imgs/next.png)](/chapters/ch02-your-first-nodejs-server.md)

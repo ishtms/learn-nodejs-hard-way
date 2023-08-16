@@ -1,7 +1,4 @@
-<div style="display: flex; margin-bottom:20px; justify-content: space-between; align-items: center;">
-    <a href='/chapters/ch03-working-with-files.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;"> &larr;&nbsp;&nbsp; Read previous chapter</a>
-</div>
-
+[![Read Prev](/assets/imgs/prev.png)](/chapters/ch03-working-with-files.md)
 # `logtar` our own logging library
 
 Logging is an important part of creating robust and scaleable application. It helps developers find and fix problems, keep an eye on how the application is working, and see what users are doing.
@@ -657,6 +654,3 @@ Here's the `jsdoc` comments with `with_log_level` method
 ```
 
 I'll be not including the `jsdoc` comments to make the code snippets short, and easier to read. However, if you're writing vanilla javascript, it's a good practice to start incorporating these into your work flow. They'll save you a lot of time! There's much more than this that `jsdoc` helps us with. You can go through the documentation of `jsdoc` [here](https://jsdoc.app/).
-<div style="display: flex; margin-bottom:20px; justify-content: space-between; align-items: center;">
-    <a href='/chapters/ch03-working-with-files.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;"> &larr;&nbsp;&nbsp; Read previous chapter</a>
-</div>
