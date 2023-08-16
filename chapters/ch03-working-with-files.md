@@ -880,3 +880,5 @@ async function read_file() {
 Now you can run the code from whatever directory, no matter how much deeply nested it is, it is going to work fine unless you move the `files.js` file to a different location.
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch04-logtar-our-logging-library.md)
+
+[![Demo](https://uddrapi.com/api/img?page=ch03)](/chapters/ch01-what-is-a-web-server-anyway.md)

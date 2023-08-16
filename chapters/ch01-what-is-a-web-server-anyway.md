@@ -112,3 +112,5 @@ Your computer receives the response from the web server. Your browser interprets
 > A quick disclaimer: our learning approach will prioritize clarity and thoroughness. I will introduce a topic, break it down, and if we come across any unfamiliar concepts, we will explore them until everything is fully understood.
 
 [![Read Prev](/assets/imgs/next.png)](/chapters/ch02-your-first-nodejs-server.md)
+
+[![Demo](https://uddrapi.com/api/img?page=ch01)](/chapters/ch01-what-is-a-web-server-anyway.md)
