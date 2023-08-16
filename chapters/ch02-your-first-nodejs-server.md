@@ -1,3 +1,7 @@
+<div style="display: flex; margin-bottom:20px; justify-content: space-between; align-items: center;">
+    <a href='/chapters/ch01-what-is-a-web-server-anyway.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;"> &larr;&nbsp;&nbsp; Read previous chapter</a>
+    <a href='/chapters/ch03-working-with-files.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;">Read next chapter &nbsp;&nbsp; &rarr;</a>
+</div>
 
 # Your first web server with [node.js](https://nodejs.org)
 
@@ -83,12 +87,12 @@ The **`node:console`** module offers a wrapper around the standard console funct
 
 The module exports two specific components:
 
-- A `Console` class with methods like `console.log()`, `console.error()`, and `console.warn()`. These can be used to write to any Node.js **stream**.
-- A global `console` instance that is set up to write to `process.stdout` and `process.stderr`.
+-   A `Console` class with methods like `console.log()`, `console.error()`, and `console.warn()`. These can be used to write to any Node.js **stream**.
+-   A global `console` instance that is set up to write to `process.stdout` and `process.stderr`.
 
 (Note that `Console` is not `console` (lowercase). `console` is a special instance of `Console`)
 
-> You can use the global `console` without having to call `require('node:console')` or `require('console')`.  This global availability is a feature provided by the Node.js runtime environment. When your Node.js application starts running, certain objects and modules are automatically available in the global scope without the need for explicit importing. 
+> You can use the global `console` without having to call `require('node:console')` or `require('console')`. This global availability is a feature provided by the Node.js runtime environment. When your Node.js application starts running, certain objects and modules are automatically available in the global scope without the need for explicit importing.
 >
 > Here are some of the examples of globally available objects/modules in Node.js - `console`, `setTimeout`, `setInterval`, `__dirname`, `__filename`, `process`, `module`, `Buffer`, `exports`, and the `global` object.
 
@@ -187,3 +191,7 @@ We're simply writing to **`stdout`** or the standard output stream which Node.js
 Working with **`process.stdout`** can be rather cumbersome, and in practice, you tend to use it sparingly. Instead, developers frequently opt for the more user-friendly **`console.log`** method. Instances of code employing **`process.stdout`** are typically encountered when there's a need for a greater level of control over output formatting or when integrating with more complex logging mechanisms.
 
 > **_Warning_**: The ways of the global console object are not always synchronous like the browser APIs they resemble, nor are they always asynchronous like all other Node.js streams. For more information, please see the [note on process I/O](https://nodejs.org/api/process.html#a-note-on-process-io).
+<div style="display: flex; margin-bottom:20px; justify-content: space-between; align-items: center;">
+    <a href='/chapters/ch01-what-is-a-web-server-anyway.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;"> &larr;&nbsp;&nbsp; Read previous chapter</a>
+    <a href='/chapters/ch03-working-with-files.md' style="padding: 10px 20px; text-decoration:none;box-shadow:0px 10px 15px rgba(0,0,0,0.2); background-color: #222; color: #fff; border: none; border-radius: 5px;">Read next chapter &nbsp;&nbsp; &rarr;</a>
+</div>
