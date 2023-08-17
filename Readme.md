@@ -75,4 +75,17 @@ I highly recommend coding along with this guide rather than just reading it.
     - [Adding more useful methods in the `LogConfig` class](/chapters/ch04-logtar-our-logging-library.md#adding-more-useful-methods-in-the-logconfig-class)
     - [Why `readFileSync`?](/chapters/ch04-logtar-our-logging-library.md#why-readfilesync)
 
+-   [Refactoring the code](/chapters/ch04.1-refactoring-the-code.md)
+    - [The need for refactoring](/chapters/ch04.1-refactoring-the-code.md#the-need-for-refactoring)
+    - [Creating Separate Files](/chapters/ch04.1-refactoring-the-code.md#creating-separate-files)
+        - [Explanation](/chapters/ch04.1-refactoring-the-code.md#explanation)
+        - [The `index.js` file](/chapters/ch04.1-refactoring-the-code.md#the-indexjs-file)
+        - [The `lib/logtar.js` file](/chapters/ch04.1-refactoring-the-code.md#the-liblogtarjs-file)
+        - [The `lib/logger.js` file](/chapters/ch04.1-refactoring-the-code.md#the-libloggerjs-file)
+        - [The `lib/config/log-config.js` file](/chapters/ch04.1-refactoring-the-code.md#the-libconfiglog-configjs-file)
+        - [The `lib/config/rolling-config.js` file](/chapters/ch04.1-refactoring-the-code.md#the-libconfigrolling-configjs-file)
+        - [The `lib/utils/log-level.js` file](/chapters/ch04.1-refactoring-the-code.md#the-libutilslog-leveljs-file)
+        - [The `lib/utils/rolling-options.js` class](/chapters/ch04.1-refactoring-the-code.md#the-libutilsrolling-optionsjs-class)
+
+
 ![](https://uddrapi.com/api/img?page=readme)

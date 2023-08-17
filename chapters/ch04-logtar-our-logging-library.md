@@ -582,7 +582,7 @@ class LogConfig {
 >    }
 >  }
 >  
->  MyClass.my_static_method(); // This is a static method.
+>  MyClass.my_static_method();
 > ```
 > One thing to keep in mind is that you cannot access the `this` keyword inside a static method. This is because `this` refers to the instance of the class, and static methods are not called on an instance.
 
@@ -925,5 +925,9 @@ const logger = Logger.with_config(config)
 Everything works as expected. 
 
 > Note: The entire code we write here can be found [here](/code/chapter_04/index.js). This will be a single file, and we'll refactor in subsequent chapters.
+
+> The code for the entire section can be found [at the code/chapter_04 directory](/code/chapter_04/README.md)
+
+[![Read Next](/assets/imgs/next.png)](/chapters/ch04.1-refactoring-the-code.md)
 
 ![](https://uddrapi.com/api/img?page=ch04)
