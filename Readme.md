@@ -6,7 +6,7 @@
 
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
-This isn't your average Node.js tutorial or guide. It's a detailed walkthrough that shows you how to create a backend framework from the ground up while getting a solid grasp of Node.js's inner workings and it’s standard library.
+This isn't any normal Node.js tutorial or guide. It's a detailed walkthrough, and a code along experience that shows you how to create a backend framework from the ground up while getting a solid grasp of Node.js's inner workings and it’s standard library.
 
 In this guide, we will not only build a web framework, but also focus on designing a powerful and optimized end product that is ready for use in production applications (somewhat). Our goal is to create a modular backend framework that can be easily extended with new features as needed.
 

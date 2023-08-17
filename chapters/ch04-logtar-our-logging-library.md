@@ -27,7 +27,7 @@ This creates a new npm package/project, creates a `package.json` file and sets u
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \\"Error: no test specified\\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -113,11 +113,11 @@ class LogLevel {
 
     static assert(log_level) {
        if (
-      log_level !== LogLevel.Debug ||
-      log_level !== LogLevel.Info ||
-      log_level !== LogLevel.Warn ||
-      log_level !== LogLevel.Error ||
-      log_level !== LogLevel.Critical
+            log_level !== LogLevel.Debug ||
+            log_level !== LogLevel.Info ||
+            log_level !== LogLevel.Warn ||
+            log_level !== LogLevel.Error ||
+            log_level !== LogLevel.Critical
         ) {
             throw new Error(
             `log_level must be an instance of LogLevel. Unsupported param ${JSON.stringify(log_level)}`);
@@ -173,8 +173,8 @@ There’s an issue. The user may construct the `Logger` with whatever value they
 For example
 
 ```jsx
-const my_logger = new Logger("test");
 // makes no sense
+const my_logger = new Logger("test");
 ```
 
 Let’s make use of the `LogLevel.assert()` static method that we just defined.
@@ -519,6 +519,8 @@ Our current `LogConfig` class looks like this
 
 class LogConfig {
     #level = LogLevel.Info;
+
+    // We'll talk about rolling config in just a bit.
     #rolling_config = RollingConfig.Hourly;
     #file_prefix = "Logtar_";
 
@@ -571,6 +573,20 @@ class LogConfig {
     ...
 }
 ```
+
+> Static methods in JavaScript are methods that belong to a class instead of an instance of the class. They can be used without creating an instance of the class and are often used for utility functions or operations that don't need any state. To create a static method in a class, use the `static` keyword before the method definition. For example:
+> ```jsx
+>  class MyClass {
+>    static my_static_method() {
+>      console.log('This is a static method.');
+>    }
+>  }
+>  
+>  MyClass.my_static_method(); // This is a static method.
+> ```
+> One thing to keep in mind is that you cannot access the `this` keyword inside a static method. This is because `this` refers to the instance of the class, and static methods are not called on an instance.
+
+Subclasses can also inherit static methods, but they cannot be used on instances of the subclass. They are useful for organizing code and providing a namespace for related utility functions.
 
 You may notice a difference now. Every method that we added is only responsible to validate a single input/argument. It does not care about any other options, whether they are correct or not.
 
