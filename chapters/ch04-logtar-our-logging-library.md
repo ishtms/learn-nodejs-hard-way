@@ -2,7 +2,7 @@
 
 # `logtar` our own logging library
 
-> Note: The entire code we write here can be found [here](/code/chapter_04/index.js). This will be a single file, and we'll refactor in subsequent chapters.
+> Note: The entire code we write here can be found [here](/code/chapter_04). This will be a single file, and we'll refactor in subsequent chapters.
 
 Logging is an important part of creating robust and scaleable application. It helps developers find and fix problems, keep an eye on how the application is working, and see what users are doing.
 
@@ -926,7 +926,7 @@ Everything works as expected.
 
 > Note: The entire code we write here can be found [here](/code/chapter_04/index.js). This will be a single file, and we'll refactor in subsequent chapters.
 
-> The code for the entire section can be found [at the code/chapter_04 directory](/code/chapter_04/README.md)
+> Note: The entire code we write here can be found [here](/code/chapter_04). This will be a single file, and we'll refactor in subsequent chapters.
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch04.1-refactoring-the-code.md)
 
