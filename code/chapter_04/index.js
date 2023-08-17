@@ -70,7 +70,7 @@ class RollingConfig {
     }
 
     /**
-     *  @param {time_threshold} time_threshold Roll/Create new file every time the current file size exceeds this threshold.
+     *  @param {RollingTimeOptions} time_threshold Roll/Create new file every time the current file size exceeds this threshold.
      * @returns {RollingConfig} The current instance of RollingConfig.
      * @throws {Error} If the time_threshold is not an instance of RollingTimeOptions.
      */
