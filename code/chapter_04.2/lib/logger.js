@@ -23,7 +23,6 @@ class Logger {
         log_config = log_config || LogConfig.with_defaults();
         LogConfig.assert(log_config);
         this.#config = log_config;
-        this.#init();
     }
 
     async init() {
