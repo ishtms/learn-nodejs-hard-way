@@ -96,6 +96,9 @@ I highly recommend coding along with this guide rather than just reading it.
     - [The `log`` method](/chapters/ch04.2-writing-logs.md#the-log-method)
     - [Considering the `log_level` member variable](/chapters/ch04.2-writing-logs.md#considering-the-log_level-member-variable)
     - [Writing to a file](/chapters/ch04.2-writing-logs.md#writing-to-a-file)
-
+        - [A small primer on Regular Expressions](/chapters/ch04.2-writing-logs.md#a-small-primer-on-regular-expressions)
+        - [Testing the log file creation](/chapters/ch04.2-writing-logs.md#testing-the-log-file-creation)
+        - [Another gotcha](/chapters/ch04.2-writing-logs.md#another-gotcha)
+        - [Configuring the `log_file_handle`](/chapters/ch04.2-writing-logs.md#configuring-the-log_file_handle)
 
 ![](https://uddrapi.com/api/img?page=readme)
