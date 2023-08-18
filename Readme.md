@@ -85,6 +85,17 @@ I highly recommend coding along with this guide rather than just reading it.
         - [The `lib/config/rolling-config.js` file](/chapters/ch04.1-refactoring-the-code.md#the-libconfigrolling-configjs-file)
         - [The `lib/utils/log-level.js` file](/chapters/ch04.1-refactoring-the-code.md#the-libutilslog-leveljs-file)
         - [The `lib/utils/rolling-options.js` class](/chapters/ch04.1-refactoring-the-code.md#the-libutilsrolling-optionsjs-class)
+- [Writing Logs](/chapters/ch04.2-writing-logs.md)
+    - [Re-using the file handle](/chapters/ch04.2-writing-logs.md#re-using-the-file-handle)
+    - [Log rotation](/chapters/ch04.2-writing-logs.md#2-log-rotation)
+    - [Asynchronous logging](/chapters/ch04.2-writing-logs.md#3-asynchronous-logging)
+    - [Getting caller information](/chapters/ch04.2-writing-logs.md#4-getting-caller-information)
+    - [Testing our current API](/chapters/ch04.2-writing-logs.md#testing-our-current-api)
+    - [Implementing logging methods](/chapters/ch04.2-writing-logs.md#implementing-logging-methods)
+    - [DRY (Don't Repeat Yourself)](/chapters/ch04.2-writing-logs.md#dry-dont-repeat-yourself)
+    - [The `log`` method](/chapters/ch04.2-writing-logs.md#the-log-method)
+    - [Considering the `log_level` member variable](/chapters/ch04.2-writing-logs.md#considering-the-log_level-member-variable)
+    - [Writing to a file](/chapters/ch04.2-writing-logs.md#writing-to-a-file)
 
 
 ![](https://uddrapi.com/api/img?page=readme)
