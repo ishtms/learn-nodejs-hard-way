@@ -2,7 +2,7 @@
 
 > There’s going to be 0 dependencies for our backend framework, as well as our logging library. Everything will be done using vanilla Node.js, the hard-way (the best way to learn).
 
-> This is still in a very early stage. It consists of almost 2-3% of the total content which it intends to cover. There will also be an pdf version of this to download, as well as a website for the documentation.
+> This is still in a very early stage. It consists of almost an insignificant portion of the total content which it intends to cover. There will also be an pdf version of this to download, as well as a website for the documentation.
 
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
