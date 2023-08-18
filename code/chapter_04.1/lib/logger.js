@@ -27,6 +27,7 @@ class Logger {
      * @param {LogLevel} log_level
      */
     constructor(log_config) {
+        log_config = log_config || LogConfig.with_defaults();
         LogConfig.assert(log_config);
         this.#config = log_config;
     }

@@ -415,7 +415,19 @@ All looks okay. We have a `LogConfig` class setup. Now, instead of using `#level
 // before
 
 class Logger {
+    ...
+
     #level = LogLevel.Info;
+
+    constructor(log_level) {
+        // only set/check the log level if the client has provided it
+        // otherwise use the default value, i.e `LogLevel.Info`
+        if (arguments.length > 0) {
+            LogLevel.assert(log_level);
+            this.#level = log_level;
+        }
+    }
+
     ...
 }
 
@@ -424,6 +436,13 @@ class Logger {
 class Logger {
     #config;
     ...
+
+    constructor(log_config) {
+        // we'll create the `with_defaults()` static method in just a bit.
+        log_config = log_config || LogConfig.with_defaults();
+        LogConfig.assert(log_config);
+        this.#config = log_config;
+    }
 }
 ```
 
