@@ -89,7 +89,7 @@ I highly recommend coding along with this guide rather than just reading it.
     - [Re-using the file handle](/chapters/ch04.2-writing-logs.md#re-using-the-file-handle)
     - [Log rotation](/chapters/ch04.2-writing-logs.md#2-log-rotation)
     - [Asynchronous logging](/chapters/ch04.2-writing-logs.md#3-asynchronous-logging)
-    - [Getting caller information](/chapters/ch04.2-writing-logs.md#4-getting-caller-information)
+    - [Getting caller information](/chapters/ch04.2-writing-logs.md#4-getting-caller-information-module-and-line-number)
     - [Testing our current API](/chapters/ch04.2-writing-logs.md#testing-our-current-api)
     - [Implementing logging methods](/chapters/ch04.2-writing-logs.md#implementing-logging-methods)
     - [DRY (Don't Repeat Yourself)](/chapters/ch04.2-writing-logs.md#dry-dont-repeat-yourself)
