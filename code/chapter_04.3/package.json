@@ -1,0 +1,26 @@
+{
+    "name": "logtar",
+    "version": "0.0.8",
+    "description": "A lightweight logger for your applications with rolling file support and much more.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "logger",
+        "fast",
+        "stream",
+        "rolling",
+        "json"
+    ],
+    "author": "Ishtmeet Singh <ish.rissam@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ishtms/logtar.git"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ishtms/logtar/issues"
+    },
+    "homepage": "https://github.com/ishtms/logtar"
+}

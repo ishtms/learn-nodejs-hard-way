@@ -1,0 +1,4 @@
+[2023-08-19T19:11:51.888Z] [CRITICAL]: main (/Users/ishtmeet/Code/logtard/test.js:11:12) From the main() function
+[2023-08-19T19:11:51.888Z] [CRITICAL]: nested_func (/Users/ishtmeet/Code/logtard/test.js:16:12) From the nested_func() function
+[2023-08-19T19:11:51.888Z] [CRITICAL]: super_nested (/Users/ishtmeet/Code/logtard/test.js:21:12) From the super_nested() function
+[2023-08-19T19:11:51.888Z] [CRITICAL]: Logger.#setup_for_process_exit (/Users/ishtmeet/Code/logtard/lib/logger.js:50:14) Logger shutting down. Received signal: 0
