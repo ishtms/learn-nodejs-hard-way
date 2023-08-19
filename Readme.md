@@ -110,5 +110,9 @@ I highly recommend coding along with this guide rather than just reading it.
     - [Examples of stacks](/chapters/ch04.3-capturing-metadata.md#examples-of-stacks)
     - [The call stack](/chapters/ch04.3-capturing-metadata.md#the-call-stack)
     - [Getting the stack info](/chapters/ch04.3-capturing-metadata.md#getting-the-stack-info)
+    - [Getting the `callee`` name and the line number](/chapters/ch04.3-capturing-metadata.md#getting-the-callee-name-and-the-line-number)
+    - [A more ergonomic way](/chapters/ch04.3-capturing-metadata.md#a-more-ergonomic-way)
+    - [Using the `get_caller_info` function](/chapters/ch04.3-capturing-metadata.md#using-the-get_caller_info-function)
+    
 
 ![](https://uddrapi.com/api/img?page=readme)
