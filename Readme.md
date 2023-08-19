@@ -105,5 +105,10 @@ I highly recommend coding along with this guide rather than just reading it.
     - [Adding a new helper to create log directory](/chapters/ch04.2-writing-logs.md#adding-a-new-helper-to-create-log-directory)
     - [Updating the `init` method](/chapters/ch04.2-writing-logs.md#updating-the-init-method)
     - [Completing the `log` method](/chapters/ch04.2-writing-logs.md#completing-the-log-method)
+- [Capturing metadata](/chapters/ch04.3-capturing-metadata.md)
+    - [What is a stack](/chapters/ch04.3-capturing-metadata.md#what-is-a-stack)
+    - [Examples of stacks](/chapters/ch04.3-capturing-metadata.md#examples-of-stacks)
+    - [The call stack](/chapters/ch04.3-capturing-metadata.md#the-call-stack)
+    - [Getting the stack info](/chapters/ch04.3-capturing-metadata.md#getting-the-stack-info)
 
 ![](https://uddrapi.com/api/img?page=readme)
