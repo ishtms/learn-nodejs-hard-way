@@ -723,6 +723,13 @@ Notice that we get rid of all those options since they are already set to defaul
 
 The **`for..of`** loop is a JavaScript feature that provides an easy and straightforward way to go through elements in an array, string, or other [iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols) objects. It makes it simpler to iterate through each item without the need to manage the loop's index or length manually.
 
+Let's look at the syntax:
+```js
+for (const element of iterable) {
+  // Code to be executed for each element
+}
+```
+
 Here's an overview of how the **`for..of`** loop works:
 
 1. **`for`**: This is the keyword that indicates the start of the loop structure.
@@ -740,7 +747,7 @@ for (const fruit of fruits) {
 }
 ```
 
-In this example, the loop will iterate through each element in the **`fruits`** array, and in each iteration, the **`fruit`** variable will contain the value of the current fruit. The loop will log:
+The loop will iterate through each element in the **`fruits`** array, and in each iteration, the **`fruit`** variable will contain the value of the current fruit. The loop will log:
 
 ```
 apple
