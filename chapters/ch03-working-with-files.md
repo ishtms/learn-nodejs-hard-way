@@ -1,4 +1,5 @@
 [![Read Prev](/assets/imgs/prev.png)](/chapters/ch02-your-first-nodejs-server.md)
+
 ## Working with files
 
 Now that we've covered the basics of logging in Node.js, let's explore a real-world example. Let us understand the low level of files and how to interact with them. After that, we'll build a logging library [logtar](https://github.com/ishtms/logtar) that writes logs to a log file. It also has a support for tracing and rolling file creation. We’ll use this library as the central mechanism of logging for our web framework, that we build further into this guide.
@@ -693,7 +694,8 @@ async function read_file() {
   try {
     const file_handle = await fs.open("./index.js");
     const stream = file_handle.readLines();
-
+    
+    // we'll get to this syntax in a bit
     for await (const line of stream) {
       console.log("Reading line of length %d -> %s", line.length, line);
     }
@@ -714,6 +716,81 @@ Reading line of length 12 -> read_file();
 ```
 
 Notice that we get rid of all those options since they are already set to default values for our convenience. Only specify them if you wish to choose values other than the defaults.
+
+## A small primer to `for..of` and `for await..of` in javascript
+
+### `for..of`
+
+The **`for..of`** loop is a JavaScript feature that provides an easy and straightforward way to go through elements in an array, string, or other [iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols) objects. It makes it simpler to iterate through each item without the need to manage the loop's index or length manually.
+
+Here's an overview of how the **`for..of`** loop works:
+
+1. **`for`**: This is the keyword that indicates the start of the loop structure.
+2. **`element`**: This is a variable that you define to represent the current element of the iterable in each iteration of the loop. In each iteration, the **`element`** variable will hold the value of the current element in the iterable.
+3. **`of`**: This is a keyword that signifies the relationship between the **`element`** variable and the **`iterable`** you're looping through.
+4. **`iterable`**: This is the collection or object you want to iterate over. It can be an array, a string, a set, a map, or any other object that has a collection of items.
+
+Here's an example of using **`for..of`** to loop through an array:
+
+```jsx
+const fruits = ['apple', 'banana', 'orange', 'grape'];
+
+for (const fruit of fruits) {
+  console.log(fruit);
+}
+```
+
+In this example, the loop will iterate through each element in the **`fruits`** array, and in each iteration, the **`fruit`** variable will contain the value of the current fruit. The loop will log:
+
+```
+apple
+banana
+orange
+grape
+```
+
+The **`for..of`** loop is particularly useful when you don't need to access the index of the elements directly. It provides a cleaner and more concise way to work with iterable objects.
+
+Note that the **`for..of`** loop can't be used to directly loop over properties of an object. It's specifically designed for iterating over values in iterable collections. If you need to loop through object properties, the traditional **`for..in`** loop or using **`Object.keys()`**, **`Object.values()`**, or **`Object.entries()`** would be more appropriate.
+
+### `for await..of`
+
+The **`for await..of`** loop is an extension of the **`for..of`** loop. It is used for asynchronous operations and iterables. It can iterate over asynchronous iterable objects like those returned by asynchronous [generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator) or promises. The loop is useful when dealing with asynchronous operations like fetching data from APIs or reading from streams, just like we did above!
+
+Here's how the **`for await..of`** loop works:
+
+```jsx
+for await (const element of async_iterable) {
+  // Asynchronous code to be executed for each element
+}
+```
+
+Let's break down the key components:
+
+1. **`for await`**: These keywords start the asynchronous loop structure.
+2. **`element`**: This variable represents the current element of the asynchronous iterable in each iteration of the loop.
+3. **`async_iterable`****: This is an asynchronous iterable object, such as an asynchronous generator, a promise that resolves to an iterable, or any other object that implements the asynchronous [iteration protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
+
+Here's an example of using **`for await..of`** to loop through an asynchronous iterable:
+
+```jsx
+async function fetch_fruits() {
+  const fruits = ['apple', 'banana', 'orange', 'grape'];
+
+  for await (const fruit of fruits) {
+    console.log(fruit);
+
+    // a dummy async operation simulation
+    await new Promise(resolve => setTimeout(resolve, 1000)); 
+  }
+}
+
+fetch_fruits();
+```
+
+Here, the **`fetchFruits`** function uses the **`for await..of`** loop to iterate through the **`fruits`** array asynchronously. For each fruit, it logs the fruit name and then simulates an asynchronous operation using **`setTimeout`** to pause for a second.
+
+The **`for await..of`** loop is a handy tool when working with asynchronous operations. It allows us to iterate over the results of promises or asynchronous generators in a more readable and intuitive way. It ensures that the asynchronous operations within the loop are executed sequentially, one after the other, even if they have varying completion times.
 
 ## Reading the `json` file
 
