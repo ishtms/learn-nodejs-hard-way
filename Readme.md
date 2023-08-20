@@ -1,6 +1,6 @@
 # Learn Node.js by building a backend framework
 
-You can access the current version of the book (both Light and Dark modes) in PDF format by [clicking here](https://github.com/ishtms/learn-nodejs-hard-way/releases/tag/v0.0.2). Note that this version includes the current release of the content, and is not the final version.
+You can access the current version of the book in PDF format  (both Light and Dark modes are available) by [clicking here](https://github.com/ishtms/learn-nodejs-hard-way/releases/tag/v0.0.2). Note that this version includes the current release of the content, and is not the final version.
 
 > The PDF book is generated using the scripts I wrote at [bookgen](https://github.com/ishtms/bookgen). Would love to receive some pull requests improving the formatting of the book.
 
