@@ -1,4 +1,3 @@
-
 [![Read Prev](/assets/imgs/prev.png)](/Readme.md)
 
 # What the hell is a web server any way?

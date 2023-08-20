@@ -694,7 +694,7 @@ async function read_file() {
   try {
     const file_handle = await fs.open("./index.js");
     const stream = file_handle.readLines();
-    
+
     // we'll get to this syntax in a bit
     for await (const line of stream) {
       console.log("Reading line of length %d -> %s", line.length, line);
@@ -717,13 +717,14 @@ Reading line of length 12 -> read_file();
 
 Notice that we get rid of all those options since they are already set to default values for our convenience. Only specify them if you wish to choose values other than the defaults.
 
-## A small primer to `for..of` and `for await..of` in javascript
+## A small primer on `for..of` and `for await..of` in javascript
 
 ### `for..of`
 
 The **`for..of`** loop is a JavaScript feature that provides an easy and straightforward way to go through elements in an array, string, or other [iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols) objects. It makes it simpler to iterate through each item without the need to manage the loop's index or length manually.
 
 Let's look at the syntax:
+
 ```js
 for (const element of iterable) {
   // Code to be executed for each element
