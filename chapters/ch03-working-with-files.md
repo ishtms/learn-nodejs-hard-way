@@ -776,7 +776,7 @@ Let's break down the key components:
 
 1. **`for await`**: These keywords start the asynchronous loop structure.
 2. **`element`**: This variable represents the current element of the asynchronous iterable in each iteration of the loop.
-3. **`async_iterable`****: This is an asynchronous iterable object, such as an asynchronous generator, a promise that resolves to an iterable, or any other object that implements the asynchronous [iteration protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
+3. **`async_iterable`**: This is an asynchronous iterable object, such as an asynchronous generator, a promise that resolves to an iterable, or any other object that implements the asynchronous [iteration protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
 
 Here's an example of using **`for await..of`** to loop through an asynchronous iterable:
 
