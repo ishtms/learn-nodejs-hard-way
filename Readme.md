@@ -2,6 +2,8 @@
 
 You can access the current version of the content in PDF format by [clicking here](https://github.com/ishtms/learn-nodejs-hard-way/releases/tag/v0.0.1). Note that this version includes the current release of the content, and is not the final version.
 
+> The PDF book is generated using the scripts I wrote at [bookgen](https://github.com/ishtms/bookgen). Would love to receive some pull requests improving the formatting of the book.
+
 > There’s going to be 0 dependencies for our backend framework, as well as our logging library. Everything will be done using vanilla Node.js, the hard-way (the best way to learn).
 
 > This is still in a very early stage. It consists of almost an insignificant portion of the total content which it intends to cover. There will also be an pdf version of this to download, as well as a website for the documentation.
