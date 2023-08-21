@@ -118,6 +118,12 @@ I highly recommend coding along with this guide rather than just reading it.
     - [Getting the `callee` name and the line number](/chapters/ch04.3-capturing-metadata.md#getting-the-callee-name-and-the-line-number)
     - [A more ergonomic way](/chapters/ch04.3-capturing-metadata.md#a-more-ergonomic-way)
     - [Using the `get_caller_info` function](/chapters/ch04.3-capturing-metadata.md#using-the-get_caller_info-function)
+- [A small intro to `async` vs `sync`](/chapters/ch04.4-intro-to-async-vs-sync.md)
+    - [The Balance between Opposites](/chapters/ch04.4-intro-to-async-vs-sync.md#the-balance-between-opposites)
+    - [Mixing Asynchronous and Synchronous Code](/chapters/ch04.4-intro-to-async-vs-sync.md#mixing-asynchronous-and-synchronous-code)
+    - [Faster I/O out of the box](/chapters/ch04.4-intro-to-async-vs-sync.md#faster-io-out-of-the-box)
+    - [Blocking Code](/chapters/ch04.4-intro-to-async-vs-sync.md#blocking-code)
+    - [Concurrency](/chapters/ch04.4-intro-to-async-vs-sync.md#concurrency)
 
 
 ![](https://uddrapi.com/api/img?page=readme)
