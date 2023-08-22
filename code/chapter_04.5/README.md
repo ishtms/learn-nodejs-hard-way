@@ -1,6 +1,3 @@
-# A fast, flexible and configurable Logging framework for NodeJS
+## Code for the Chapter 04.5 - Adding Rolling File Support
 
-Master the art of backend development and servers with the free open source book on [github](https://github.com/ishtms/learn-nodejs-hard-way)
-
-> Note: This should not be used in production yet. This is not a complete project.
-![](https://uddrapi.com/api/img?page=logtar%20homepage)
+![](https://uddrapi.com/api/img?page=Code%20ch04.5)
