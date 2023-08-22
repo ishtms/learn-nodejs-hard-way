@@ -1,13 +1,10 @@
 # Learn Node.js by building a backend framework
 
-The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy)
-
 You can access the current version of the book in the [chapters directory](/chapters) or in PDF format  (both Light and Dark modes are available) by [clicking here](https://github.com/ishtms/learn-nodejs-hard-way/releases). Note that this version includes the current release of the content, and is not the final version.
 
 > This is still in a very early stage. I started working on this book on 14th Aug 2023. It consists of almost an insignificant portion of the total content which it will cover.
 
 > There’s going to be 0 dependencies for our [backend framework](https://github.com/ishtms/velocy), as well as our [logging library](https://github.com/ishtms/logtar). Everything will be done using vanilla Node.js, the hard-way (the best way to learn).
-
 
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
@@ -18,6 +15,8 @@ In this guide, we will not only build a web framework, but also focus on designi
 We will cover topics like error handling, security, and testing to ensure that our framework is reliable and secure. We will explore different approaches to modularity and demonstrate how to create reusable components that can be shared across multiple projects. By the end of this guide, you will have a solid understanding of Node.js and it’s tough parts.
 
 I highly recommend coding along with this guide rather than just reading it.
+
+The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy)
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
 
