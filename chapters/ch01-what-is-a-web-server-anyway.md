@@ -72,15 +72,15 @@ Imagine you're at home, sitting in front of your computer, and you decide to vis
 
 ### The Request:
 
-#### 1. Your Request:
+#### Your Request:
 
 You type "example.com" into your browser's address bar and hit Enter. This is like you telling your computer, "Hey, I want to see what's on this website!"
 
-#### 2. Finding the Address:
+#### Finding the Address:
 
 Your computer knows the basics of websites, but it needs the exact address of "example.com" to connect to it. So, it reaches out to a special helper called a [DNS resolver](https://en.wikipedia.org/wiki/Domain_Name_System#Address_resolution_mechanism).
 
-#### 3. Resolving the Address:
+#### Resolving the Address:
 
 The DNS resolver is like a digital address book. It takes "example.com" and looks up the actual IP address associated with it. This IP address is like the specific coordinates of the website's location on the internet.
 
@@ -88,23 +88,23 @@ The DNS resolver is like a digital address book. It takes "example.com" and look
 
 ### The Response:
 
-#### 1. Return Address:
+#### Return Address:
 
 The DNS resolver finds the IP address linked to "example.com" and sends it back to your computer. It's like the DNS resolver telling your computer, "The website is located at this IP address."
 
-#### 2. Sending the Request:
+#### Sending the Request:
 
 Now that your computer knows the IP address, it can send a request to the web server that holds the website's content. This request includes the IP address and a message saying, "Hey, can you please give me the content of your website?"
 
-#### 3. Preparing the Content:
+#### Preparing the Content:
 
 The web server receives your request and understands that you want to see the content of "example.com." It then gathers the necessary files – HTML, images, stylesheets, scripts – to create the webpage.
 
-#### 4. Sending the Response:
+#### Sending the Response:
 
 The web server packages the content into a response and sends it back to your computer through the internet. It's like the server sending a digital package to your doorstep.
 
-#### 5. Enjoying the Content:
+#### Enjoying the Content:
 
 Your computer receives the response from the web server. Your browser interprets the HTML, displays images, and applies styles, creating a complete webpage. This is what you see on your screen – the final result of your request.
 
