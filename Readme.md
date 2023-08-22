@@ -124,6 +124,18 @@ I highly recommend coding along with this guide rather than just reading it.
     - [Faster I/O out of the box](/chapters/ch04.4-intro-to-async-vs-sync.md#faster-io-out-of-the-box)
     - [Blocking Code](/chapters/ch04.4-intro-to-async-vs-sync.md#blocking-code)
     - [Concurrency](/chapters/ch04.4-intro-to-async-vs-sync.md#concurrency)
+- [Adding Rolling File Support](/chapters/ch04.5-rolling-file-support.md)
+    - [Rolling features](/chapters/ch04.5-rolling-file-support.md#rolling-features)
+        - [`#time_threshold`](/chapters/ch04.5-rolling-file-support.md#timethreshold)
+        - [`#size_threshold`](/chapters/ch04.5-rolling-file-support.md#sizethreshold)
+    - [The `rolling_check()` method](/chapters/ch04.5-rolling-file-support.md#the-rolling_check-method)
+    - [`file_handle.stat()`](/chapters/ch04.5-rolling-file-support.md#file_handlestat)
+    - [Calling the `rolling_check` method](/chapters/ch04.5-rolling-file-support.md#calling-the-rolling_check-method)
+    - [A big gotcha!](/chapters/ch04.5-rolling-file-support.md#a-big-gotcha)
+    - [Stack traces across `await` points](/chapters/ch04.5-rolling-file-support.md#stack-traces-across-await-points)
+        - [The culprit](/chapters/ch04.5-rolling-file-support.md#the-culprit)
+    - [Testing the new Log file creation](/chapters/ch04.5-rolling-file-support.md#testing-the-new-log-file-creation)
+    
 
 
 ![](https://uddrapi.com/api/img?page=readme)
