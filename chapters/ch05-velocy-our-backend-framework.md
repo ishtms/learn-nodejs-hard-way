@@ -1,3 +1,3 @@
-# [Velocy](https://www.npmjs.com/package/velocy) - Our backend framework
+# [Velocy](https://github.com/ishtms/velocy) - Our backend framework
 
 ![](https://uddrapi.com/api/img?page=Velocy_5.0)
