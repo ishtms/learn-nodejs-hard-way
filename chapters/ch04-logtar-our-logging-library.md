@@ -1,6 +1,6 @@
 [![Read Prev](/assets/imgs/prev.png)](/chapters/ch03-working-with-files.md)
 
-# `logtar` our own logging library
+# [`logtar`](https://github.com/ishtms/logtar) our own logging library
 
 > Note: The entire code we write here can be found  [at the code/chapter_04 directory](/code/chapter_04). This will be a single file, and we'll refactor in subsequent chapters.
 

@@ -1,10 +1,13 @@
 # Learn Node.js by building a backend framework
 
-You can access the current version of the book in PDF format  (both Light and Dark modes are available) by [clicking here](https://github.com/ishtms/learn-nodejs-hard-way/releases). Note that this version includes the current release of the content, and is not the final version.
+The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy)
 
-> There’s going to be 0 dependencies for our backend framework, as well as our logging library. Everything will be done using vanilla Node.js, the hard-way (the best way to learn).
+You can access the current version of the book in the [chapters directory](/chapters) or in PDF format  (both Light and Dark modes are available) by [clicking here](https://github.com/ishtms/learn-nodejs-hard-way/releases). Note that this version includes the current release of the content, and is not the final version.
 
-> This is still in a very early stage. It consists of almost an insignificant portion of the total content which it intends to cover. There will also be an pdf version of this to download, as well as a website for the documentation.
+> This is still in a very early stage. I started working on this book on 14th Aug 2023. It consists of almost an insignificant portion of the total content which it will cover.
+
+> There’s going to be 0 dependencies for our [backend framework](https://github.com/ishtms/velocy), as well as our [logging library](https://github.com/ishtms/logtar). Everything will be done using vanilla Node.js, the hard-way (the best way to learn).
+
 
 I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
 
