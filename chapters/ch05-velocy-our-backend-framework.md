@@ -117,6 +117,8 @@ Our mini in-memory database with index support has the following key features:
 - Supports indexing of key fields to speed up data retrieval.
 - Has basic indexing mechanisms to optimize query performance.
 
+> This won't be our target for the initial chapters, but we'll get there as we approach the end of the book.
+
 #### CRUD Operations:
 
 - Performs Create, Read, Update, and Delete operations for managing data.
