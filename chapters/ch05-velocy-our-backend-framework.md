@@ -101,7 +101,7 @@ If the request is rejected, it does not go to the next middleware, or the main f
 
 ### Building our own database
 
-We will also create a basic in-memory database with indexing support. This mini in-memory database will provide users with a lightweight and efficient solution for storing and retrieving data within their applications. 
+We will also create a basic in-memory key-value database. This mini in-memory database will provide users with a lightweight and efficient solution for storing and retrieving data within their applications. 
 
 While it won't have the full range of capabilities found in dedicated databases, it will serve as a valuable tool for scenarios where a simple and fast data storage option is needed, without relying on other third party tools.
 
