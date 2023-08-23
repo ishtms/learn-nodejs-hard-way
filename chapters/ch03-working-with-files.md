@@ -220,7 +220,7 @@ This is because `divide` and all the other functions declared in this module are
 
 ```jsx
 let person = {};
-person.get_age = funtion get_age() {...}
+person.get_age = function get_age() {...}
 
 // `get_age` is not defined as it can only be accessed using
 // `person.get_age()`
