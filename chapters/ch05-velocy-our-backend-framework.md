@@ -10,7 +10,7 @@ For example, you could write performant server applications with Node.js, but th
 
 However, in this book, we are going to take the hard route - build our own backend library.
 
-> Note: I am going to use the terms library/framework interchangeably. However they are somewhat different. 
+> Note: I am going to use the terms library/framework interchangeably. In practice, they are somewhat different. 
 
 ## Core features of our backend framework
 
