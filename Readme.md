@@ -156,6 +156,6 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy)
             - [Websockets](/chapters/ch05-velocy-our-backend-framework.md#some-other-features-that-we-will-be-implementing)
             - [Logging](/chapters/ch05-velocy-our-backend-framework.md#some-other-features-that-we-will-be-implementing)
             - [Monitoring](/chapters/ch05-velocy-our-backend-framework.md#some-other-features-that-we-will-be-implementing)
-
+- [HTTP Deep Dive](/chapters/ch06-http-deep-dive.md)
 
 ![](https://uddrapi.com/api/img?page=readme)
