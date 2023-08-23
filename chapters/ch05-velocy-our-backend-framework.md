@@ -44,7 +44,7 @@ In a backend library, a strong routing system makes it simpler to create and man
   GET /api/games/:type
   ```
   
-  Developers of our library should be able to configure the URLs like above, and we as a library should provide them with the ability to extract useful info for them, whenever someone makes a request like this:
+  Developers who use our library should be able to configure the URLs like above, and we as a library should provide them with the ability to extract useful info for them, whenever someone makes a request like this:
   
   ```
   https://ourapi.com/api/games/multiplayer?limit=10&order=asc
