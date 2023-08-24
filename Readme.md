@@ -2,7 +2,7 @@
 
 You can access the current version of the book in the [chapters directory](/chapters) or in PDF format  (both Light and Dark modes are available) by [clicking here](https://github.com/ishtms/learn-nodejs-hard-way/releases). Note that this version includes the current release of the content, and is not the final version.
 
-> This is still in a very early stage. I started working on this book on 14th Aug 2023. It consists of almost an insignificant portion of the total content which it will cover.
+> This book is still in a very early stage. It contains an insignificant portion of the total content that the book is supposed to cover.
 
 > There’s going to be 0 dependencies for our [backend framework](https://github.com/ishtms/velocy), as well as our [logging library](https://github.com/ishtms/logtar). Everything will be done using vanilla Node.js, the hard-way (the best way to learn).
 
