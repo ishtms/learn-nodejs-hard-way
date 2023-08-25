@@ -156,14 +156,14 @@ The `LogLevel` looks fine for now. Let’s introduce a new class `Logger` which 
 class LogLevel {...}
 
 class Logger {
-    /* Set the default value of `log_level` to be `LogLevel.Debug` for every
+    /* Set the default value of `level` to be `LogLevel.Debug` for every
     * new instance of the `Logger` class
     */
-    log_level = LogLevel.Debug;
+    level = LogLevel.Debug;
 
     // Sets the log level to whatever user passed as an argument to `new Logger()`
     constructor(log_level) {
-      this.log_level = log_level;
+      this.level = log_level;
     }
 }
 ```
@@ -185,12 +185,12 @@ Let’s make use of the `LogLevel.assert()` static method that we just defined.
 class LogLevel {...}
 
 class Logger {
-    log_level = LogLevel.Debug;
+    level = LogLevel.Debug;
 
     constructor(log_level) {
         // Throw an error if the `log_level` is an unsupported value.
         LogLevel.assert(log_level);
-        this.log_level = log_level;
+        this.level = log_level;
     }
 }
 ```
@@ -217,7 +217,7 @@ Everything looks good! No, not yet. What if we try to do
 
 ```jsx
 const logger = new Logger(LogLevel.Error);
-logger.log_level = 1000;
+logger.level = 1000;
 ```
 
 Again, this breaks our whole library’s functionality. How do we prevent this? Seems like Javascript has us covered.
@@ -274,7 +274,7 @@ console.log(logger.level); // Good. Calls the `get level()` method
 
 > Note: If you create a getter using `get()`, you do not need to specify the parenthesis after `level`. Javascript knows that we're referring to the `get level()` getter.
 
-Now, add the `LogLevel.assert` method inside the constructor, to make sure the clients pass in a correct value for `log_level`
+Now, add the `LogLevel.assert` method inside the constructor, to make sure the clients pass in a correct value for the `log_level` constructor parameter.
 
 ```js
 // index.js
@@ -345,7 +345,7 @@ new Logger(LogLevel.Debug); // works fine
 new Logger(); // works fine
 
 let logger = new Logger(LogLevel.Warning);
-logger.level; // returns the `log_level` because of the getter `level()`
+logger.level; // returns the `level` because of the getter `level()`
 logger.#level; // throws error
 logger.#level = LogLevel.Warning; // throws error
 logger.level = 10; // throws error
