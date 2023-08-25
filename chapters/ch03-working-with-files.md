@@ -383,7 +383,7 @@ The `flag` argument indicates the mode (not to confused by `mode` argument) in w
 
 > You do not need to remember all of these, but it can be useful to write consistent APIs to ensure that no undefined behavior occurs.
 
-Let’s use `wx+` to show a small example. `wx+` will open a file for read and write, but fail to open a file if it already exists. If teh file doesn’t exists it will create a file and work just fine.
+Let’s use `wx+` to show a small example. `wx+` will open a file for read and write, but fail to open a file if it already exists. If the file doesn’t exists it will create a file and work just fine.
 
 ```jsx
 // calculator.js
