@@ -249,7 +249,7 @@ module.exports = {
 };
 ```
 
-But this isn’t the best way to create your library’s API. The second option is more concise and easier to read. It clearly shows that you're exporting a group of functions as properties of an object. This can be particularly useful when you have many functions to export. Also, everything is nicely placed at a single place. You don’t have to keep searching for `module.exports.export_name` to find out what this module exports.
+The first method isn’t the best way to create your library’s API. The second option is more concise and easier to read. It clearly shows that you're exporting a group of functions as properties of an object. This can be particularly useful when you have many functions to export. Also, everything is nicely placed at a single place. You don’t have to keep searching for `module.exports.export_name` to find out what this module exports.
 
 ### Let’s get back to `files`
 
@@ -265,7 +265,7 @@ Node.js interacts (indirectly, through ) with the operating system's I/O subsyst
 
 When a file is opened by a process, the operating system assigns a unique file descriptor to that open file. This descriptor is essentially an integer value that serves as an identifier for the open file within the context of that process. File descriptors are used in various [system calls](https://en.wikipedia.org/wiki/System_call) and APIs to perform operations like reading, writing, seeking, and closing files.
 
-In Unix-like systems, including Linux, file descriptors are often managed using a data structure called a [file table](https://man7.org/linux/man-pages/man5/table.5.html) or [file control block](https://en.wikipedia.org/wiki/File_Control_Block#:~:text=A%20File%20Control%20Block%20(FCB,not%20in%20operating%20system%20memory.). This table keeps track of the properties and status of each open file, such as the file's current position, permissions, and other relevant information. The file descriptor acts as an **_index_** or key into this table, allowing the operating system to quickly look up the details of the open file associated with a particular descriptor, which is more efficient, and more performant than to iterate over a vector/array of files and find a particular file.
+In Unix-like systems, including Linux, file descriptors are often managed using a data structure called a [file table](https://man7.org/linux/man-pages/man5/table.5.html) or [file control block](https://en.wikipedia.org/wiki/File_Control_Block). This table keeps track of the properties and status of each open file, such as the file's current position, permissions, and other relevant information. The file descriptor acts as an **_index_** or key into this table, allowing the operating system to quickly look up the details of the open file associated with a particular descriptor, which is more efficient, and more performant than to iterate over a vector/array of files and find a particular file.
 
 When you interact with files or file descriptors, you're typically dealing with numeric values. For instance, in C, the **`open()`** system call returns a file descriptor, and other functions like **`read()`**, **`write()`**, and **`close()`** require this descriptor to operate on the corresponding file. In a runtime like Node.js, the **`fs`** module abstracts the direct use of file descriptors by providing a more user-friendly API, but it still relies on them behind the scenes to manage file operations.
 
@@ -383,7 +383,7 @@ The `flag` argument indicates the mode (not to confused by `mode` argument) in w
 
 > You do not need to remember all of these, but it can be useful to write consistent APIs to ensure that no undefined behavior occurs.
 
-Let’s use `wx+` to show a small example. `wx+` will open a file for read and write, but fail to open a file if it already exists. If teh file doesn’t exists it will create a file and work just fine.
+Let’s use `wx+` to show a small example. `wx+` will open a file for read and write, but fail to open a file if it already exists. If the file doesn’t exists it will create a file and work just fine.
 
 ```jsx
 // calculator.js
