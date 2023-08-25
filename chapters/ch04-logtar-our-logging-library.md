@@ -163,7 +163,7 @@ class Logger {
 
     // Sets the log level to whatever user passed as an argument to `new Logger()`
     constructor(log_level) {
-      this.level = log_level;
+      this.log_level = log_level;
     }
 }
 ```
@@ -190,7 +190,7 @@ class Logger {
     constructor(log_level) {
         // Throw an error if the `log_level` is an unsupported value.
         LogLevel.assert(log_level);
-        this.level = log_level;
+        this.log_level = log_level;
     }
 }
 ```
@@ -243,7 +243,7 @@ class Logger {
 
     constructor(log_level) {
         // You refer to private variables using the `#` prefix.
-        this.#log_level = log_level;
+        this.#level = log_level;
     }
 }
 
