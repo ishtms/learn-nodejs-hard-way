@@ -28,7 +28,7 @@ class Logger {
     async init() {
           const log_dir_path = check_and_create_dir("logs")
 
-          const file_name = this.#config.file_prefix + new Date().toISOString().replace(/\..+/, "") + ".log";
+          const file_name = this.#config.file_prefix + new Date().toISOString().replace(/[\.:]+/, "-") + ".log";
           this.#log_file_handle = await fs.open(path.join(log_dir_path, file_name), "a+");
     }
 
