@@ -1,8 +1,8 @@
+# Learn Node.js by building a backend framework
+
 <p align="center">
   <img src="./assets/imgs/cover.jpg" alt="Learn nodejs the hard way" width="500">
 </p>
-
-# Learn Node.js by building a backend framework
 
 You can access the current version of the book in the [chapters directory](/chapters) or in PDF format  (both Light and Dark modes are available) by [clicking here](https://github.com/ishtms/learn-nodejs-hard-way/releases). Note that this version includes the current release of the content, and is not the final version.
 
