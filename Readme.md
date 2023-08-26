@@ -185,5 +185,7 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy)
         - [Caching improvements](/chapters/ch06.1-http-verbs.md#caching-improvements)
         - [Range Requests](/chapters/ch06.1-http-verbs.md#range-requests)
         - [New Methods: `PUT`, `DELETE`, `CONNECT`, `OPTIONS`, `TRACE`](/chapters/ch06.1-http-verbs.md#new-methods-put-delete-connect-options-trace)
+- [User Agents](/chapters/ch06.2-user-agents.md)
+    - [`User-Agent` can be weird](/chapters/ch06.2-user-agents.md#user-agent-can-be-weird)
 
 ![](https://uddrapi.com/api/img?page=readme)
