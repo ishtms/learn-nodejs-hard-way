@@ -68,8 +68,8 @@ In a backend library, a strong routing system makes it simpler to create and man
   let add_user = velocy.get('/', add_user_callback)
   let delete_user = velocy.delete('/:user_id', delete_user_callback)
   
-  // Nest `users_router` inside `our_router`, and `add_user`, `delete_user` inside `users_router`
-  v1.nest(
+  // Nest `users_router` inside `v1_router`, and `add_user`, `delete_user` inside `users_router`
+  v1_router.nest(
       users_router.nest(add_user, delete_user)
   );
   ```
