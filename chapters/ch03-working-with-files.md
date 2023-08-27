@@ -565,7 +565,7 @@ async function open_file() {
     const file_handle = await fs.open("config", "r", fs.constants.O_WRONLY);
         // do something with the `file_handle`
   } catch (err) {
-    // Do somethign with the `err` object
+    // Do something with the `err` object
   }
 }
 
@@ -847,7 +847,7 @@ Strangely, this outputs some weird looking stuff
  <Buffer 7b 0a 20 20 22 6c 6f 67 5f 70 72 65 66 69 78 22 3a 20 22 5b 4c 4f 47 5d 3a 20 22 0a 7d 0a>
 ```
 
-Why is it so? And what is a `Buffer`? This is one of the most unvisited topic of programming. Let’s take a minute to understand it.
+Why is it so? And what is a `Buffer`? This is one of the most unvisited topics of programming. Let’s take a minute to understand it.
 
 # Buffers
 
