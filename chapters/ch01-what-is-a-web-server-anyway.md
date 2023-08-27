@@ -2,7 +2,7 @@
 
 # What the hell is a web server any way?
 
-> Note: This chapter gives you a brief overview of the basics of web servers and HTTP. We'll learn about HTTP in more details in an [upcoming chapter](/chapters/ch06.0-http-deep-dive.md.md).
+> Note: This chapter gives you a brief overview of the basics of web servers and HTTP. We'll learn about HTTP in more details in an [upcoming chapter](/chapters/ch06.0-http-deep-dive.md).
 
 If you do not wish to read about the basics of web/http, you can safely jump to the [coding section](/chapters/ch02-your-first-nodejs-server.md).
 
