@@ -630,13 +630,13 @@ Let's fix it.
     }
 ```
 
-We create `jsdoc` comments with multi-line comment format using `/** ... */`. Then specify a tag using `@`. In the code snippet above, we specified two tags - `@params` and `@returns`. The tags have the following syntax
+We create `jsdoc` comments with multi-line comment format using `/** ... */`. Then specify a tag using `@`. In the code snippet above, we specified three tags - `@params`, `@returns` and `@throws`. The tags have the following syntax
 
 ```textile
 @tag {Type} <argument> <description>
 ```
 
-The `Type` is the actual type of the `argument` you specified. that you're referring to. In our case it's the argument for `with_max_file_size` method is `max_file_size`. And the type for that is `number`. The description is the documentation part for that particular parameter.
+The `Type` is the actual type of the `argument` that you're referring to. In our case it's the argument `file_prefix` in the method `with_file_prefix`. The type for that is `string`. The description is the documentation part for that particular parameter.
 
 Here's the `jsdoc` comments with `with_log_level` method
 
