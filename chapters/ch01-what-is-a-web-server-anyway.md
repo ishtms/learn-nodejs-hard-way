@@ -1,6 +1,6 @@
 [![Read Prev](/assets/imgs/prev.png)](/Readme.md)
 
-# What the hell is a web server any way?
+# What the heck is a web server any way?
 
 > Note: This chapter gives you a brief overview of the basics of web servers and HTTP. We'll learn about HTTP in more details in an [upcoming chapter](/chapters/ch06.0-http-deep-dive.md).
 
