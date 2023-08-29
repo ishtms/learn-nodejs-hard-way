@@ -357,7 +357,8 @@ Perfect! This all looks really good. We are confident that neither clients nor o
 
 We have a bare bones `Logger` setup, which isn't helpful at all. Let's make it a bit more useful.
 
-You see, setting the log level inside the logger is fine until we start adding a lot of config settings. For example, we may add a `file_prefix` member variable, as well as `max_file_size` too. The `Logger` class will get cluttered too much, and that's not what we want.
+You see, setting the log level inside the logger is fine until we start adding a lot of config settings. For example, we may add a `file_prefix` member variable, as well as some other configuration related variables. In that case, the `Logger` class will get cluttered too much, and that's not what we want.
+
 Let's start refactoring now. Create a new class `LogConfig` that will contain all the utility helpers to deal with log config. Everything that take cares about the configuration will live inside it.
 
 ```js
@@ -401,10 +402,6 @@ class LogConfig {
 
     get file_prefix() {
         return this.#file_prefix;
-    }
-
-    get max_file_size() {
-        return this.#max_file_size;
     }
 }
 ```
