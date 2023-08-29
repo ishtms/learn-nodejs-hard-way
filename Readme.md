@@ -218,5 +218,15 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy)
     -   [Host](/chapters/ch06.4-headers.md#host)
     -   [Content-Type](/chapters/ch06.4-headers.md#content-type)
 -   [Response Headers](/chapters/ch06.4-headers.md#response-headers)
+    - [Content-Type (response)](/chapters/ch06.4-headers.md#content-type-response)
+    - [Cache-Control](/chapters/ch06.4-headers.md#cache-control)
+        - [How Caches Work](/chapters/ch06.4-headers.md#how-caches-work)
+        - [Cache-Control Directives](/chapters/ch06.4-headers.md#cache-control-directives)
+            - [Always Cache (infrequent updates)](/chapters/ch06.4-headers.md#always-cache-infrequent-updates)
+            - [Always Cache (private only)](/chapters/ch06.4-headers.md#always-cache-private-only)
+            - [Never Cache (realtime data)](/chapters/ch06.4-headers.md#never-cache-realtime-data)
+    - [Set-Cookie](/chapters/ch06.4-headers.md#set-cookie)
+
+
 
 ![](https://uddrapi.com/api/img?page=readme)
