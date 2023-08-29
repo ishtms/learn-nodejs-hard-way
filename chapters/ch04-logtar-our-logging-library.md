@@ -758,14 +758,14 @@ class RollingConfig {
     // If yes, set the size, and return the current instance of the class.
     // If it's not valid, throw an error.
     with_size_threshold(size_threshold) {
-        RollingTimeOptions.assert_size(size_threshold);
+        RollingSizeOptions.assert(size_threshold);
         this.#size_threshold = size_threshold;
         return this;
     }
 
     // Same like above, but with `time`.
     with_time_threshold(time_threshold) {
-        RollingTimeOptions.assert_time(time_threshold);
+        RollingTimeOptions.assert(time_threshold);
         this.#time_threshold = time_threshold;
         return this;
     }
