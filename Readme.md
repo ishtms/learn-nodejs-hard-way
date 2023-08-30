@@ -226,7 +226,9 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy)
             - [Always Cache (private only)](/chapters/ch06.4-headers.md#always-cache-private-only)
             - [Never Cache (realtime data)](/chapters/ch06.4-headers.md#never-cache-realtime-data)
     - [Set-Cookie](/chapters/ch06.4-headers.md#set-cookie)
-
+- [Response and Status Codes](/chapters/ch06.5-response-status-codes.md)
+    - [`Connection: close` in action](/chapters/ch06.5-response-status-codes.md#connection-close-in-action)
+    - [Status Codes](/chapters/ch06.5-response-status-codes.md#status-codes)
 
 
 ![](https://uddrapi.com/api/img?page=readme)
