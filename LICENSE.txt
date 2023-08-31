@@ -34,7 +34,7 @@ exhaustive, and do not form part of our licenses.
      licensed material, or material used under an exception or
      limitation to copyright. More considerations for licensors:
     wiki.creativecommons.org/Considerations_for_licensors
-
+    
      Considerations for the public: By using one of our public
      licenses, a licensor grants the public permission to use the
      licensed material under specified terms and conditions. If
@@ -66,7 +66,6 @@ consideration of Your acceptance of these terms and conditions, and the
 Licensor grants You such rights in consideration of benefits the
 Licensor receives from making the Licensed Material available under
 these terms and conditions.
-
 
 Section 1 -- Definitions.
 
@@ -135,7 +134,6 @@ Section 1 -- Definitions.
   k. You means the individual or entity exercising the Licensed Rights
      under this Public License. Your has a corresponding meaning.
 
-
 Section 2 -- Scope.
 
   a. License grant.
@@ -144,21 +142,21 @@ Section 2 -- Scope.
           the Licensor hereby grants You a worldwide, royalty-free,
           non-sublicensable, non-exclusive, irrevocable license to
           exercise the Licensed Rights in the Licensed Material to:
-
+    
             a. reproduce and Share the Licensed Material, in whole or
                in part, for NonCommercial purposes only; and
-
+    
             b. produce and reproduce, but not Share, Adapted Material
                for NonCommercial purposes only.
-
+    
        2. Exceptions and Limitations. For the avoidance of doubt, where
           Exceptions and Limitations apply to Your use, this Public
           License does not apply, and You do not need to comply with
           its terms and conditions.
-
+    
        3. Term. The term of this Public License is specified in Section
           6(a).
-
+    
        4. Media and formats; technical modifications allowed. The
           Licensor authorizes You to exercise the Licensed Rights in
           all media and formats whether now known or hereafter created,
@@ -170,22 +168,22 @@ Section 2 -- Scope.
           Technological Measures. For purposes of this Public License,
           simply making modifications authorized by this Section 2(a)
           (4) never produces Adapted Material.
-
+    
        5. Downstream recipients.
-
+    
             a. Offer from the Licensor -- Licensed Material. Every
                recipient of the Licensed Material automatically
                receives an offer from the Licensor to exercise the
                Licensed Rights under the terms and conditions of this
                Public License.
-
+    
             b. No downstream restrictions. You may not offer or impose
                any additional or different terms or conditions on, or
                apply any Effective Technological Measures to, the
                Licensed Material if doing so restricts exercise of the
                Licensed Rights by any recipient of the Licensed
                Material.
-
+    
        6. No endorsement. Nothing in this Public License constitutes or
           may be construed as permission to assert or imply that You
           are, or that Your use of the Licensed Material is, connected
@@ -202,10 +200,10 @@ Section 2 -- Scope.
           assert any such rights held by the Licensor to the limited
           extent necessary to allow You to exercise the Licensed
           Rights, but not otherwise.
-
+    
        2. Patent and trademark rights are not licensed under this
           Public License.
-
+    
        3. To the extent possible, the Licensor waives any right to
           collect royalties from You for the exercise of the Licensed
           Rights, whether directly or through a collecting society
@@ -215,7 +213,6 @@ Section 2 -- Scope.
           the Licensed Material is used other than for NonCommercial
           purposes.
 
-
 Section 3 -- License Conditions.
 
 Your exercise of the Licensed Rights is expressly made subject to the
@@ -224,47 +221,46 @@ following conditions.
   a. Attribution.
 
        1. If You Share the Licensed Material, You must:
-
+    
             a. retain the following if it is supplied by the Licensor
                with the Licensed Material:
-
+    
                  i. identification of the creator(s) of the Licensed
                     Material and any others designated to receive
                     attribution, in any reasonable manner requested by
                     the Licensor (including by pseudonym if
                     designated);
-
+    
                 ii. a copyright notice;
-
+    
                iii. a notice that refers to this Public License;
-
+    
                 iv. a notice that refers to the disclaimer of
                     warranties;
-
+    
                  v. a URI or hyperlink to the Licensed Material to the
                     extent reasonably practicable;
-
+    
             b. indicate if You modified the Licensed Material and
                retain an indication of any previous modifications; and
-
+    
             c. indicate the Licensed Material is licensed under this
                Public License, and include the text of, or the URI or
                hyperlink to, this Public License.
-
+    
           For the avoidance of doubt, You do not have permission under
           this Public License to Share Adapted Material.
-
+    
        2. You may satisfy the conditions in Section 3(a)(1) in any
           reasonable manner based on the medium, means, and context in
           which You Share the Licensed Material. For example, it may be
           reasonable to satisfy the conditions by providing a URI or
           hyperlink to a resource that includes the required
           information.
-
+    
        3. If requested by the Licensor, You must remove any of the
           information required by Section 3(a)(1)(A) to the extent
           reasonably practicable.
-
 
 Section 4 -- Sui Generis Database Rights.
 
@@ -287,7 +283,6 @@ apply to Your use of the Licensed Material:
 For the avoidance of doubt, this Section 4 supplements and does not
 replace Your obligations under this Public License where the Licensed
 Rights include other Copyright and Similar Rights.
-
 
 Section 5 -- Disclaimer of Warranties and Limitation of Liability.
 
@@ -317,7 +312,6 @@ Section 5 -- Disclaimer of Warranties and Limitation of Liability.
      possible, most closely approximates an absolute disclaimer and
      waiver of all liability.
 
-
 Section 6 -- Term and Termination.
 
   a. This Public License applies for the term of the Copyright and
@@ -331,9 +325,9 @@ Section 6 -- Term and Termination.
        1. automatically as of the date the violation is cured, provided
           it is cured within 30 days of Your discovery of the
           violation; or
-
+    
        2. upon express reinstatement by the Licensor.
-
+    
      For the avoidance of doubt, this Section 6(b) does not affect any
      right the Licensor may have to seek remedies for Your violations
      of this Public License.
@@ -346,7 +340,6 @@ Section 6 -- Term and Termination.
   d. Sections 1, 5, 6, 7, and 8 survive termination of this Public
      License.
 
-
 Section 7 -- Other Terms and Conditions.
 
   a. The Licensor shall not be bound by any additional or different
@@ -355,7 +348,6 @@ Section 7 -- Other Terms and Conditions.
   b. Any arrangements, understandings, or agreements regarding the
      Licensed Material not stated herein are separate from and
      independent of the terms and conditions of this Public License.
-
 
 Section 8 -- Interpretation.
 
