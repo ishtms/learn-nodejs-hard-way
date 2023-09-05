@@ -529,7 +529,7 @@ This is due to 3 separate processes consuming the memory - One master node, and 
 
 If you need speed - for both - CPU and IO/resource intensive tasks, you're better off working with languages like Rust, GoLang, C++ (Drogon) or Zig directly. Node.js is perfect for demanding IO workloads and is not slow at all. We just saw, how a small, immature web framework, almost achieved the same speed of Bun, that claimed to be orders of magnitude faster than Node.js counterparts. Stop looking at benchmarks. They're hardly a valid reason to choose a particular tool.
 
-The things that's important is - the tooling, the community, library ecosystem, job market and the list goes on. Node.js can be thought of as #1 on this list as far as server side programming is concerned. Axum is my go-to framework if I want to build something which involves security heavy things like managing a wallet system, or sub microsecond latency - and that is it. 
+The things that's important is - the tooling, the community, library ecosystem, job market and the list goes on. Node.js can be thought of as #1 on this list as far as server side programming is concerned. Axum is my go-to framework if I want to build something which involves security heavy things like managing a wallet system, or sub microsecond latency - and that's it. 
 
 On the other hand, you can work both on server and client applications by knowing just one language. This is the most under-rated part of working with Node.js.
 
