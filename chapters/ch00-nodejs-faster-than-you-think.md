@@ -24,7 +24,7 @@ I personally love [Axum](https://lib.rs/axum). It's one of the fastest and the m
 
 ### Express - Node.js
 
-This library is always used to establish the baseline for any benchmarks. I would love to be proven wrong, but I do not believe Elysia can be 18 times faster than Express. Maybe 18x faster at "waiting for IO".
+This library is always used to establish the baseline for any benchmarks. I would love to be proven wrong, but I do not believe Elysia can be 18 times faster than Express. Maybe 18x faster at "waiting for I/O".
 
 ### Velocy - Node.js
 
