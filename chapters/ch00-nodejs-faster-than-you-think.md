@@ -18,7 +18,7 @@ We'll be comparing a couple of "fast" frameworks and putting them against Node.j
 
 Elysia claims to be 18x faster than Express.
 
-![](/Users/ishtmeet/Library/Application%20Support/CleanShot/media/media_wb0ok9oPxA/CleanShot%202023-09-05%20at%2005.55.25@2x.png)
+![](/assets/imgs/elysia-claim.png)
 
 ### Axum - Rust
 
@@ -324,21 +324,19 @@ Transfer/sec:     16.60MB
 
 ### Latency
 
-![](/Users/ishtmeet/Library/Application%20Support/CleanShot/media/media_Tc8tmbIovn/CleanShot%202023-09-05%20at%2010.46.46@2x.png)
+![](/assets/imgs/max_latency.png)
 
 ### Requests/sec
 
-![](/Users/ishtmeet/Library/Application%20Support/CleanShot/media/media_PSD4wOXlKs/CleanShot%202023-09-05%20at%2011.34.26@2x.png)
+![](/assets/imgs/rps.png)
 
 ### Idle memory
 
-![](/Users/ishtmeet/Library/Application%20Support/CleanShot/media/media_I8ouOqgzI2/CleanShot%202023-09-05%20at%2011.38.59@2x.png)
-
-
+![](/assets/imgs/idle_memory.png)
 
 ### Memory under constant load
 
-![](/Users/ishtmeet/Library/Application%20Support/CleanShot/media/media_IG1csxVxEO/CleanShot%202023-09-05%20at%2011.44.51@2x.png)
+![](/assets/imgs/mem_const_load.png)
 
 ### Verdict - Typical benchmark
 
@@ -503,31 +501,31 @@ Graphs
 
 ### Latency
 
-![](/Users/ishtmeet/Library/Application%20Support/CleanShot/media/media_hLBUWhQnZS/CleanShot%202023-09-05%20at%2014.02.12@2x.png)
+![](/assets/imgs/latency_2.png)
 
-Slightly high `max` latency due to the fact that the requests have to be distributed to the workers and all worker processes in a cluster share the same server ports, and the OS scheduler decides which worker process will handle an incoming request. This can cause contention and variability in response time. Some workers may get stuck with long-running requests, thereby delaying other incoming requests.
+Too high `max` latency due to the fact that the requests have to be distributed to the workers and all worker processes in a cluster share the same server ports, and the OS scheduler decides which worker process will handle an incoming request. This can cause contention and variability in response time. Some workers may get stuck with long-running requests, thereby delaying other incoming requests.
 
 Let's ignore `max. latency` and zoom in for some exciting results -
 
 ### Latency without `max latency` bar
 
-![](/Users/ishtmeet/Library/Application%20Support/CleanShot/media/media_7SuFnTkl34/CleanShot%202023-09-05%20at%2014.06.48@2x.png)
+![](/assets/imgs/latency_without_max.png)
 
 Velocy, our young, immature Node.js framework (in yellow) is performing almost the same as the super fast bun server (in blue)!
 
 ### Requests/sec
 
-![](/Users/ishtmeet/Library/Application%20Support/CleanShot/media/media_SwSdSfhGrI/CleanShot%202023-09-05%20at%2014.08.49@2x.png)
+![](/assets/imgs/rps_2.png)
 
 ### Idle memory
 
 This is due to 3 separate processes consuming the memory - One master node, and two workers. Still, not much difference.
 
-![](/Users/ishtmeet/Library/Application%20Support/CleanShot/media/media_lp66BJiz6G/CleanShot%202023-09-05%20at%2014.11.33@2x.png)
+![](/assets/imgs/mem_idle_2.png)
 
 ### Memory under constant load
 
-![](/Users/ishtmeet/Library/Application%20Support/CleanShot/media/media_Tx23R2dEec/CleanShot%202023-09-05%20at%2014.17.52@2x.png)
+![](/assets/imgs/mem_const_load_2.png)
 
 ## Final verdict
 
@@ -543,4 +541,4 @@ Node.js does use a threadpool internally, through **libuv**. Libuv is the underl
 
 [![Read Prev](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
 
-![](https://uddrapi.com/api/img?page=nodejs_way_faster)
+<!-- ![](https://uddrapi.com/api/img?page=nodejs_way_faster) -->
