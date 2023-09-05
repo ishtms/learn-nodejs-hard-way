@@ -541,4 +541,4 @@ Node.js does use a threadpool internally, through **libuv**. Libuv is the underl
 
 [![Read Prev](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
 
-<!-- ![](https://uddrapi.com/api/img?page=nodejs_way_faster) -->
+![](https://uddrapi.com/api/img?page=nodejs_way_faster)
