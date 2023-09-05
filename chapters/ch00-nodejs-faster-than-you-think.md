@@ -541,6 +541,6 @@ Node.js does use a threadpool internally, through **libuv**. Libuv is the underl
 
 > TBD: Create benchmarks using `rewrk` too.
 
+[![Read Prev](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
 
-
-
+![](https://uddrapi.com/api/img?page=nodejs_way_faster)
