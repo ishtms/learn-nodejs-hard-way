@@ -25,7 +25,13 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy)
 [![Read Next](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
 
 # Table of contents
-
+- [(optional) Node.js is way faster than you think](/chapters/ch00-nodejs-faster-than-you-think.md)
+    - [Contenders for the test](/chapters/ch00-nodejs-faster-than-you-think.md#contenders-for-the-test)
+        - [Elysia - Bun](/chapters/ch00-nodejs-faster-than-you-think.md#elysia---bun)
+        - [Axum - Rust](/chapters/ch00-nodejs-faster-than-you-think.md#axum---rust)
+        - [Express - Node.js](/chapters/ch00-nodejs-faster-than-you-think.md#express---nodejs)
+        - [Velocy - Node.js](/chapters/ch00-nodejs-faster-than-you-think.md#velocy---nodejs)
+    - [The benchmark](/chapters/ch00-nodejs-faster-than-you-think.md#the-benchmark)
 -   [What the hell is a web server any way?](/chapters/ch01-what-is-a-web-server-anyway.md)
     -   [Parts of a Web Server](/chapters/ch01-what-is-a-web-server-anyway.md#parts-of-a-web-server)
     -   [Navigating the World of Protocols: A Quick Overview](/chapters/ch01-what-is-a-web-server-anyway.md#navigating-the-world-of-protocols-a-quick-overview)
