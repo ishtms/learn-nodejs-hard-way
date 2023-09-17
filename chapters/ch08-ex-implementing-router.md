@@ -610,3 +610,5 @@ null
 ```
 
 Everything seems to be working well. This is it for the `findRoute` method. This was much easier than our `addRoute` implementation, since we only cared about searching. Excellent, we've grasped the basics well! Now let's move on to the more advanced features in the next chapter, ie Implementing HTTP methods with our router.
+
+![](https://uddrapi.com/api/img?page=ex2)
