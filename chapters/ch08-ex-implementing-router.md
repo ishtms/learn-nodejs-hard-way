@@ -17,41 +17,41 @@ Create a new class, `TrieRouter`, similar to what we had earlier - `Trie`. Add a
 ### More details
 
 1. **Class Definition**: Define a class named `TrieRouter`. This class should contain:
-
-    - A root node, which is the starting point of the Trie.
-    - A method called `addRoute`.
+   
+   - A root node, which is the starting point of the Trie.
+   - A method called `addRoute`.
 
 2. **Route Node**: Define a class named `RouteNode` which will represent all the nodes.
-
-    1. `RouteNode` should contain the handler function, which will be `null` or `undefined` for all nodes except the end nodes of each URL pattern.
-
-    2. `RouteNode` should also contain a `Map` to store its children nodes, where the key will be the URL segment eg "home" or "user", and the value will be another `RouteNode`
+   
+   1. `RouteNode` should contain the handler function, which will be `null` or `undefined` for all nodes except the end nodes of each URL pattern.
+   
+   2. `RouteNode` should also contain a `Map` to store its children nodes, where the key will be the URL segment eg "home" or "user", and the value will be another `RouteNode`
 
 3. **Root Node**: The root node is an empty node of the type `RouteNode`, that serves as the starting point for inserting new URL patterns into the Trie. Initialize it in the constructor of `TrieRouter`.
 
 4. **Method - `addRoute`**: This method takes in two parameters:
-
-    - `path`: A string representing the URL pattern to add to the Trie. The URL pattern will be segmented by forward slashes `/`.
-
-    - `handler`: A function that should be called when the URL pattern is matched.
-
-    - Remove the trailing slash `/` from the `path` if it exists.
-
-    - The method should insert the `path` into the `TrieRouter`, associating the `handler` function with the last node of that pattern.
+   
+   - `path`: A string representing the URL pattern to add to the Trie. The URL pattern will be segmented by forward slashes `/`.
+   
+   - `handler`: A function that should be called when the URL pattern is matched.
+   
+   - Remove the trailing slash `/` from the `path` if it exists.
+   
+   - The method should insert the `path` into the `TrieRouter`, associating the `handler` function with the last node of that pattern.
 
 5. **Trailing forward-slashes**: You should treat routes that end with a forward slash `/` the same as those that don't, so that `/home/` and `/home` point to the same handler.
 
 6. **Repeated forward-slashes**: You should remove all the repeated `/` in the path.
-
-    1. `/user//hello////` should resolve as `/user/hello`
-
-    2. `/user//////////` should resolve as `/user`
+   
+   1. `/user//hello////` should resolve as `/user/hello`
+   
+   2. `/user//////////` should resolve as `/user`
 
 7. **Remove whitespaces** before and after all the url segments. For example `/   user/ node  /` should resolve as `/user/node`
 
 8. **Reject URLs** that do not start with `/`
-
-    1. If someone uses `trieRouter.addRoute("hi/something")`, your code should throw an error.
+   
+   1. If someone uses `trieRouter.addRoute("hi/something")`, your code should throw an error.
 
 Once implemented, we should be able to do something like this:
 
@@ -352,21 +352,17 @@ You've successfully implemented the `addRoute` method to build our `Trie`-based 
 ### More details
 
 1. **Method - `findRoute`**: Add a method to your `TrieRouter` class called `findRoute`.
+- This method should take a single parameter, `path`, which is a string representing the URL pattern to find in the Trie.
 
--   This method should take a single parameter, `path`, which is a string representing the URL pattern to find in the Trie.
+- Return the handler function associated with the last node of the matching URL pattern.
 
--   Return the handler function associated with the last node of the matching URL pattern.
-
--   If the URL pattern is not found, return `null` or some indication that the route does not exist.
-
+- If the URL pattern is not found, return `null` or some indication that the route does not exist.
 2. **Path Normalization**: Before searching for the route in the Trie, normalize the path similar to what you did in `addRoute`.
+- Remove trailing slashes.
 
--   Remove trailing slashes.
+- Handle repeated slashes.
 
--   Handle repeated slashes.
-
--   Remove whitespaces before and after each URL segment.
-
+- Remove whitespaces before and after each URL segment.
 3. **Traversal**: Start from the root node and traverse the Trie based on the URL segments. Retrieve the handler function from the last node if the path exists.
 
 4. **Route Matching**: The Trie should now allow for a partial match. For instance, if a handler is set for `/user/status`, a request for `/user/status/play` should return null if `/user/status/play` has not been set!
@@ -524,7 +520,6 @@ We're using the newly created `getRouteParts` function to normalize and segment 
         let handler = null;
         ...
     }
-
 ```
 
 We've initialized three key variables. The `routeParts` variable stores the normalized URL segments obtained from calling `getRouteParts()`. The `node` variable keeps track of our current position in the Trie and is initialized to the root node. The `handler` variable is initialized to `null` and will later store the handler function if a match is found.

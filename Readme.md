@@ -6,19 +6,56 @@
 
 You can access the current version of the book in the [chapters directory](/chapters) or in PDF format (both Light and Dark modes are available) by [clicking here](https://github.com/ishtms/learn-nodejs-hard-way/releases). Note that this version includes the current release of the content, and is not the final version.
 
-> This book is still in a very early stage. It contains an insignificant portion of the total content that the book is supposed to cover.
+> This book is still in a very early stage. It contains an insignificant portion of the total content that the book is supposed to cover. There’s going to be 0 dependencies for our [backend framework](https://github.com/ishtms/velocy), as well as our [logging library](https://github.com/ishtms/logtar). Everything will be done using vanilla Node.js, the hard-way (the best way to learn).
 
-> There’s going to be 0 dependencies for our [backend framework](https://github.com/ishtms/velocy), as well as our [logging library](https://github.com/ishtms/logtar). Everything will be done using vanilla Node.js, the hard-way (the best way to learn).
+```
+             ('-.   ('-.     _  .-')       .-') _
+           _(  OO) ( OO ).-.( \( -O )     ( OO ) )
+ ,--.     (,------./ . --. / ,------. ,--./ ,--,'
+ |  |.-')  |  .---'| \-.  \  |   /`. '|   \ |  |\
+ |  | OO ) |  |  .-'-'  |  | |  /  | ||    \|  | )
+ |  |`-' |(|  '--.\| |_.'  | |  |_.' ||  .     |/
+(|  '---.' |  .--' |  .-.  | |  .  '.'|  |\    |
+ |      |  |  `---.|  | |  | |  |\  \ |  | \   |
+ `------'  `------'`--' `--' `--' '--'`--'  `--'
+     .-') _              _ .-') _     ('-.                .-')
+    ( OO ) )            ( (  OO) )  _(  OO)              ( OO ).
+,--./ ,--,'  .-'),-----. \     .'_ (,------.        ,--.(_)---\_)
+|   \ |  |\ ( OO'  .-.  ',`'--..._) |  .---'    .-')| ,|/    _ |
+|    \|  | )/   |  | |  ||  |  \  ' |  |       ( OO |(_|\  :` `.
+|  .     |/ \_) |  |\|  ||  |   ' |(|  '--.    | `-'|  | '..`''.)
+|  |\    |    \ |  | |  ||  |   / : |  .--'    ,--. |  |.-._)   \
+|  | \   |     `'  '-'  '|  '--'  / |  `---..-.|  '-'  /\       /
+`--'  `--'       `-----' `-------'  `------'`-' `-----'  `-----'
+ .-') _    ('-. .-.   ('-.         ('-. .-.   ('-.     _  .-')  _ .-') _
+(  OO) )  ( OO )  / _(  OO)       ( OO )  /  ( OO ).-.( \( -O )( (  OO) )
+/     '._ ,--. ,--.(,------.      ,--. ,--.  / . --. / ,------. \     .'_
+|'--...__)|  | |  | |  .---'      |  | |  |  | \-.  \  |   /`. ',`'--..._)
+'--.  .--'|   .|  | |  |          |   .|  |.-'-'  |  | |  /  | ||  |  \  '
+   |  |   |       |(|  '--.       |       | \| |_.'  | |  |_.' ||  |   ' |
+   |  |   |  .-.  | |  .--'       |  .-.  |  |  .-.  | |  .  '.'|  |   / :
+   |  |   |  | |  | |  `---.      |  | |  |  |  | |  | |  |\  \ |  '--'  /
+   `--'   `--' `--' `------'      `--' `--'  `--' `--' `--' '--'`-------'
+  (`\ .-') /`  ('-.
+   `.( OO ),' ( OO ).-.
+,--./  .--.   / . --. /  ,--.   ,--.
+|      |  |   | \-.  \    \  `.'  /
+|  |   |  |,.-'-'  |  | .-')     /
+|  |.'.|  |_)\| |_.'  |(OO  \   /
+|         |   |  .-.  | |   /  /\_
+|   ,'.   |   |  | |  | `-./  /.__)
+'--'   '--'   `--' `--'   `--'
+```
 
-I've found that one of the best ways to get a handle on a new concept is to start from scratch. Begin with nothing, and build it up yourself. This approach lets you not only learn how it works, but also understand _why_ it works that way.
+To master a new concept, it's often best to begin from the ground up. This isn't just another Node.js guide; it's a comprehensive, code-along experience aimed at building a real world product that may be used by thousands of developers. The product that we're going to build will be a backend framework, that too from scratch.
 
-This isn't any normal Node.js tutorial or guide. It's a detailed walkthrough, and a code along experience that shows you how to create a backend framework from the ground up while getting a solid grasp of Node.js's inner workings and it’s standard library.
+You won't just learn how Node.js works, but also why it operates in a particular way. The guide also includes discussions on relevant data structures and design patterns.
 
-In this guide, we will not only build a web framework, but also focus on designing a powerful and optimized end product that is ready for use in production applications (somewhat). Our goal is to create a modular backend framework that can be easily extended with new features as needed.
+The book also includes a wide range of exercises specifically created to challenge you, that may require commitment and consistent effort on your part. The first exercises starts from [chapter 7](/chapters/ch07-ex-implementing-a-trie.md)
 
-We will cover topics like error handling, security, and testing to ensure that our framework is reliable and secure. We will explore different approaches to modularity and demonstrate how to create reusable components that can be shared across multiple projects. By the end of this guide, you will have a solid understanding of Node.js and it’s tough parts.
+This guide goes beyond the basics. We're focused on delivering a modular, optimized backend framework that is close to being production-ready. Topics like performance optimization, security measures, and various testing approaches will be covered to ensure the framework is both reliable and extendable.
 
-I highly recommend coding along with this guide rather than just reading it.
+I highly recommend actively coding alongside this guide, rather than just reading through it, for a full understanding of Node.js and its more intricate aspects.
 
 The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy)
 
