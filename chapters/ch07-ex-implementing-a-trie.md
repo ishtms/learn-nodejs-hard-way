@@ -1,6 +1,6 @@
 [![Read Prev](/assets/imgs/prev.png)](/chapters/ch06.4-the-need-for-a-trie.md)
 
-# Exercises - Implementing a `Trie`
+# Exercise 1 - Implementing a `Trie`
 
 > This exercise will motivate you to work on implementing your solution independently. Once you have completed the exercise, you can move on to the next challenge or read the solution to find a different approach.
 >

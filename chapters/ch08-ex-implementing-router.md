@@ -1,6 +1,6 @@
 [![Read Prev](/assets/imgs/prev.png)](/chapters/ch07-ex-implementing-a-trie.md)
 
-# Exercise - Implementing our Trie based `Router`
+# Exercise 2 - Implementing our Trie based `Router`
 
 > This challenge is designed to push your boundaries and is considered to be more advanced than usual. It's completely okay if you don't crack it on your first attempt. The key is to persist, revisit your logic, and don't hesitate to iterate on your solutions.
 
