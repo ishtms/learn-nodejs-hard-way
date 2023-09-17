@@ -1,8 +1,10 @@
+[![Read Prev](/assets/imgs/prev.png)](/chapters/ch07-ex-implementing-a-trie.md)
+
 # Exercise - Implementing our Trie based `Router`
 
 > This challenge is designed to push your boundaries and is considered to be more advanced than usual. It's completely okay if you don't crack it on your first attempt. The key is to persist, revisit your logic, and don't hesitate to iterate on your solutions.
 
-Since we just built a Trie data structure that can efficiently insert and search words, we can further enhance its capabilities by extending it to implement a Trie-based router for matching URL patterns. This powerful application of `Trie` data structure is commonly utilized in web frameworks, where it plays a crucial role in efficiently routing incoming HTTP requests to their respective handler functions. 
+Since we just built a Trie data structure that can efficiently insert and search words, we can further enhance its capabilities by extending it to implement a Trie-based router for matching URL patterns. This powerful application of `Trie` data structure is commonly utilized in web frameworks, where it plays a crucial role in efficiently routing incoming HTTP requests to their respective handler functions.
 
 By building a `Trie`-based router, our framework can achieve optimal performance and scalability, ensuring that each request is efficiently directed to the appropriate handler for processing.
 
@@ -15,41 +17,41 @@ Create a new class, `TrieRouter`, similar to what we had earlier - `Trie`. Add a
 ### More details
 
 1. **Class Definition**: Define a class named `TrieRouter`. This class should contain:
-   
-   - A root node, which is the starting point of the Trie.
-   - A method called `addRoute`.
+
+    - A root node, which is the starting point of the Trie.
+    - A method called `addRoute`.
 
 2. **Route Node**: Define a class named `RouteNode` which will represent all the nodes.
-   
-   1. `RouteNode` should contain the handler function, which will be `null` or `undefined` for all nodes except the end nodes of each URL pattern.
-   
-   2. `RouteNode` should also contain a `Map` to store its children nodes, where the key will be the URL segment eg "home" or "user", and the value will be another `RouteNode`
+
+    1. `RouteNode` should contain the handler function, which will be `null` or `undefined` for all nodes except the end nodes of each URL pattern.
+
+    2. `RouteNode` should also contain a `Map` to store its children nodes, where the key will be the URL segment eg "home" or "user", and the value will be another `RouteNode`
 
 3. **Root Node**: The root node is an empty node of the type `RouteNode`, that serves as the starting point for inserting new URL patterns into the Trie. Initialize it in the constructor of `TrieRouter`.
 
 4. **Method - `addRoute`**: This method takes in two parameters:
-   
-   - `path`: A string representing the URL pattern to add to the Trie. The URL pattern will be segmented by forward slashes `/`.
-   
-   - `handler`: A function that should be called when the URL pattern is matched.
-   
-   - Remove the trailing slash `/` from the `path` if it exists.
-   
-   - The method should insert the `path` into the `TrieRouter`, associating the `handler` function with the last node of that pattern.
+
+    - `path`: A string representing the URL pattern to add to the Trie. The URL pattern will be segmented by forward slashes `/`.
+
+    - `handler`: A function that should be called when the URL pattern is matched.
+
+    - Remove the trailing slash `/` from the `path` if it exists.
+
+    - The method should insert the `path` into the `TrieRouter`, associating the `handler` function with the last node of that pattern.
 
 5. **Trailing forward-slashes**: You should treat routes that end with a forward slash `/` the same as those that don't, so that `/home/` and `/home` point to the same handler.
 
 6. **Repeated forward-slashes**: You should remove all the repeated `/` in the path.
-   
-   1. `/user//hello////` should resolve as `/user/hello`
-   
-   2. `/user//////////` should resolve as `/user`
+
+    1. `/user//hello////` should resolve as `/user/hello`
+
+    2. `/user//////////` should resolve as `/user`
 
 7. **Remove whitespaces** before and after all the url segments. For example `/   user/ node  /` should resolve as `/user/node`
 
 8. **Reject URLs** that do not start with `/`
-   
-   1. If someone uses `trieRouter.addRoute("hi/something")`, your code should throw an error.
+
+    1. If someone uses `trieRouter.addRoute("hi/something")`, your code should throw an error.
 
 Once implemented, we should be able to do something like this:
 
@@ -126,7 +128,7 @@ class RouteNode {
 
 Kudos to those who successfully implemented the `addRoute` function in the `TrieRouter` class. You've just completed the first difficult exercise in this book, showcasing not only your coding abilities but also your problem-solving skills.
 
-For those who found this challenge particularly challenging, don't get discouraged. The complexities you faced are what deepen your understanding and enhance your coding skills. Consider revisiting this exercise after looking at the solution or scraping and starting again from scratch. 
+For those who found this challenge particularly challenging, don't get discouraged. The complexities you faced are what deepen your understanding and enhance your coding skills. Consider revisiting this exercise after looking at the solution or scraping and starting again from scratch.
 
 ```js
 class RouteNode {
@@ -257,7 +259,7 @@ In the `RouteNode` class, each node is initialized with a `handler` set to `null
 ```js
 class TrieRouter {
     constructor() {
-        // Create a rootNode upon TrieRouter instantiation
+        // Create a rootNode upon TrieRouter instantiation
         this.rootNode = new RouteNode();
     }
 }
@@ -350,17 +352,21 @@ You've successfully implemented the `addRoute` method to build our `Trie`-based 
 ### More details
 
 1. **Method - `findRoute`**: Add a method to your `TrieRouter` class called `findRoute`.
-- This method should take a single parameter, `path`, which is a string representing the URL pattern to find in the Trie.
 
-- Return the handler function associated with the last node of the matching URL pattern.
+-   This method should take a single parameter, `path`, which is a string representing the URL pattern to find in the Trie.
 
-- If the URL pattern is not found, return `null` or some indication that the route does not exist.
+-   Return the handler function associated with the last node of the matching URL pattern.
+
+-   If the URL pattern is not found, return `null` or some indication that the route does not exist.
+
 2. **Path Normalization**: Before searching for the route in the Trie, normalize the path similar to what you did in `addRoute`.
-- Remove trailing slashes.
 
-- Handle repeated slashes.
+-   Remove trailing slashes.
 
-- Remove whitespaces before and after each URL segment.
+-   Handle repeated slashes.
+
+-   Remove whitespaces before and after each URL segment.
+
 3. **Traversal**: Start from the root node and traverse the Trie based on the URL segments. Retrieve the handler function from the last node if the path exists.
 
 4. **Route Matching**: The Trie should now allow for a partial match. For instance, if a handler is set for `/user/status`, a request for `/user/status/play` should return null if `/user/status/play` has not been set!
@@ -378,9 +384,9 @@ function userHandler() {}
 trieRouter.addRoute("/home", homeHandler);
 trieRouter.addRoute("/user/status", userHandler);
 
-console.log(trieRouter.findRoute("/home"));  // Should return homeHandler
-console.log(trieRouter.findRoute("/user/status"));  // Should return userHandler
-console.log(trieRouter.findRoute("/user/status/play"));  // Should return null
+console.log(trieRouter.findRoute("/home")); // Should return homeHandler
+console.log(trieRouter.findRoute("/user/status")); // Should return userHandler
+console.log(trieRouter.findRoute("/user/status/play")); // Should return null
 ```
 
 Feel free to share your implementation or ask for feedback in the [Github discussions](https://github.com/ishtms/learn-nodejs-hard-way/discussions) section. I'll try to review all code submissions and provide feedback if required.
@@ -398,7 +404,7 @@ class TrieRouter {
     addRoute(path, handler) {
         /* Your addRoute code */
     }
-    
+
     findRoute(path) {
         /* Your findRoute code goes here */
     }
@@ -526,11 +532,11 @@ We've initialized three key variables. The `routeParts` variable stores the norm
 ```js
 findRoute(path) {
     ...
-    
+
     // Traverse the Trie based on the URL segments
     for (let idx = 0; idx < routeParts.length; idx++) {
         let currPart = routeParts[idx];
-    
+
         // Retrieve the child node corresponding to the current URL segment
         let nextNode = node.children.get(currPart);
     ...
@@ -565,7 +571,7 @@ findRoute(path) {
         // Update the current Trie node for the next iteration
         node = nextNode;
     }
-    
+
     // Return the handler if found, otherwise null will be returned
     return handler;
 }
@@ -604,5 +610,3 @@ null
 ```
 
 Everything seems to be working well. This is it for the `findRoute` method. This was much easier than our `addRoute` implementation, since we only cared about searching. Excellent, we've grasped the basics well! Now let's move on to the more advanced features in the next chapter, ie Implementing HTTP methods with our router.
-
-
