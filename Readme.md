@@ -26,7 +26,7 @@ This guide goes beyond the basics. We're focused on delivering a modular, optimi
 
 I highly recommend actively coding alongside this guide, rather than just reading through it, for a full understanding of Node.js and its more intricate aspects.
 
-The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy)
+The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy). (W.I.P)
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
 
