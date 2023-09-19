@@ -8,44 +8,13 @@ You can access the current version of the book in the [chapters directory](/chap
 
 > This book is still in a very early stage. It contains an insignificant portion of the total content that the book is supposed to cover. There’s going to be 0 dependencies for our [backend framework](https://github.com/ishtms/velocy), as well as our [logging library](https://github.com/ishtms/logtar). Everything will be done using vanilla Node.js, the hard-way (the best way to learn).
 
-```
-             ('-.   ('-.     _  .-')       .-') _
-           _(  OO) ( OO ).-.( \( -O )     ( OO ) )
- ,--.     (,------./ . --. / ,------. ,--./ ,--,'
- |  |.-')  |  .---'| \-.  \  |   /`. '|   \ |  |\
- |  | OO ) |  |  .-'-'  |  | |  /  | ||    \|  | )
- |  |`-' |(|  '--.\| |_.'  | |  |_.' ||  .     |/
-(|  '---.' |  .--' |  .-.  | |  .  '.'|  |\    |
- |      |  |  `---.|  | |  | |  |\  \ |  | \   |
- `------'  `------'`--' `--' `--' '--'`--'  `--'
-     .-') _              _ .-') _     ('-.                .-')
-    ( OO ) )            ( (  OO) )  _(  OO)              ( OO ).
-,--./ ,--,'  .-'),-----. \     .'_ (,------.        ,--.(_)---\_)
-|   \ |  |\ ( OO'  .-.  ',`'--..._) |  .---'    .-')| ,|/    _ |
-|    \|  | )/   |  | |  ||  |  \  ' |  |       ( OO |(_|\  :` `.
-|  .     |/ \_) |  |\|  ||  |   ' |(|  '--.    | `-'|  | '..`''.)
-|  |\    |    \ |  | |  ||  |   / : |  .--'    ,--. |  |.-._)   \
-|  | \   |     `'  '-'  '|  '--'  / |  `---..-.|  '-'  /\       /
-`--'  `--'       `-----' `-------'  `------'`-' `-----'  `-----'
- .-') _    ('-. .-.   ('-.         ('-. .-.   ('-.     _  .-')  _ .-') _
-(  OO) )  ( OO )  / _(  OO)       ( OO )  /  ( OO ).-.( \( -O )( (  OO) )
-/     '._ ,--. ,--.(,------.      ,--. ,--.  / . --. / ,------. \     .'_
-|'--...__)|  | |  | |  .---'      |  | |  |  | \-.  \  |   /`. ',`'--..._)
-'--.  .--'|   .|  | |  |          |   .|  |.-'-'  |  | |  /  | ||  |  \  '
-   |  |   |       |(|  '--.       |       | \| |_.'  | |  |_.' ||  |   ' |
-   |  |   |  .-.  | |  .--'       |  .-.  |  |  .-.  | |  .  '.'|  |   / :
-   |  |   |  | |  | |  `---.      |  | |  |  |  | |  | |  |\  \ |  '--'  /
-   `--'   `--' `--' `------'      `--' `--'  `--' `--' `--' '--'`-------'
-  (`\ .-') /`  ('-.
-   `.( OO ),' ( OO ).-.
-,--./  .--.   / . --. /  ,--.   ,--.
-|      |  |   | \-.  \    \  `.'  /
-|  |   |  |,.-'-'  |  | .-')     /
-|  |.'.|  |_)\| |_.'  |(OO  \   /
-|         |   |  .-.  | |   /  /\_
-|   ,'.   |   |  | |  | `-./  /.__)
-'--'   '--'   `--' `--'   `--'
-```
+---
+
+## Note
+
+If you're not familiar with javascript, you may also check out my other repository - [Learn Javascript - The Easy Way](https://github.com/ishtms/learn-javascript-easy-way) that takes you on a deep and a fun journey into Javascript - from the very basics to the advanced concepts that you'd ever need, without diving into too much theory. Only practical code examples.
+
+---
 
 To master a new concept, it's often best to begin from the ground up. This isn't just another Node.js guide; it's a comprehensive, code-along experience aimed at building a real world product that may be used by thousands of developers. The product that we're going to build will be a backend framework, that too from scratch.
 
