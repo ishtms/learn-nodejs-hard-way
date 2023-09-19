@@ -2,7 +2,7 @@
 
 # [`logtar`](https://github.com/ishtms/logtar) our own logging library
 
-> Note: The entire code we write here can be found  [at the code/chapter_04.0 directory](/code/chapter_04.0). This will be a single file, and we'll refactor in subsequent chapters.
+> Note: The entire code we write here can be found [at the code/chapter_04.0 directory](/code/chapter_04.0). This will be a single file, and we'll refactor in subsequent chapters.
 
 Logging is an important part of creating robust and scaleable application. It helps developers find and fix problems, keep an eye on how the application is working, and see what users are doing.
 
@@ -61,7 +61,7 @@ Usually logging libraries have these 5 log levels (from least to most severe):
 4. **Error**: Reports errors or exceptional conditions that need to be addressed. These messages indicate that something has gone wrong and might affect the application's functionality.
 5. **Critical/Fatal**: For severe errors that might crash the application or cause major malfunctions. These messages require immediate attention as they indicate critical failures.
 
-> I prefer using `Class` over functions or objects to provide a better API. It's a powerful system in JavaScript, and I find it superior to factory functions. `Class` do have some draw backs but for our use case, they’re the best possible solution. If you’re un-aware of how classes work in javascript, just [go through this page quickly.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_classes) This should be enough to follow along.
+> I prefer using `Class` over functions or objects to provide a better API. It's a powerful system in JavaScript, and I find it superior to factory functions. `Class` do have some draw backs but for our use case, they’re the best possible solution. If you’re un-aware of how classes work in javascript, just [go through this](https://github.com/ishtms/learn-javascript-easy-way/blob/master/chapters/14_classes.js) and [this page](https://github.com/ishtms/learn-javascript-easy-way/blob/master/chapters/15_inheritance_classes.js) on my another javascript learning resource.
 
 When building a complex system or anticipating scalability, it's best to start simply and refactor as necessary. You don't need to use best practices from day one.
 
@@ -523,9 +523,7 @@ Do you notice the difference? All of the related validations and logic for each 
 Here's what I'd like the API of `LogConfig` to look like
 
 ```js
-const config = LogConfig.with_defaults()
-    .with_file_prefix("LogTar_")
-    .with_log_level(LogLevel.Critical);
+const config = LogConfig.with_defaults().with_file_prefix("LogTar_").with_log_level(LogLevel.Critical);
 ```
 
 Our current `LogConfig` class looks like this
@@ -591,15 +589,17 @@ class LogConfig {
 ```
 
 > Static methods in JavaScript are methods that belong to a class instead of an instance of the class. They can be used without creating an instance of the class and are often used for utility functions or operations that don't need any state. To create a static method in a class, use the `static` keyword before the method definition. For example:
+>
 > ```jsx
->  class MyClass {
->    static my_static_method() {
->      console.log('This is a static method.');
->    }
->  }
->  
->  MyClass.my_static_method();
+> class MyClass {
+>     static my_static_method() {
+>         console.log("This is a static method.");
+>     }
+> }
+>
+> MyClass.my_static_method();
 > ```
+>
 > One thing to keep in mind is that you cannot access the `this` keyword inside a static method. This is because `this` refers to the instance of the class, and static methods are not called on an instance.
 
 Subclasses can also inherit static methods, but they cannot be used on instances of the subclass. They are useful for organizing code and providing a namespace for related utility functions.
@@ -624,7 +624,7 @@ Let's fix it.
         if (typeof file_prefix !== "string") {
             throw new Error(`file_prefix must be a string. Unsupported param ${JSON.stringify(file_prefix)}`);
         }
-   
+
         this.#file_prefix = file_prefix;
         return this;
     }
@@ -714,13 +714,9 @@ class RollingTimeOptions {
     static Yearly = 12 * this.Monthly;
 
     static assert(time_option) {
-        if (
-            ![this.Minutely, this.Hourly, this.Daily, this.Weekly, this.Monthly, this.Yearly].includes(time_option)
-        ) {
+        if (![this.Minutely, this.Hourly, this.Daily, this.Weekly, this.Monthly, this.Yearly].includes(time_option)) {
             throw new Error(
-                `time_option must be an instance of RollingConfig. Unsupported param ${JSON.stringify(
-                    time_option
-                )}`
+                `time_option must be an instance of RollingConfig. Unsupported param ${JSON.stringify(time_option)}`
             );
         }
     }
@@ -769,9 +765,9 @@ class RollingConfig {
         this.#time_threshold = time_threshold;
         return this;
     }
-    
-     // Build from a `json` object instead of the `Builder`
-     static from_json(json) {
+
+    // Build from a `json` object instead of the `Builder`
+    static from_json(json) {
         let rolling_config = new RollingConfig();
 
         Object.keys(json).forEach((key) => {
@@ -784,7 +780,7 @@ class RollingConfig {
                     break;
             }
         });
-        
+
         return rolling_config;
     }
 }
@@ -794,23 +790,23 @@ The `RollingConfig` class is ready to be used. It has no functionality, and is m
 
 ### Let's recap
 
-- `RollingConfig` - A class that maintains the configuration on how often a new log file file should be rolled out. It is based on the `RollingTimeOptions` and `RollingSizeOptions` utility classes which define some useful constants as well as an `assert()` method for the validation.
+-   `RollingConfig` - A class that maintains the configuration on how often a new log file file should be rolled out. It is based on the `RollingTimeOptions` and `RollingSizeOptions` utility classes which define some useful constants as well as an `assert()` method for the validation.
 
-- `LogConfig` - A class that groups all other configurations into one giant class. This has a couple of private member variables - `#level` which is going to be of type `LogLevel` and keeps track of what logs should be written and what ignored; `#rolling_config` which is going to store the `RolllingConfig` for our logger; `#file_prefix` will be used to prefix log files.
-  
-  - `with_defaults` constructs and returns a new `LogConfig` object with some default values.
-  
-  - `with_log_level`, `with_file_prefix` and `with_rolling_config` mutates the current object after testing whether the input provided is valid. The example of what we learnt above - a `Builder` pattern.
-  
-  - `assert` validation for the `LogConfig` class.
+-   `LogConfig` - A class that groups all other configurations into one giant class. This has a couple of private member variables - `#level` which is going to be of type `LogLevel` and keeps track of what logs should be written and what ignored; `#rolling_config` which is going to store the `RolllingConfig` for our logger; `#file_prefix` will be used to prefix log files.
 
-- `Logger` - The backbone of our logger. It hardly has any functionality now, but this is the main class of our library. This is responsible to do all the hard work.
+    -   `with_defaults` constructs and returns a new `LogConfig` object with some default values.
+
+    -   `with_log_level`, `with_file_prefix` and `with_rolling_config` mutates the current object after testing whether the input provided is valid. The example of what we learnt above - a `Builder` pattern.
+
+    -   `assert` validation for the `LogConfig` class.
+
+-   `Logger` - The backbone of our logger. It hardly has any functionality now, but this is the main class of our library. This is responsible to do all the hard work.
 
 ## Adding more useful methods in the `LogConfig` class
 
-The `LogConfig` class looks fine. But it's missing out on a lot of other features. Let's add them one by one. 
+The `LogConfig` class looks fine. But it's missing out on a lot of other features. Let's add them one by one.
 
-Firstly, not everyone is a fan of builder pattern, many people would like to pass in an object and ask the library to parse something useful out of it. It's generally a very good practice to expose various ways to do a particular task. 
+Firstly, not everyone is a fan of builder pattern, many people would like to pass in an object and ask the library to parse something useful out of it. It's generally a very good practice to expose various ways to do a particular task.
 
 We are going to provide an ability to create a `LogConfig` object from a json object.
 
@@ -821,7 +817,7 @@ We are going to provide an ability to create a `LogConfig` object from a json ob
 
 class LogConfig {
     ...
-    
+
     with_rolling_config(config) {
         this.#rolling_config = RollingConfig.from_json(config);
         return this;
@@ -830,7 +826,7 @@ class LogConfig {
     static from_json(json) {
         // Create an empty LogConfig object.
         let log_config = new LogConfig();
-        
+
         // ignore the keys that aren't needed for our purposes.
         // if a key matches, let's set it to the provided value.
         Object.keys(json).forEach((key) => {
@@ -867,7 +863,7 @@ const config = LogConfig.from_json(json_config).with_file_prefix("Testing");
 
 const config = LogConfig.from_json({ level: LogLevel.Debug }).with_file_prefix('Test');
 
-// or 
+// or
 
 const config = LogConfig.with_defaults().with_log_level(LogLevel.Critical);
 
@@ -895,14 +891,14 @@ class LogConfig {
      * @throws {Error} If the file_path is not a string.
      */
     static from_file(file_path) {
-        // `fs.readFileSync` throws an error if the path is invalid. 
+        // `fs.readFileSync` throws an error if the path is invalid.
         // It takes care of the OS specific path handling for us. No need to
         // validate paths by ourselves.
         const file_contents = fs.readFileSync(file_path);
 
         // Send this over to our `from_json` method to do the rest
         return LogConfig.from_json(JSON.parse(file_contents));
-    }    
+    }
 
     ...
 }
@@ -914,7 +910,7 @@ Do you notice how we reused the `from_json` method to parse the json into a `Log
 
 Loggers are usually initialized once when the program starts, and are not usually created after the initialization phase. As such, using `readFileSync` over the asynchronous version (readFile) can provide several benefits in this specific case.
 
-`readFileSync` operates synchronously, meaning it blocks the execution of the code until the file reading is complete. For logger configuration setup, this is often desired because the configuration is needed to initialize the logger properly before any logging activity begins, since our application will be using the logger internally. 
+`readFileSync` operates synchronously, meaning it blocks the execution of the code until the file reading is complete. For logger configuration setup, this is often desired because the configuration is needed to initialize the logger properly before any logging activity begins, since our application will be using the logger internally.
 
 We cannot let the application start before initializing the logger. Using asynchronous operations like `readFile` could introduce complexities in managing the timing of logger initialization.
 
@@ -934,13 +930,13 @@ Let's test using a config file. Create a `config.demo.json` file with the follow
 Since we have added the support for files, the following code will work now
 
 ```js
-const config = LogConfig.from_file('./config.demo.json')
-const logger = Logger.with_config(config)
+const config = LogConfig.from_file("./config.demo.json");
+const logger = Logger.with_config(config);
 ```
 
-Everything works as expected. 
+Everything works as expected.
 
-> Note: The entire code we write here can be found  [at the code/chapter_04.0 directory](/code/chapter_04.0). This will be a single file, and we'll refactor in subsequent chapters.
+> Note: The entire code we write here can be found [at the code/chapter_04.0 directory](/code/chapter_04.0). This will be a single file, and we'll refactor in subsequent chapters.
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch04.1-refactoring-the-code.md)
 
