@@ -26,10 +26,10 @@ class Logger {
     }
 
     async init() {
-          const log_dir_path = check_and_create_dir("logs")
+        const log_dir_path = check_and_create_dir("logs");
 
-          const file_name = this.#config.file_prefix + new Date().toISOString().replace(/[\.:]+/, "-") + ".log";
-          this.#log_file_handle = await fs.open(path.join(log_dir_path, file_name), "a+");
+        const file_name = this.#config.file_prefix + new Date().toISOString().replace(/[\.:]+/g, "-") + ".log";
+        this.#log_file_handle = await fs.open(path.join(log_dir_path, file_name), "a+");
     }
 
     /**
@@ -47,7 +47,7 @@ class Logger {
     static with_config(log_config) {
         return new Logger(log_config);
     }
-    
+
     /**
      * @param {string} message
      * @param {number} log_level

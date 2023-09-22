@@ -32,7 +32,7 @@ class Logger {
     async init() {
         const log_dir_path = check_and_create_dir("logs");
 
-        const file_name = this.#config.file_prefix + new Date().toISOString().replace(/[\.:]+/, "-") + ".log";
+        const file_name = this.#config.file_prefix + new Date().toISOString().replace(/[\.:]+/g, "-") + ".log";
         this.#log_file_handle = await fs.open(path.join(log_dir_path, file_name), "a+");
     }
 
@@ -76,7 +76,7 @@ class Logger {
         const { size, birthtimeMs } = await this.#log_file_handle.stat();
         const current_time = new Date().getTime();
 
-        if (size >= size_threshold || (current_time - birthtimeMs >= time_threshold * 1000)) {
+        if (size >= size_threshold || current_time - birthtimeMs >= time_threshold * 1000) {
             await this.#log_file_handle.close();
             await this.init();
         }
@@ -88,7 +88,7 @@ class Logger {
      * @param {string} message
      * @param {LogLevel} log_level
      * @returns {Promise<void>}
-     */ 
+     */
     async #write_to_handle(message, log_level) {
         const date_iso = new Date().toISOString();
         const log_level_string = LogLevel.to_string(log_level);
