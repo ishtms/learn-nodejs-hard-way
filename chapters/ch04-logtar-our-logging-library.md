@@ -347,7 +347,7 @@ new Logger(); // works fine
 let logger = new Logger(LogLevel.Warn);
 logger.level; // returns the `level` because of the getter `level()`
 logger.#level; // throws error
-logger.#level = LogLevel.Warning; // throws error
+logger.#level = LogLevel.Warn; // throws error
 logger.level = 10; // throws error
 ```
 
