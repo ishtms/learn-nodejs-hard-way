@@ -663,7 +663,7 @@ Getting line -> open_file();
 File handle 20 closed
 ```
 
-The code above has a function called `open_file` that does three things: open a file, read each line, and show each line on the console.
+The code above has a function called `read_file` that does three things: open a file, read each line, and show each line on the console.
 
 This function uses the `fs` module. It opens a read-only file and creates a stream to read it. The function can read only some lines using the `start` and `end` options. The function also needs to know the file's characters using the `encoding` option.
 
