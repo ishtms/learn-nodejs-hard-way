@@ -77,7 +77,7 @@ class LogLevel {
     static Info = 1;
     static Warn = 2;
     static Error = 3;
-    static Critical = 5;
+    static Critical = 4;
 }
 
 module.exports = {
@@ -344,10 +344,10 @@ new Logger("OK"); // throws error
 new Logger(LogLevel.Debug); // works fine
 new Logger(); // works fine
 
-let logger = new Logger(LogLevel.Warning);
+let logger = new Logger(LogLevel.Warn);
 logger.level; // returns the `level` because of the getter `level()`
 logger.#level; // throws error
-logger.#level = LogLevel.Warning; // throws error
+logger.#level = LogLevel.Warn; // throws error
 logger.level = 10; // throws error
 ```
 
@@ -406,7 +406,7 @@ class LogConfig {
 }
 ```
 
-All looks okay. We have a `LogConfig` class setup. Now, instead of using `#level` for storing the log level inside the `Logger` class, let's replace it with `#config`
+All looks okay. We have a `LogConfig` class setup. Now, instead of using `#level` for storing the log level inside the `Logger` class, let's replace it with `#config`. Also add a helper method `with_config`.
 
 ```js
 // before
@@ -439,6 +439,10 @@ class Logger {
         log_config = log_config || LogConfig.with_defaults();
         LogConfig.assert(log_config);
         this.#config = log_config;
+    }
+
+     static with_config(log_config) {
+        return new Logger(log_config);
     }
 }
 ```
