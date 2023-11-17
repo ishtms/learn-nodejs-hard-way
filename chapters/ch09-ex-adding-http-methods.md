@@ -15,10 +15,12 @@ To make our router more useful and versatile, we need to extend the existing `Tr
 3. The key in the `handler` `Map` will be the HTTP method as a string (like "GET", "POST") and the value will be the handler function for that HTTP method.
 
 4. Modify the `addRoute` method of the `TrieRouter` class to take an additional parameter `method`.
-- `method`: A string representing the HTTP method. This could be "GET", "POST", "PUT", "DELETE", etc.
-4. Also update the `findRoute` method. Now it will have another parameter - `method`, to search for routes based on the HTTP method as well as the path.
 
-5. If a handler for a specific path and HTTP method is already present, the new handler should override the old one.
+-   `method`: A string representing the HTTP method. This could be "GET", "POST", "PUT", "DELETE", etc.
+
+5. Also update the `findRoute` method. Now it will have another parameter - `method`, to search for routes based on the HTTP method as well as the path.
+
+6. If a handler for a specific path and HTTP method is already present, the new handler should override the old one.
 
 ## Example
 
@@ -33,9 +35,9 @@ function postHandler() {}
 trieRouter.addRoute("/home", "GET", getHandler);
 trieRouter.addRoute("/home", "POST", postHandler);
 
-console.log(trieRouter.findRoute("/home", "GET")) // -> fn getHandler() {..}
-console.log(trieRouter.findRoute("/home", "PATCH")) // -> null or undefined
-console.log(trieRouter.findRoute("/home", "POST")) // -> fn postHanlder() {..}
+console.log(trieRouter.findRoute("/home", "GET")); // -> fn getHandler() {..}
+console.log(trieRouter.findRoute("/home", "PATCH")); // -> null or undefined
+console.log(trieRouter.findRoute("/home", "POST")); // -> fn postHanlder() {..}
 ```
 
 Go ahead and add the functionality to our `TrieRouter` class. This will involve making a lot of changes to the previous code. Feel free to share your implementation or ask for feedback in the [Github discussions](https://github.com/ishtms/learn-nodejs-hard-way/discussions) section.
@@ -141,7 +143,9 @@ class Router {
         return handler;
     }
 
-    printTree(node = this.rootNode, indentation = 0) { /** unchanged **/}
+    printTree(node = this.rootNode, indentation = 0) {
+        /** unchanged **/
+    }
 }
 
 class RouteNode {
@@ -192,7 +196,7 @@ method = method.toUpperCase();
 The `method` string is converted to uppercase to standardize the HTTP methods.
 
 ```js
-this.handler = new Map()
+this.handler = new Map();
 ```
 
 The `handler` in `RouteNode` has changed from a single function reference to a `Map`. This allows you to store multiple handlers for the same path but with different HTTP methods.
