@@ -1,38 +1,38 @@
-# Node.js is way faster than you think
+# Node.js é muito mais rápido do que você pensa
 
-> For people who came here to read the book, you can safely skip to the [first chapter of this book](/chapters/ch01-what-is-a-web-server-anyway.md). If you still wish to read this, you may not understand a lot of terms mentioned here. Don't get overwhelmed, and take it as a small motivation on why "Learning Node.js is worth it".
+> Para as pessoas que vieram aqui ler o livro, você seguramente pode pular o [primeiro capítulo deste livro](/chapters/ch01-what-is-a-web-server-anyway.md). Mas se ainda sim você deseja ler esta parte, saiba que você pode não entender muitos termos mencionados aqui".
 
-**"Node.js is slow."** This is a statement you may have heard often, perhaps whispered in developer circles or debated on online forums. Node.js has been unfairly criticized for not being suitable for high-performance applications. This chapter aims to disprove that myth permanently.
+**"Node.js é lento."** Essa é uma afirmação que você pode ter escutado muitas vezes, talvez espalhada nos ciclos de desenvolvedores ou debatidas nos fóruns online. O Node.js tem sido injustamente criticado por não ser adequado para aplicações de alta performance.
 
-The tech community often praises languages like Go or Rust for their ***blazing fast*** ™ execution, and often doubt whether JavaScript and its server-side partner, Node.js, can keep up. Common criticisms range from Node.js being single-threaded to the fundamental limitations of JavaScript itself. But what if I told you that these critiques are not just overly simplistic, but often misleading?
+A comunidade tech elogia frequentemente linguagens como Go ou Rust por sua execução ***extremamente rápida***, muitas vezes duvidando que o JavaScript e seu parceiro do lado do servidor, Node.js, consigam acompanhar. As críticas mais comuns vão desde o Node.js ser single-thread até as limitações fundamentais do JavaScript em si. Mas e se eu te dissesse que essas críticas não são somente superficiais, mas na maioria das vezes enganosas?
 
-Why is Node.js perceived as slow? Is it the single-threaded architecture? Or perhaps the fact that it uses JavaScript - a language originally designed for client-side web development - as its backbone? These are just a couple of the many misconceptions that contribute to the underestimation of Node.js. But as you'll soon discover, Node.js can not only stand toe-to-toe with competing backend technologies but, under the right circumstances, can even perform as good as other "fast" languages.
+Por que o Node.js é considerado lento? Será a arquitetura single-thread? Ou talvez pelo fato de usar JavaScript - a linguagem originalmente desenvolvida para o lado do cliente - como sua espinha dorsal? Esses são apenas alguns dos muitos equívocos que contribuem para a subestimação do Node.js. Mas, como você descobrirá em breve, o Node.js pode não apenas ficar lado a lado com as tecnologias concorrentes de back-end, como também, nas circunstâncias certas, ter um desempenho tão bom quanto outras linguagens “rápidas”.
 
-## Contenders for the test
+## Candidatos ao teste
 
-We'll be comparing a couple of "fast" frameworks and putting them against Node.js.
+Vamos comparar alguns frameworks considerados rápidos e confrontá-los com o Node.js.
 
 ### Elysia - Bun
 
-Elysia claims to be 18x faster than Express.
+O Elysia afirma ser 18x mais rápido que o Express.
 
 ![](/assets/imgs/elysia-claim.png)
 
 ### Axum - Rust
 
-I personally love [Axum](https://lib.rs/axum). It's one of the fastest and the most developer-friendly server side framework for Rust.
+Eu pessoalmente adoro o [Axum](https://lib.rs/axum). É um dos frameworks back-end mais rápidos e fáceis para desenvolver em Rust.
 
 ### Express - Node.js
 
-This library is always used to establish the baseline for any benchmarks. I would love to be proven wrong, but I do not believe Elysia can be 18 times faster than Express. Maybe 18x faster at "waiting for I/O".
+Essa biblioteca sempre é usada como referência para qualquer benchmark. Eu adoraria que provassem que estou errado, mas não acredito que o Elysia consegue ser 18 vezes mais rápido que o Express. Talvez seja 18x vezes mais rápido em "waiting for I/O".
 
 ### Velocy - Node.js
 
-Velocy is a HTTP library that I am building as part of this book. For context, this github repo serves as a book that I am writing - [Learn Node.js the hard way](https://github.com/ishtms/learn-nodejs-hard-way). Velocy is still an unfinished product as it was started just 7 days ago. I have managed to build a performant `Router` class that uses the Radix Tree data structure to manage routes and extract path params. Our current router provides enough functionality for Velocy to be able to compete in this benchmark. You can find the source of Velocy - [here](https://github.com/ishtms/velocy)
+Velocy é uma biblioteca HTTP que estou construindo como parte deste livro. Para contextualizar, este repositório do github funciona como um livro que estou escrevendo - [Learn Node.js the hard way](https://github.com/ishtms/learn-nodejs-hard-way). O Velocy ainda é um produto inacabado, pois foi iniciado há apenas 7 dias. Eu consegui construir uma classe `Router` de alto desempenho usando a estrutura de dados Radix Tree para gerenciar rotas e extrair parâmetros de path. Nosso roteador atual oferece funcionalidade suficiente para que o Velocy possa competir neste benchmark. Você pode encontrar a fonte do Velocy. - [aqui](https://github.com/ishtms/velocy)
 
-## The benchmark
+## O benchmark
 
-The question is, how are we going to benchmark? Let's take `bun`'s approach. If you're not aware, `bun` uses [uWebsockets](https://github.com/uNetworking/uWebSockets) under the hood for their web server. Let us see what the creator of `uWebsockets` [has to say about benchmarking](https://github.com/uNetworking/uWebSockets/tree/master/benchmarks#why-hello-world-benchmarking):
+A questão é, como vamos realizar o benchmark? Vamos adotar a abordagem do `bun`. Caso você não saiba, o `bun` usa [uWebsockets](https://github.com/uNetworking/uWebSockets) por baixo do capô do seu servidor web. Vamos ver o que o criador do `uWebsockets` [tem a dizer sobre benchmarking](https://github.com/uNetworking/uWebSockets/tree/master/benchmarks#why-hello-world-benchmarking):
 
 ```tex
 Why "hello world" benchmarking?
