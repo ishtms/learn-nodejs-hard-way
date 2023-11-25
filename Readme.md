@@ -4,21 +4,21 @@
   <img src="./assets/imgs/cover.jpg" alt="Learn nodejs the hard way" width="500">
 </p>
 
-Você pode acessar a versão atual do livro nos [diretórios dos capítulos](/chapters) ou no formato PDF (modo claro e escuro disponíveis) [clicando aqui](https://github.com/ishtms/learn-nodejs-hard-way/releases). Vale ressaltar que esta edição inclui a versão atual do conteúdo, não a sua versão final.
+Você pode acessar a versão atual do livro nos [diretórios dos capítulos](/chapters) ou no formato PDF (modo claro e escuro disponíveis - versão em Inglês) [clicando aqui](https://github.com/ishtms/learn-nodejs-hard-way/releases). Vale ressaltar que esta edição inclui a versão atual do conteúdo, não a sua versão final.
 
-> Este livro ainda está em um estágio bem inicial. Ele contém uma parte insignificante do conteúdo total que o livro deveria cobrir. Haverá um total de 0 dependências para o nosso [framework backend](https://github.com/ishtms/velocy), assim como para a nossa [biblioteca de logs](https://github.com/ishtms/logtar). Tudo será feito usando Node.js puro, no modo "vannila", do jeito difícil (o melhor jeito para aprender).
+> Este livro ainda está em um estágio bem inicial. Ele contém uma parte insignificante do conteúdo total que o livro deveria cobrir. Haverá um total de 0 dependências para o nosso [framework backend](https://github.com/ishtms/velocy), assim como para a nossa [biblioteca de logs](https://github.com/ishtms/logtar). Tudo será feito usando Node.js puro, no modo "vannilla", do jeito difícil (o melhor jeito para aprender).
 
 ---
 
 ## Nota
 
-Se você não está familiarizado com javascript, também é possível conferir meu outro repositório - [Learn Javascript - The Easy Way](https://github.com/ishtms/learn-javascript-easy-way) ele leva você a um uma jornada profunda e divertida em Javascript - desde o básico até os conceitos avançados que você precisa, sem mergulhar em muita teoria. Apenas exemplos práticos de código.
+Se você não está familiarizado com Javascript, também é possível conferir meu outro repositório - [Learn Javascript - The Easy Way](https://github.com/ishtms/learn-javascript-easy-way) ele leva você a uma jornada profunda e divertida em Javascript - desde o básico até os conceitos avançados que você precisa, sem mergulhar em muita teoria. Apenas exemplos práticos de código.
 
 ---
 
 Para dominar um novo conceito, muitas vezes é melhor começar do zero. Este não é apenas mais um guia qualquer de Node.js; é uma experiência abrangente de código, visando construir um produto do mundo real que pode ser usado por milhares de desenvolvedores. O produto que vamos construir será um framework backend, também do zero.
 
-Você não aprenderá apenas como o Node.js funciona, mas também por que ele funciona de uma maneira específica. O guia também contém discussões sobre estruturas de dados e design patterns relevantes.
+Você não aprenderá apenas como o Node.js funciona, mas porque ele funciona de uma maneira específica. O guia também contém discussões sobre estruturas de dados e design patterns relevantes.
 
 Outra coisa incluída no livro, é uma ampla gama de exercícios criados especificamente para desafiá-lo, podendo exigir comprometimento e esforço consistente de sua parte. Os primeiros exercícios começam no capítulo 7.
 
