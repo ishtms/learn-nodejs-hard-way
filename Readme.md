@@ -44,7 +44,7 @@ Repositório para nosso framework backend - [Velocy](https://github.com/ishtms/v
   - [Navegando pelo mundo dos protocolos: Um rápido panorama](/chapters/ch01-what-is-a-web-server-anyway.md#navigating-the-world-of-protocols-a-quick-overview)
   - [A relação entre HTTP e TCP](/chapters/ch01-what-is-a-web-server-anyway.md#the-relationship-between-http-and-tcp-ensuring-reliable-web-communication)
     - [Integridade e ordenamento de dados](/chapters/ch01-what-is-a-web-server-anyway.md#1-data-integrity-and-order)
-    - [Mecanismo de reconhecimento](/chapters/ch01-what-is-a-web-server-anyway.md#2-acknowledgment-mechanism)
+    - [Mecanismo de confirmação](/chapters/ch01-what-is-a-web-server-anyway.md#2-acknowledgment-mechanism)
     - [Interações complexas](/chapters/ch01-what-is-a-web-server-anyway.md#3-complex-interactions)
     - [Sobrecarga de transmissão](/chapters/ch01-what-is-a-web-server-anyway.md#4-transmission-overhead)
   - [Como Servidores Web respondem às suas requisições](/chapters/ch01-what-is-a-web-server-anyway.md#asking-and-getting-how-web-servers-respond-to-your-requests)
