@@ -1,20 +1,22 @@
 [![Read Prev](/assets/imgs/prev.png)](/Readme.md)
 
-# What the heck is a web server any way?
+# Afinal, o que diabos é um Servidor Web?
 
-> Note: This chapter gives you a brief overview of the basics of web servers and HTTP. We'll learn about HTTP in more details in an [upcoming chapter](/chapters/ch05.0-http-deep-dive.md).
+> Nota: Este capítulo te dará uma breve visão geral do básico sobre Servidores Web e HTTP. Nós vamos aprender sobre o HTTP com mais detalhes em um [capítulo mais adiante](/chapters/ch05.0-http-deep-dive.md).
 
-If you do not wish to read about the basics of web/http, you can safely jump to the [coding section](/chapters/ch02-your-first-nodejs-server.md).
+Se você não quer ler sobre o básico de web/http, você pode pular tranquilamente para a [sessão de códigos](/chapters/ch02-your-first-nodejs-server.md).
 
-Before diving straight into writing JavaScript code to create web servers, it's essential to grasp the fundamental concepts that are the basic building blocks of web server. Web servers are like the traffic controllers of the internet. They manage requests from users (like you!) and send back the right information. But what makes up a web server, and how does it even work? Let's break it down into simple terms.
+Antes de mergulhar diretamente na escrita de código Javascript para criação de Servidores Web, é essencial compreender os conceitos fundamentais, eles são os blocos básicos na construção de um Servidor Web. Servidores Web são como os controladores de tráfego da internet. Eles gerenciam requisições de usuários (como você!) e nos devolvem a informação correta. Mas do que é formado um Servidor Web e como ele funciona? Vamos dividir isso em termos simples.
 
-## Parts of a Web Server:
+## Partes de um Servidor Web:
 
-Web servers are like friendly translators that help computers understand each other. Imagine if you and a friend speak different languages. To have a conversation, you'd need a common language that both of you understand. In the same way, web servers and computers need a common set of rules to talk to each other effectively. These rules are called protocols, which are like languages specifically designed for computers. When you type a website address in your browser and hit "Enter," your computer sends a message to the web server. This message follows the web's language rules, known as the HTTP protocol (Hypertext Transfer Protocol).
+Servidores Web são como amigos tradutores que ajudam computadores a entenderem uns aos outros. Imagine que você e um amigo falam línguas diferentes. Para ter uma conversa, vocês precisariam de uma língua em comum que ambos entendam. Do mesmo jeito, Servidores Web e Computadores precisam de uma série de regras em comum para falar um com o outro efetivamente. Essas regras são chamadas de protocolos, são como linguagens criadas especificamente para computadores. Quando você digita o endereço de um site em seu navegador e aperta "Enter", o seu computador envia uma mensagem para o Servidor Web. Essa mensagem segue as regras da linguagem da web, conhecida como protocolo HTTP (Hypertext Transfer Protocol).
 
-HTTP is like a code that tells the web server what you want (e.g., a webpage or an image) and how to respond. The web server reads your message, understands it because it knows the HTTP protocol too, and then sends back the information you requested using the same rules. This information could be a webpage, a picture, or any other content.
+O HTTP é como um código que diz ao Servidor Web o que você quer (por exemplo, um site ou uma imagem) e como responder. O Servidor Web lê a sua mensagem, entende ela porquê também conhece o protocolo HTTP, e então envia de volta a informação solicitada utilizando as mesmas regras. Essa informação pode ser um site, uma foto ou qualquer outro conteúdo.
 
-Just like you need to speak the same language to have a successful conversation with someone, computers and web servers need to use the same protocol to communicate effectively. This way, they can understand each other's requests and provide the right responses, allowing you to enjoy the content you're looking for on the internet. HTTP establishes a standardised set of rules for how your computer's request (like asking for a webpage) should be structured and how the server's response (the webpage itself) should be formatted. This ensures seamless communication between different devices, regardless of their underlying technologies.
+Assim como você precisa falar a mesma língua para ter uma conversa bem sucedida com alguém, computadores e servidores web precisam utilizar o mesmo protocolo para se comunicarem efetivamente. Dessa forma, eles podem entender as requisições um do outro e fornecer as respostas corretas, permitindo que você consuma o conteúdo que estava procurando na internet. O HTTP estabelece um conjunto padronizado de regras sobre como a requisição do seu computador (como visitar um site) deve ser estruturada e como a resposta do servidor (o próprio site) deve ser formatada. Isso garante uma comunicação sem ruídos entre diferentes dispositivos, independente das tecnologias de cada um.
+
+(CONTINUAR DAQUI)
 
 Think of HTTP as a detailed script for a play. It outlines every step, from introducing characters (your request) to their dialogues (data transmission) and the grand finale (the server's response). This structured script eliminates misunderstandings and ensures that both sides know what to expect at each stage of the conversation.
 
