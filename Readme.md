@@ -6,7 +6,7 @@
 
 Você pode acessar a versão atual do livro nos [diretórios dos capítulos](/chapters) ou no formato PDF (modo claro e escuro disponíveis - versão em Inglês) [clicando aqui](https://github.com/ishtms/learn-nodejs-hard-way/releases). Vale ressaltar que esta edição inclui a versão atual do conteúdo, não a sua versão final.
 
-> Este livro ainda está em um estágio bem inicial. Ele contém uma parte insignificante do conteúdo total que o livro deveria cobrir. Haverá um total de 0 dependências para o nosso [framework backend](https://github.com/ishtms/velocy), assim como para a nossa [biblioteca de logs](https://github.com/ishtms/logtar). Tudo será feito usando Node.js puro, no modo "vannilla", do jeito difícil (o melhor jeito para aprender).
+> Este livro ainda está em um estágio bem inicial. Ele contém uma parte insignificante de todo o conteúdo que o livro deveria cobrir. Haverá um total de 0 dependências para o nosso [framework backend](https://github.com/ishtms/velocy), assim como para a nossa [biblioteca de logs](https://github.com/ishtms/logtar). Tudo será feito usando Node.js puro, no modo "vannilla", do jeito difícil (o melhor jeito para aprender).
 
 ---
 
@@ -39,7 +39,7 @@ Repositório para nosso framework backend - [Velocy](https://github.com/ishtms/v
     - [Express - Node.js](/chapters/ch00-nodejs-faster-than-you-think.md#express---nodejs)
     - [Velocy - Node.js](/chapters/ch00-nodejs-faster-than-you-think.md#velocy---nodejs)
   - [O benchmark](/chapters/ch00-nodejs-faster-than-you-think.md#the-benchmark)
-- [Afinal, o que diabos é um servidor web?](/chapters/ch01-what-is-a-web-server-anyway.md)
+- [Afinal, o que diabos é um Servidor Web?](/chapters/ch01-what-is-a-web-server-anyway.md)
   - [Partes de um Servidor Web](/chapters/ch01-what-is-a-web-server-anyway.md#parts-of-a-web-server)
   - [Navegando pelo mundo dos protocolos: Um rápido panorama](/chapters/ch01-what-is-a-web-server-anyway.md#navigating-the-world-of-protocols-a-quick-overview)
   - [A relação entre HTTP e TCP](/chapters/ch01-what-is-a-web-server-anyway.md#the-relationship-between-http-and-tcp-ensuring-reliable-web-communication)
@@ -155,9 +155,9 @@ Repositório para nosso framework backend - [Velocy](https://github.com/ishtms/v
     - [O culpado](/chapters/ch04.5-rolling-file-support.md#the-culprit)
   - [Testando a criação de um novo arquivo de Log](/chapters/ch04.5-rolling-file-support.md#testing-the-new-log-file-creation)
 - [Mergulho profundo no HTTP](/chapters/ch05.0-http-deep-dive.md)
-  - [Um pequeno servidor web](/chapters/ch05.0-http-deep-dive.md#a-small-web-server)
-    - [Iniciando nosso servidor web](/chapters/ch05.0-http-deep-dive.md#starting-our-web-server)
-    - [Testando nosso servidor web](/chapters/ch05.0-http-deep-dive.md#testing-our-web-server)
+  - [Um pequeno Servidor Web](/chapters/ch05.0-http-deep-dive.md#a-small-web-server)
+    - [Iniciando nosso Servidor Web](/chapters/ch05.0-http-deep-dive.md#starting-our-web-server)
+    - [Testando nosso Servidor Web](/chapters/ch05.0-http-deep-dive.md#testing-our-web-server)
     - [Testando com o `cURL`](/chapters/ch05.0-http-deep-dive.md#testing-with-curl)
 - [Verbos HTTP (Métodos de Requisição), Versionamento e os benefícios do `HTTP/1.1`](/chapters/ch05.1-http-verbs-versioning-http1_1.md)
   - [`GET` - Recuperando dados](/chapters/ch05.1-http-verbs-versioning-http1_1.md#get---retrieve-data)

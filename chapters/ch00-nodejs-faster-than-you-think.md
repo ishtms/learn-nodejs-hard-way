@@ -35,44 +35,43 @@ Velocy é uma biblioteca HTTP que estou construindo como parte deste livro. Para
 A questão é, como vamos realizar o benchmark? Vamos adotar a abordagem do `bun`. Caso você não saiba, o `bun` usa [uWebsockets](https://github.com/uNetworking/uWebSockets) por baixo do capô do seu servidor web. Vamos ver o que o criador do `uWebsockets` [tem a dizer sobre benchmarking](https://github.com/uNetworking/uWebSockets/tree/master/benchmarks#why-hello-world-benchmarking):
 
 ```tex
-Why "hello world" benchmarking?
+Porque o benchmarking com "hello world"?
 
-Contrary to popular belief, "hello world benchmarks" are the most accurate and realistic gauges of performance 
-for the kind of applications µWebSockets is designed for:
+Ao contrário da crença popular, os "benchmarks de hello world" são os indicadores de desempenho mais precisos e realistas para o tipo de aplicativos para os quais o µWebSockets foi projetado:
 
-IO-gaming (latency)
-Signalling (memory overhead)
-Trading (latency)
-Finance (latency)
-Chatting (memory overhead)
-Notifications (memory overhead)
+I/O de Games (latency)
+Sinalização (sobrecarga de memória)
+Negociação (latência)
+Finanças (latência)
+Bate-papo (sobrecarga de memória)
+Notificações (sobrecarga de memória)
 ```
 
-According to them, hello world benchmarks give a real world result. However, I don't think that is true. Real-world applications often involve much more than just sending a "hello world" message. There are usually additional layers of complexity like security, data access, business logic, etc., that these benchmarks do not account for. In all the examples above, there is a layer in between - i.e a database, which should not be ignored when talking about "real world benchmarks".
+De acordo com eles, os benchmarls de hello world dão um resultado do mundo real. No entando, eu não acho que isso é real. Aplicações do mundo real normalmente envolvem muito mais do que só enviar uma mensagem de "hello world". Normalmente há camadas adicionais de complexidade, como segurança, acesso de dados, regras de negócio, etc..., que esses benchmarks não dão conta. Em todos os exemplos acima há uma camada intermediária - em outras palavras, um banco de dados - que não deveria ser ignorada quando falamos em "benchmarks do mundo real".
 
-Since "hello world" benchmarks test the absolute bare minimum, they can sometimes give a false perception of performance. For example, a framework might excel at basic tasks but falter when handling more complex operations.
+Já que os "benchmarks de hello world" testam absolutamente o mínimo, eles podem nos dar uma falsa percepção de performance às vezes. Por exemplo, um framework pode ser excelente em tarefas básicas, mas falhar ao lidar com operações mais complexas.
 
-But nevertheless, we're going to use the elysia/`bun`'s way of benchmarking -
+Ainda assim, vamos usar o método de benchmarking do elysia/`bun` - 
 
-- Get the path parameter i.e extracting `name` from the endpoint `/bench/:name`
+- Obtenha o parâmetro do path, ou seja, extraia o `name` do endpoint `/bench/:name`
 
-- Get the query parameter i.e extracting `id` from the endpoint `/bench/:name?id=10`
+- Obtenha o parâmetro da query (consulta), ou seja, extraia o `id` do endpoint `/bench/:name?id=10`
 
-- Set a couple of headers on the response.
+- Defina alguns cabeçalhos na resposta.
 
-- Set a custom header on the response.
+- Defina um cabeçalho personalizado na resposta.
 
-- Set the `content-type`, `connection` and `keep-alive` headers explicitly, so the response headers are the same for every framework.
+- Defina os cabeçalhos de `content-type`, `connection` e `keep-alive` explicitamente, dessa forma, os cabeçalhos de resposta serão os mesmos para cada framework.
 
-- Serializing. It is a bit more cpu-intensive task than doing something like IO. For that reason, instead of returning an Javascript object, we're going to return a JSON response (serialized) back to the client. Bun claims that the [JSON.stringify() in bun is 3.5x faster than Node.js](https://twitter.com/jarredsumner/status/1552409321245265920/photo/1). That should also give our Node.js servers a significant performance hit, right?
+- Serializando. É uma tarefa que exige um pouco mais da CPU do que fazer algo como um I/O. Por esse motivo, ao invés de retornar um objeto Javascript, vamos retornar um JSON (serializado) de resposta ao cliente. O Bun afirma que o [JSON.stringify() no Bun é 3.5x mais rápido do que no Node.js](https://twitter.com/jarredsumner/status/1552409321245265920/photo/1). Isso também deveria proporcionar um impacto significativo em nossos servidores Node.js, certo? 
 
 ## Source code
 
-We will examine the source of all frameworks that are going to be used for benchmarking. I will also provide necessary information such as their versions, etc. if required.
+Vamos examinar a fonte de todos os frameworks que serão utilizados no benchmarking. Eu também fornecerei as informações necessárias, como suas versões, etc, caso necessário.
 
 ### Elysia - Bun
 
-Bun version - `0.8.1`
+Bun versão - `0.8.1`
 
 ```js
 import { Elysia } from "elysia";
@@ -98,11 +97,11 @@ app.listen(3000);
 
 ### Axum - Rust
 
-rustc version - `1.73.0-nightly`
+rustc versão - `1.73.0-nightly`
 
-axum version - `0.6.20`
+axum versão - `0.6.20`
 
-Release flags:
+Configurações do release:
 
 ```toml
 [profile.release]
@@ -115,7 +114,7 @@ incremental = false
 overflow-checks = false
 ```
 
-Code:
+Código:
 
 ```rust
 use axum::{
@@ -161,7 +160,7 @@ async fn main() {
 
 ### Express - Node.js
 
-`express` version - `4.18.2`
+`express` versão - `4.18.2`
 
 ```js
 const express = require("express");
@@ -174,7 +173,7 @@ const headers = {
         "keep-alive": "timeout=5",
 }
 
-// We want to make sure that the the response body is same, to make it fair.
+// Queremos ter certeza que o corpo da resposta será o mesmo para que seja justo.
 app.disable("x-powered-by");
 app.disable("etag");
 
@@ -182,8 +181,8 @@ app.get("/bench/:name", (req, res) => {
     const { name } = req.params;
     const id = req.query.id;
     
-    // res.end() does not set the content-length implicitly, so the `transfer-encoding: chunked` is assumed.
-    // Manually setting the `content-length` to get rid of it.
+    // res.end() does not set the content-length implicitly, so the `transfer-encoding: chunked` assume.
+    // Definindo manualmente o `content-length` para se livrar dele.
     const response = JSON.stringify({ name, id });
     headers["content-length"] = response.length;
 
