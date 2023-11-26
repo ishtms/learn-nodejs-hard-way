@@ -4,17 +4,17 @@
 
 > Nota: Este capítulo te dará uma breve visão geral do básico sobre Servidores Web e HTTP. Nós vamos aprender sobre o HTTP com mais detalhes em um [capítulo mais adiante](/chapters/ch05.0-http-deep-dive.md).
 
-Se você não quer ler sobre o básico de web/http, você pode pular tranquilamente para a [sessão de códigos](/chapters/ch02-your-first-nodejs-server.md).
+Se você não deseja ler sobre o básico de web/http, você pode pular tranquilamente para a [sessão de códigos](/chapters/ch02-your-first-nodejs-server.md).
 
 Antes de mergulhar diretamente na escrita de código Javascript para criação de Servidores Web, é essencial compreender os conceitos fundamentais, eles são os blocos básicos na construção de um Servidor Web. Servidores Web são como os controladores de tráfego da internet. Eles gerenciam requisições de usuários (como você!) e nos devolvem a informação correta. Mas do que é formado um Servidor Web e como ele funciona? Vamos dividir isso em termos simples.
 
 ## Partes de um Servidor Web:
 
-Servidores Web são como amigos tradutores que ajudam computadores a entenderem uns aos outros. Imagine que você e um amigo falam línguas diferentes. Para ter uma conversa, vocês precisariam de uma língua em comum que ambos entendam. Do mesmo jeito, Servidores Web e Computadores precisam de uma série de regras em comum para falar um com o outro efetivamente. Essas regras são chamadas de protocolos, são como linguagens criadas especificamente para computadores. Quando você digita o endereço de um site em seu navegador e aperta "Enter", o seu computador envia uma mensagem para o Servidor Web. Essa mensagem segue as regras da linguagem da web, conhecida como protocolo HTTP (Hypertext Transfer Protocol).
+Servidores Web são como amigos tradutores que ajudam computadores a entenderem uns aos outros. Imagine que você e um amigo falam línguas diferentes. Para ter uma conversa, vocês precisariam de uma língua em comum que ambos entendam. Do mesmo jeito, Servidores Web e Computadores precisam de uma série de regras em comum para falar uns com os outros efetivamente. Essas regras são chamadas de protocolos, são como linguagens criadas especificamente para computadores. Quando você digita o endereço de um site em seu navegador e aperta "Enter", o seu computador envia uma mensagem para o Servidor Web. Essa mensagem segue as regras da linguagem da web, conhecida como protocolo HTTP (Hypertext Transfer Protocol).
 
 O HTTP é como um código que diz ao Servidor Web o que você quer (por exemplo, um site ou uma imagem) e como responder. O Servidor Web lê a sua mensagem, entende ela porquê também conhece o protocolo HTTP, e então envia de volta a informação solicitada utilizando as mesmas regras. Essa informação pode ser um site, uma foto ou qualquer outro conteúdo.
 
-Assim como você precisa falar a mesma língua para ter uma conversa bem sucedida com alguém, computadores e servidores web precisam utilizar o mesmo protocolo para se comunicarem efetivamente. Dessa forma, eles podem entender as requisições um do outro e fornecer as respostas corretas, permitindo que você consuma o conteúdo que estava procurando na internet. O HTTP estabelece um conjunto padronizado de regras sobre como a requisição do seu computador (como visitar um site) deve ser estruturada e como a resposta do servidor (o próprio site) deve ser formatada. Isso garante uma comunicação sem ruídos entre diferentes dispositivos, independente das tecnologias de cada um.
+Assim como você precisa falar a mesma língua para ter uma conversa bem sucedida com alguém, computadores e servidores web precisam utilizar o mesmo protocolo para se comunicarem efetivamente. Dessa forma, eles podem entender as requisições uns dos outros e fornecerem as respostas corretas, permitindo que você consuma o conteúdo que estava procurando na internet. O HTTP estabelece um conjunto padronizado de regras sobre como a requisição do seu computador (como visitar um site) deve ser estruturada e como a resposta do servidor (o próprio site) deve ser formatada. Isso garante uma comunicação sem ruídos entre diferentes dispositivos, independente das tecnologias de cada um.
 
 (CONTINUAR DAQUI)
 
