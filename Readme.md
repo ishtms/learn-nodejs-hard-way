@@ -191,7 +191,7 @@ Repositório para nosso framework backend - [Velocy](https://github.com/ishtms/v
     - [Por que o curinga?](/chapters/ch05.3-mime-type-and-content-type.md#why-the-wildcard-)
     - [Resposta do Servidor](/chapters/ch05.3-mime-type-and-content-type.md#server-response)
   - [Tipo MIME](/chapters/ch05.3-mime-type-and-content-type.md#mime-type)
-  - [Anatomia de um tipo MIME](/chapters/ch05.3-mime-type-and-content-type.md#anatomy-of-a-mime-type)
+  - [Anatomia de um Tipo MIME](/chapters/ch05.3-mime-type-and-content-type.md#anatomy-of-a-mime-type)
   - [Mas por que o curinga `*/*`?](/chapters/ch05.3-mime-type-and-content-type.md#but-why-the-wildcard)
   - [O cabeçalho do `Content-Type`](/chapters/ch05.3-mime-type-and-content-type.md#the-content-type-header)
     - [`Content-Type` no cabeçalho da requisição](/chapters/ch05.3-mime-type-and-content-type.md#-content-type--on-request-header)
