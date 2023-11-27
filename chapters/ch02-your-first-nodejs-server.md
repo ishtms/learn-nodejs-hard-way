@@ -54,33 +54,37 @@ Vamos aprender Node.js
 
 > Você também deve ver o símbolo de `%` no fim devido a ausência de um caracter para quebra de linha (**`\n`**) no final da string que você está escrevendo na saída padrão (stdout). Você pode modificar o código para `process.stdout.write("Vamos aprender Node.js\n");` para se livrar do símbolo de porcentagem.
 
-**What is the code above doing?**
+**O que o código acima está fazendo?**
 
-There’s too much going on in the code above, and I simply chose it over `console.log()` to explain a huge difference between the Javascript API and the Nodejs API.
+Há muita coisa acontecendo por trás do código acima, eu simplesmente o escolhi no lugar de `console.log` para explicar a grande diferença entre a API Javascript e a API Nodejs.
 
-JavaScript and Node.js are closely related, but they serve different purposes and have different environments, which leads to some differences in their APIs (Application Programming Interfaces).
+Javascript e Node.js estão extremamente relacionados, mas eles servem a propositos diferentes e possuem ambientes distintos, o que leva a algumas diferenças entre suas APIs (Application Programming Interfaces).
 
-JavaScript was created to make web pages more interactive and dynamic. It was meant for creating user interfaces and responding to user actions on the client side, **inside the browser**. However, as web applications became more complex, relying only on client-side JavaScript was not enough. This led to the development of Node.js, which allows JavaScript to be executed on the server side. Node.js extends JavaScript's capabilities, introducing APIs for file system operations, network communication, creating web servers, and more. This means developers can use one programming language throughout the entire web application stack, making development simpler.
+O JavaScript foi criado para tornar páginas web mais interativas e dinâmicas. Foi pensada para criar interfaces de usuário e responder a ações de usuário no lado do cliente, **dentro do navegador**. No entanto, à medida que as aplicações web se tornaram mais complexas, depender do JavaScript somente do lado do cliente não foi o suficiente. Isso levou ao desenvolvimento do Node.js, que permite que o JavaScript seja executado do lado do servidor. O Node.js amplia os recursos do JavaScript, introduzindo APIs para operações de sistemas de arquivos
 
-So let’s jump back to the code above, and understand why did I use `process.stdout.write` instead of `console.log`.
+O Node.js amplia os recursos do JavaScript, introduzindo APIs para operações de sistemas de arquivos, comunicação de rede, criação de servidores web e muito mais. Isso significa que os desenvolvedores podem usar uma linguagem de programação em todas as partes de uma aplicação, tornando o desenvolvimento mais simples.
 
-Simply put, `console.log` is a method that outputs a message to the web console or the browser console. However, Node.js does not run on the web, which means it does not recognize what a console is.
+Então vamos voltar ao código acima e entender o porque eu utilizei `process.stdout.write` no lugar de `console.log`.
 
-But if you change your code inside `index.js` to this
+Simplificando, `console.log` é um método que exibe a mensagem para o web console ou console do navegador. No entando, o Node.js não roda na web, o que significa que ele não reconhece o que é um console.
+
+Mas se você mudar o seu código no arquivo `index.js` para:
 
 ```jsx
 console.log("Vamos aprender Node.js");
 
-// Outputs -> Vamos aprender Node.js
+// Saída -> Vamos aprender Node.js
 ```
 
-It works. However, isn't it the case that I just mentioned Node.js being unfamiliar with the concept of a browser console? Indeed, that's correct. However, Node.js has made it easier for developers who are only used to working with JavaScript in a web context. It has included all the important features of browser-based JavaScript in its framework.
+Funciona. Mas eu não havia mencionado que o Node.js não é familiarizado com o conceito de web console? Na verdade, está correto. No entanto, o Node.js facilitou isso para os desenvolvedores que estavam habituados a trabalhar com o JavaScript somente no contexto da web. Ele incluiu todos os recursos importantes do JavaScript baseado no navegador dentro do framework.
 
-Expanding upon this topic, it's important to understand that Node.js, despite its roots in server-side development, strives to bridge the gap between traditional web development and server-side scripting. By incorporating features commonly associated with browser-based JavaScript, Node.js has made it more accessible for developers who are already well-versed in the language but might be new to server-side programming.
+Expandindo este tópico, é importante entender que o Node.js, apesar de ter suas raízes no desenvolvimento do lado do servidor, tenta preencher a lacuna entre o desenvolvimento web tradicional e os scripts server-side. Ao incorporar recursos comumente associados ao JavaScript baseado no navegador, o Node.js se tornou mais acessível para desenvolvedores que possuem habilidades com a linguagem, mas podem ser novos na programação do lado do servidor.
 
-### How does `console.log()` work in Node.js?
+### Como o `console.log()` funciona no Node.js?
 
-The **`node:console`** module offers a wrapper around the standard console functionalities that javascript provides. This wrapper aims to provide a consistent and familiar interface for logging and interacting with the Node.js environment, just as developers would in a web browser's developer console.
+O módulo **`node:console`** oferece um pacote com as principais funcionalidades do console padrão que o Javascript fornece. Este pacote visa fornecer uma interface consistente e familiar para registrar e interagir com o ambiente do Node.js, assim como os desenvolvedores fariam em um console de navegador.
+
+(Continuar daqui)
 
 The module exports two specific components:
 
