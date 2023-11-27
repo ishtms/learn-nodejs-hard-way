@@ -1,8 +1,8 @@
 [![Read Prev](/assets/imgs/prev.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
 
-# Your first web server with [node.js](https://nodejs.org)
+# Seu primeiro servidor web com [node.js](https://nodejs.org)
 
-The following section assumes that you have nodejs installed locally and are ready to follow along. You can check whether you have nodejs installed by running this command on your terminal -
+A sessão a seguir assume que você tenha o nodejs instalado localmente e está pronto para seguir adiante. Você pode conferir se possui o nodejs instalado digitando o seguinte comando no seu terminal:
 
 ```bash
 node --version
@@ -11,48 +11,48 @@ node --version
 # v18.17.0
 ```
 
-If you see a `Command not found` error, that means you do not have nodejs installed. Follow the instructions [here to download and install it](https://nodejs.org/en/download).
+Se o erro `Command not found` for exibido, isso significa que você não possui o nodejs instalado. Siga as instruções que estão [aqui para baixar e instalar](https://nodejs.org/en/download).
 
-## What exactly is node or nodejs?
+## O que é exatamente node ou nodejs?
 
-From the official website -
+De acordo com o site oficial -
 
-> Node.js® is an open-source, cross-platform JavaScript runtime environment.
+> Node.js® é um ambiente de execução JavaScript open-source e cross-plataform.
 
-What does a “runtime” mean?
+O que significa ambiente de execução (runtime environment) ?
 
-Simply put, when you write code in a programming language like JavaScript, you need something to execute that code. For compiled languages like C++ or Rust, you use a compiler. The runtime environment takes care of executing the code, ensuring that it works well with the computer's hardware and other software components.
+Simplificando, quando você escreve código em uma linguagem de programação como JavaScript, você precisa de algo para executar esse código. Para linguagens compiladas como C++ ou Rust, você usa um compilador. O ambiente de execução cuida da execução do código, garantindo que ele funcione bem com o hardware do computador e outros componentes de software.
 
-For Node.js, being a JavaScript runtime environment means it has everything needed to execute JavaScript code **_outside of a web browser_**. It includes the V8 JavaScript engine (which compiles and executes JavaScript code), libraries, APIs for file, network, and other system-related tasks, and an event loop for asynchronous, non-blocking operations.
+Para o Node.js, ser um ambiente de execução JavaScript significa ter tudo que é preciso para executar código JavaScript **_fora de um navegador web_**. Isso inclui o motor V8 JavaScript (que compila e executa o código JavaScript), bibliotecas, APIs para tarefas de arquivo, de rede e para outras tarefas relacionadas ao sistema, além de um loop de eventos para operações assíncronas e sem bloqueio.
 
-> We’ll discuss what exactly an event loop means, and implement our own version of event loop to understand how it works, later on in the guide.
+> Nós vamos discutir exatamente o que um loop de eventos significa, e implementar nossa própria versão de um loop de eventos para entender como isso funciona, mais tarde neste guia.
 
-## Your first node.js program
+## Seu primeiro programa em node.js
 
-Let’s begin by writing some code. Let’s create a new folder, and name it whatever you wish. I’ve named it `intro-to-node`. Inside it, create a new file `index.js` and add the following content inside it.
+Vamos começar a escrever alguns códigos. Vamos criar uma nova pasta e dar o nome que você quiser. Eu coloquei o nome de `intro-to-node`. Dentro da pasta, crie um novo arquivo chamado `index.js` e adicione o seguinte conteúdo nele.
 
 ```jsx
-// Write the string `Let's learn Nodejs` to the standard output.
-process.stdout.write("Let's learn Node.js");
+// Escrevendo a string `Vamos aprender Nodejs` na saída (output) padrão.
+process.stdout.write("Vamos aprender Node.js");
 ```
 
-To execute the code, open your terminal and `cd` into the folder containing the `index.js` file, and run `node index.js` or `node index`. You may alternatively run the command by specifying the relative or absolute path of the `index.js` file -
+Para executar o código, abra seu terminal e digite o comando `cd` seguido do caminho da pasta contendo o arquivo `index.js`. Isso vai mover o seu terminal para o diretório informado. Em seguida, execute `node index.js` ou `node index`. De maneira alternativa, você pode executar o comando especificando o caminho relativo ou absoluto do arquivo `index.js` -
 
 ```bash
 node ../Code/intro-to-node/index.js
 
-#or
+#ou
 
 node /Users/ishtmeet/Code/intro-to-node/index.js
 ```
 
-This should output
+A execução deve exibir:
 
 ```
-Let's learn Node.js
+Vamos aprender Node.js
 ```
 
-> You might also see a trailing `%` at the end due to the absence of a newline character (**`\n`**) at the end of the string you're writing to the standard output (stdout). You can modify the code as `process.stdout.write("Let's learn Node.js\n");` to get rid of that trailing modulo.
+> Você também deve ver o símbolo de `%` no fim devido a ausência de um caracter para quebra de linha (**`\n`**) no final da string que você está escrevendo na saída padrão (stdout). Você pode modificar o código para `process.stdout.write("Vamos aprender Node.js\n");` para se livrar do símbolo de porcentagem.
 
 **What is the code above doing?**
 
@@ -69,9 +69,9 @@ Simply put, `console.log` is a method that outputs a message to the web console 
 But if you change your code inside `index.js` to this
 
 ```jsx
-console.log("Let's learn Node.js");
+console.log("Vamos aprender Node.js");
 
-// Outputs -> Let's learn Node.js
+// Outputs -> Vamos aprender Node.js
 ```
 
 It works. However, isn't it the case that I just mentioned Node.js being unfamiliar with the concept of a browser console? Indeed, that's correct. However, Node.js has made it easier for developers who are only used to working with JavaScript in a web context. It has included all the important features of browser-based JavaScript in its framework.
