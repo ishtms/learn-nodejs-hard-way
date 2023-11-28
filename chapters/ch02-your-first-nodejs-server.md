@@ -60,9 +60,7 @@ Há muita coisa acontecendo por trás do código acima, eu simplesmente o escolh
 
 Javascript e Node.js estão extremamente relacionados, mas eles servem a propositos diferentes e possuem ambientes distintos, o que leva a algumas diferenças entre suas APIs (Application Programming Interfaces).
 
-O JavaScript foi criado para tornar páginas web mais interativas e dinâmicas. Foi pensada para criar interfaces de usuário e responder a ações de usuário no lado do cliente, **dentro do navegador**. No entanto, à medida que as aplicações web se tornaram mais complexas, depender do JavaScript somente do lado do cliente não foi o suficiente. Isso levou ao desenvolvimento do Node.js, que permite que o JavaScript seja executado do lado do servidor. O Node.js amplia os recursos do JavaScript, introduzindo APIs para operações de sistemas de arquivos
-
-O Node.js amplia os recursos do JavaScript, introduzindo APIs para operações de sistemas de arquivos, comunicação de rede, criação de servidores web e muito mais. Isso significa que os desenvolvedores podem usar uma linguagem de programação em todas as partes de uma aplicação, tornando o desenvolvimento mais simples.
+O JavaScript foi criado para tornar páginas web mais interativas e dinâmicas. Foi pensado para criar interfaces de usuário e responder a ações de usuário do lado do cliente, **dentro do navegador**. No entanto, à medida que as aplicações web se tornaram mais complexas, depender do JavaScript somente do lado do cliente não foi o suficiente. Isso levou ao desenvolvimento do Node.js, que permite que o JavaScript seja executado do lado do servidor. O Node.js amplia os recursos do JavaScript, introduzindo APIs para operações de sistemas de arquivos, comunicação de rede, criação de servidores web e muito mais. Isso significa que os desenvolvedores podem usar uma linguagem de programação em todas as partes de uma aplicação, tornando o desenvolvimento mais simples.
 
 Então vamos voltar ao código acima e entender o porque eu utilizei `process.stdout.write` no lugar de `console.log`.
 
@@ -84,38 +82,36 @@ Expandindo este tópico, é importante entender que o Node.js, apesar de ter sua
 
 O módulo **`node:console`** oferece um pacote com as principais funcionalidades do console padrão que o Javascript fornece. Este pacote visa fornecer uma interface consistente e familiar para registrar e interagir com o ambiente do Node.js, assim como os desenvolvedores fariam em um console de navegador.
 
-(Continuar daqui)
+O módulo exporta dois componentes específicos:
 
-The module exports two specific components:
+-   A classe `Console` com métodos como `console.log()`, `console.error()`, e `console.warn()`. Eles podem ser utilizados para escrita em qualquer **stream** do Node.js.
+-   Uma instância global `console` que é configurada para escrever no `process.stdout` e no `process.stderr`.
 
--   A `Console` class with methods like `console.log()`, `console.error()`, and `console.warn()`. These can be used to write to any Node.js **stream**.
--   A global `console` instance that is set up to write to `process.stdout` and `process.stderr`.
+(Note que `Console` não é o mesmo que `console` (em minúsculo). `console` é uma instância especial de `Console`)
 
-(Note that `Console` is not `console` (lowercase). `console` is a special instance of `Console`)
-
-> You can use the global `console` without having to call `require('node:console')` or `require('console')`. This global availability is a feature provided by the Node.js runtime environment. When your Node.js application starts running, certain objects and modules are automatically available in the global scope without the need for explicit importing.
+> Você pode usar a global `console` sem precisar chamá-la através de `require('node:console')` ou `require('console')`. Essa disponibilidade global é um recurso fornecido pelo ambiente de execução Node.js. Quando sua aplicação em Node.js começa a rodar, certos objetos e módulos ficam automaticamente disponíveis no escopo global sem a necessidade de importá-los explicitamente.
 >
-> Here are some of the examples of globally available objects/modules in Node.js - `console`, `setTimeout`, `setInterval`, `__dirname`, `__filename`, `process`, `module`, `Buffer`, `exports`, and the `global` object.
+> Aqui estão alguns exemplos de objetos/módulos disponíveis globalmente no Node.js - `console`, `setTimeout`, `setInterval`, `__dirname`, `__filename`, `process`, `module`, `Buffer`, `exports`, e o objeto `global`.
 
-As I mentioned earlier, Node.js provides the global `console` instance to output text to `process.stdout` and `process.stderr`. So if you’re writing this
-
-```jsx
-console.log("Something");
-```
-
-the above code is just an abstraction of the code below.
+Como mencionei anteriormente, o Node.js oferece a instância global `console` para imprimir texto no `process.stdout` e no `process.stderr`. Então, se você está escrevendo isso aqui:
 
 ```jsx
-process.stdout.write("Something\n");
+console.log("Alguma coisa")
 ```
 
-However, even after reading this, the code above may still be confusing. You may not yet be familiar with the `process` object, or with `stdout` and `stderr`.
+O código acima é apenas uma abstração do código a seguir:
 
-### The **`process` Object**:
+```jsx
+process.stdout.write("Alguma coisa\n");
+```
 
-The **`process`** object in Node.js tells you about the environment where the Node.js app is running. It has various properties, methods, and event listeners to help you work with the process and access info about the runtime environment.
+No entando, mesmo depois de ler isto, o código acima ainda pode parecer confuso. Talvez você ainda não esteja familiarizado com o objeto `process`, ou com o `stdout` e o `stderr`.
 
-These are some of the useful properties and functions that are provided by the `process` object. Copy paste the code below and paste it inside your `index.js` file. Try to execute it, using `node path/to/index/file`.
+### O **objeto `process`**:
+
+O objeto **`process`** do Node.js fornece informações sobre o ambiente onde a aplicação Node.js está sendo executada. Ele tem várias propriedades, métodos e escutadores de eventos (event listeners) para ajudar a trabalhar com o processo e acessar informações sobre o ambiente de execução.
+
+Essas são algumas das propriedades e funções úteis fornecidas pelo objeto `process`. Copie o código abaixo e cole no seu arquivo `index.js`. Tente executá-lo usando o comando, `node caminho/para/arquivo/index.js`.
 
 ```jsx
 console.log(process.version);
@@ -158,40 +154,40 @@ console.log(process.pid);
 // 39328
 ```
 
-> We will discuss most of these properties/functions further down the line when we talk about implementing our own framework.
+> Nós vamos discutir sobre a maioria dessas propriedades/funções mais adiante, quando estivermos falando sobre a implementação do nosso próprio framework.
 
-### The `stdout` **property of the `process` object**:
+### A **propriedade `stdout` do objeto `process`**:
 
-In Node.js, the `stdout` property is a part of the `process` object. This property represents the standard output **_stream_**, which is used for writing data to the console or other output destinations. Anything written to the `stdout` stream is displayed in the console when you run your program.
+No Node.js, a propriedade `stdout` é parte do objeto `process`. Essa propriedade representa a **_stream_** de saída (o output) padrão, que é utilizada para imprimir dados no console ou em outra saída definida. Qualquer coisa escrita na stream `stdout` é exibida no console quando você executa o seu programa.
 
-Now you may ask, what is a `stream`?
+Agora você deve estar se perguntando, o que é uma `stream`?
 
-**_Streams_** are used in programming to efficiently handle data flow, especially when working with large datasets or network communication. A stream is a sequence of data elements that is made available over time. Instead of loading all the data into memory, streams allow you to process and transmit data in smaller, more manageable pieces.
+**_Streams_** são utilizadas na programação para lidar com o fluxo de dados de maneira eficiente, especialmente quando estamos trabalhando com um grande conjunto de dados ou comunicações de rede. Uma stream é uma sequência de elementos de dados que são disponibilizados com o passar do tempo. Ao invés de carregar todos os dados na memória, as streams permitem processar e transmitir dados em menor escala, em pedaços mais manejáveis.
 
-Streams can also be classified as input streams and output streams. Input streams are used to take in data from a source, while output streams are used to send data to a destination.
+Streams também podem ser classificadas como streams de entrada (input) ou streams de saída (output). Streams de entrada são utilizadas para receber dados de uma fonte, enquanto streams de saída são utilizadas para enviar dados para um destino.
 
-Streams have an important advantage of supporting parallelism. Instead of processing data one after the other, streams can process data in parallel and concurrently. This is helpful when working with large datasets because it speeds up processing time significantly.
+Streams possuem a importante vantagem de suportar paralelismo. Ao invés de processar dados um depois do outro, streams podem processar dados em paralelismo e simultaneamente. Isso ajuda quando estamos trabalhando com grandes bancos de dados, porque acelera o tempo de processamento de maneira significativa.
 
-Node.js provides a comprehensive implementation of streams, which can be categorized into several types:
+O Node.js fornece uma implementação abrangente de streams, que podem ser categorizadas em vários tipos:
 
-1. **Readable Streams**: These streams represent a source of data from which you can read. Examples include reading files, reading data from an HTTP request, or even generating data programmatically.
-2. **Writable Streams**: Writable streams are destinations where you can write data. Examples include writing data to files, standard output (`stdout`), standard error output (`stderr`) and many more.
-3. **Duplex Streams**: Duplex streams represent both a readable and a writable side. This means you can both read from and write to these streams concurrently. An example of a Duplex stream is a TCP socket. It can both receive data from the client and send data back to the client concurrently.
-4. **Transform Streams**: These are a specific type of duplex stream that allow you to modify or transform data as it's being read or written. They are often used for data manipulation tasks, like compression or encryption.
+1. **Streams de Leitura (Readable Streams)**: Essas streams representam uma fonte de dados que pode ser lida. Os exemplos incluem leitura de arquivos, leitura de dados de uma solicitação HTTP ou até mesmo a geração de dados de maneira programada.
+2. **Streams de Escrita (Writable Streams)**: Streams de escrita são destinos nos quais você pode gravar dados. Os exemplos incluem gravação de dados em arquivos, na saída padrão (`stdout`), na saída de erro padrão (`stderr`) e muito mais.
+3. **Streams Duplex (Duplex Streams)**: Streams Duplex representam ambas as coisas, um lado para leitura e outro para gravação. Isso significa que você pode ler e gravar nessas streams simultaneamente. Um socket TCP é um exemplo de stream Duplex. Ele pode receber e enviar dados de volta para o cliente simultaneamente.
+4. **Streams Transform (Transform Streams)**: Esse é um tipo específico de stream Duplex que permite transformar ou modificar dados conforme eles estão sendo lidos ou gravados. Elas são normalmente utilizadas para tarefas de manipulação de dados, como compressão e criptografia.
 
-> Streams are incredibly versatile and efficient because they work with small chunks of data at a time, which is particularly useful when dealing with data that doesn't fit entirely into memory or when you want to process data in real-time. They also make it possible to start processing data before the entire dataset is available, reducing memory consumption and improving performance.
+> Streams são incrivelmente versáteis e eficientes porque trabalham com pequenos pedaços de dados de cada vez, o que é particularmente útil quando estamos lidando com dados que não cabem de uma vez na memória ou quando queremos processar dados em tempo real. Elas também possibilitam iniciar o processamento de dados antes do conjunto total de dados estar disponível, reduzindo o consumo de memória e melhorando a performance.
 
-Now you know what streams are, and what is the standard output (`stdout`), we can simplify the code below.
+Agora que você sabe o que são streams, e o que é a saída padrão (standard output - `stdout`), podemos simplificar o código abaixo:
 
 ```jsx
-process.stdout.write("Hello from Node.js");
+process.stdout.write("Um olá do Node.js");
 ```
 
-We're simply writing to **`stdout`** or the standard output stream which Node.js provides, which means that we're sending data or messages from our program to the console where you see the program's output. The data we write to **`stdout`** is displayed in the order it's written, giving us a way to communicate with developers or users and provide insights into the program's execution in real-time.
+Estamos simplesmente escrevendo no **`stdout`** ou na stream de saída padrão que o Node.js oferece, o que significa que estamos enviando dados ou mensagens para o console onde você vê a saída do programa. Os dados que escrevemos no **`stdout`** são exibidos na ordem que foram escritos, nos fornecendo um forma de comunicação com desenvolvedores ou usuários e de prover insights para a execução do programa em tempo real.
 
-Working with **`process.stdout`** can be rather cumbersome, and in practice, you tend to use it sparingly. Instead, developers frequently opt for the more user-friendly **`console.log`** method. Instances of code employing **`process.stdout`** are typically encountered when there's a need for a greater level of control over output formatting or when integrating with more complex logging mechanisms.
+Trabalhar com o **`process.stdout`** pode ser bastante complicado, e na prática, você tende a usar com moderação. No lugar dele, os desenvolvedores normalmente optam pelo método mais amigável **`console.log`**. Instâncias de código que empregam o uso do **`process.stdout`** são normalmente encontradas quando há necessidade de um maior nível de controle sobre a formatação de saída ou ao integrar com mecanismos de registro mais complexos.
 
-> **_Warning_**: The ways of the global console object are not always synchronous like the browser APIs they resemble, nor are they always asynchronous like all other Node.js streams. For more information, please see the [note on process I/O](https://nodejs.org/api/process.html#a-note-on-process-io).
+> **_Aviso_**: O comportamento do objeto global console nem sempre é síncrono como nas APIs do navegador, com as quais se assemelham, e nem sempre é assíncrono como todas as outras streams do Node.js. Para mais informações, por favor, veja a [nota sobre o I/O do process](https://nodejs.org/api/process.html#a-note-on-process-io).
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch03-working-with-files.md)
 
