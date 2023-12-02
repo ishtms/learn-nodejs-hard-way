@@ -642,7 +642,7 @@ async function read_file() {
             console.log("File handle %d closed", file_handle.fd);
         });
 
-        // The 'line' event be fired whenver a line is read from the file.
+        // The 'line' event be fired whenever a line is read from the file.
         stream.on("line", (line) => {
             console.log("Getting line -> %s", line);
         });
