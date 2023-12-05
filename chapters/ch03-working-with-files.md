@@ -1,115 +1,114 @@
 [![Read Prev](/assets/imgs/prev.png)](/chapters/ch02-your-first-nodejs-server.md)
 
-## Working with files
+## Trabalhando com arquivos
 
-Now that we've covered the basics of logging in Node.js, let's explore a real-world example. Let us understand the low level of files and how to interact with them. After that, we'll build a logging library [logtar](https://github.com/ishtms/logtar) that writes logs to a log file. It also has a support for tracing and rolling file creation. We’ll use this library as the central mechanism of logging for our web framework, that we build further into this guide.
+Agora que cobrimos os fundamentos sobre o registro de logs no Node.js, vamos explorar um exemplo do mundo real. Vamos entender o baixo nível dos arquivos e como interagir com eles. Depois disso, vamos construir uma biblioteca de logs (registros) chamada [logtar](https://github.com/ishtms/logtar), que grava registros em um arquivo de log. Ela também suporta rastreamento e criação contínua de arquivos. Vamos utilizar essa biblioteca como mecanismo central de logs para o nosso framework web, que será construído mais adiante neste guia.
 
-### What will the logging library do
+### O que a biblioteca de logs vai fazer?
 
-- Log messages to a file
-- Choose log location, or simply generate a new file
-- Support for log levels (debug, info, warning, error, critical)
-- Timestamps on log messages
-- Customizable log message format
-- Automatic log rotation based on file size or time interval
-- Support for console output in addition to log files
-- Simple and easy-to-use API for logging messages
+- Registrar mensagens em um arquivo
+- Escolher o local de registro ou simplesmente gerar um novo arquivo
+- Suporte para níveis de registro (debug, info, warning, error, critical)
+- Registro de data nas mensagens de log
+- Formato customizável de mensagens de log
+- Rotação de logs automática baseada no tamanho do arquivo ou intervalo de tempo
+- Suporte para output no console, além dos arquivos de log
+- Uma API para mensagens de log simples e fácil de usar
 
-### How do you work with files anyway?
+### Afinal, como você trabalha com arquivos?
 
-A file in Node.js is represented by a JavaScript object. This object has properties that describe the file, such as its name, size, and last modified date. The object also has methods that can be used to read, write, and delete the file.
+Um arquivo no Node.js é representado por um objeto JavaScript. Esse objeto possui propriedades que descrevem o arquivo, como o seu nome, tamanho e data da última modificação. O objeto também possui métodos que podem ser usados para ler, modificar e deletar o arquivo.
 
-In order to work with files and access file-related helper methods, you can import the `fs` **_module_** from the Node.js standard library.
+Para trabalhar com arquivos e acessar métodos auxiliares relacionados a eles, você pode importar o **_módulo_** `fs` da biblioteca padrão do Node.js.
 
-**Wait, what exactly is a `module`?**
+**Espere, o que é exatamente um `módulo`?**
 
-In Node.js, every JavaScript file is like a little package, called a module. Each module has its own space, and anything you write in a module can only be used in that module, unless you specifically share it with others.
+No Node.js, todo arquivo JavaScript é como um pequeno pacote, chamado módulo. Cada módulo tem seu próprio espaço, e qualquer coisa que você escreve naquele módulo só pode ser usada naquele módulo, a menos que você especificamente compartilhe ele com outros.
 
-When you make a **`.js`** file in Node.js, it can be a module right away. This means you can put your code in that file, and if you want to use that code in other parts of your application, you can share it using the **`module.exports`** object. On the other hand, you can take code from other modules and use it in your file using the **`require`** function.
+Quando você cria um arquivo **`.js`** no Node.js, ele pode se tornar um módulo na mesma hora. Isso significa que você pode colocar seu código naquele arquivo, e se você quiser utilizar esse código em outras partes da sua aplicação, você pode compartilhá-lo usando o objeto **`module.exports`**. Do outro lado, você pode pegar códigos de outros módulos e usá-los no seu arquivo utilizando a função **`require`**.
 
-This modular approach is important for keeping your code organized and separate, and making it easy to reuse parts of your code in different places. It also helps keep your code safe from errors that can happen when different parts of your code interact in unexpected ways.
+Essa abordagem modular é importante para manter seu código organizado e separado, tornando fácil a reutilização de partes do seu código em diferentes lugares. Isso também ajuda a manter seu código seguro contra erros que podem acontecer quando diferentes partes de código interagem de forma inesperada.
 
-Let’s see an example by creating a module called `calculate`
+Vamos ver um exemplo criando um módulo chamado `calculadora`
 
-Create a file `calculator.js` and add the following contents inside it
+Crie um arquivo chamado `calculadora.js` e adicione o conteúdo a seguir nele
 
 ```jsx
-// calculator.js
+// calculadora.js
 
-function add(num_one, num_two) {
-    return num_one + num_two;
+function adiciona(num_um, num_dois) {
+    return num_um + num_dois;
 }
 
-function subtract(num_one, num_two) {
-    return num_one - num_two;
+function subtrai(num_um, num_dois) {
+    return num_um - num_dois;
 }
 
-function multiply(num_one, num_two) {
-    return num_one * num_two;
+function multiplica(num_um, num_dois) {
+    return num_um * num_dois;
 }
 
-function divide(num_one, num_two) {
-    return num_one / num_two;
+function divide(num_um, num_dois) {
+    return num_um / num_dois;
 }
 
-// Only export add and subtract
+// Apenas exporta as funções adiciona e subtrai
 module.exports = {
-    add,
-    subtract,
+    adiciona,
+    subtrai,
 };
 ```
 
-By specifying the `exports` property on the global `module` object, we declare which specific methods or properties should be publicly exposed and made accessible from all other modules/files during runtime.
+Ao especificar a propriedade `exports` no objeto global `module`, declaramos quais propriedades ou métodos específicos devem ser expostos publicamente e definidos como acessíveis a partir de todos os outros módulos/arquivos durante a execução.
 
-Note, we haven’t exported `multiply` and `divide` and we’ll see in a moment what happens when we try to access them and invoke/call those functions.
+Note, nós não exportamos `multiplica` e `divide` e veremos em breve o que acontece quando tentamos acessar e chamar essas funções.
 
-> Note: Provide the relative path to `calculator.js`. In my case, it is located in the same directory and at the same folder level.
+> Nota: Forneça o caminho relativo para o arquivo `calculadora.js`. No meu caso, está localizado no mesmo diretório e no mesmo nível na hierarquia de pastas.
 
-In your `index.js` file, you can import the exported functions as shown below.
+No seu arquivo `index.js`, você pode importar as funções exportadas como demonstrado a seguir.
 
 ```jsx
-const { add, divide, multiply, subtract } = require("./calculator");
+const { adiciona, divide, multiplica, subtrai } = require("./calculadora");
 
-// You may also write it this way, but it's preferred to omit the `.js` extension
-const { add, divide, multiply, subtract } = require("./calculator.js");
+// Você também pode escrever desse jeito, mas é preferível omitir a extensão `.js`
+const { adiciona, divide, multiplica, subtrai } = require("./calculadora.js");
 ```
+Repare que estamos importando as funções `multiplica` e `divide` mesmo que não tenhamos exportado elas no módulo `calculadora.js`. Isso não causará nenhum problema até que a gente tente usar essas funções. Se você rodar o código acima com o comando `node index`, ele executará normalmente, mas não vai produzir nenhuma saída. Vamos tentar entender o porque a execução não falha.
 
-Notice that we're importing the functions `multiply` and `divide` even though we're not exporting them from the `calculator` module. This won't cause any issues until we try to use them. If you run the code above with `node index`, it runs fine but produces no output. Let’s try to understand why it doesn't fail.
+O `module.exports` é basicamente um javascript `Object`, e quando você aplica um `require` a partir de outro arquivo, ele tenta avaliar os campos com os nomes fornecidos (resumindo, desestruturação).
 
-The `module.exports` is basically a javascript `Object`, and when you `require` it from another file, it tries to evaluate the fields with the names provided (destructuring in short).
-
-So, you can think of it as something like this:
+Sendo assim, você pode pensar nesse processo como algo desse tipo:
 
 ```jsx
 const my_module = {
-    fn_one: function fn_one() {...},
-    fn_two: function fn_two() {...}
+    fn_um: function fn_um() {...},
+    fn_dois: function fn_dois() {...}
 }
 
-const { fn_one, fn_two, fn_three } = my_module;
-fn_one;   // fn_one() {}
-fn_two;   // fn_two() {}
-fn_three; // undefined
+const { fn_um, fn_dois, fn_tres } = my_module;
+fn_um;   // fn_um() {}
+fn_dois;   // fn_dois() {}
+fn_tres; // undefined
 ```
 
-This may clear up why we don't get an error if we try to include a function/property that is not being explicitly exported from a module. If that identifier isn't found, it's simply `undefined`.
+Isso deve esclarecer o porque não são apresentados erros quando tentamos incluir uma função/propriedade que não está sendo explicitamente exportada por outro módulo. Se aquele identidicador não for encontrado, ele se torna simplesmente `undefined`.
 
-So, the `multiply` and `divide` identifiers above are just `undefined`. However, if we try to add this line:
+Então, os identificadores acima, `multiplica` e `divide`, estão apenas como `undefined`. No entanto, se tentarmos adicionar essa linha:
 
 ```jsx
 // index.js
 
-let num_two = multiply(1, 2);
+let num_dois = multiplica(1, 2);
 ```
 
-the program crashes:
+O programa quebra:
 
 ```jsx
 /Users/ishtmeet/Code/intro-to-node/index.js:5
-let num_two = multiply(1, 2);
+let num_dois = multiplica(1, 2);
               ^
 
-TypeError: multiply is not a function
+TypeError: multiplica is not a function
     at Object.<anonymous> (/Users/ishtmeet/Code/intro-to-node/index.js:5:15)
     at Module._compile (node:internal/modules/cjs/loader:1256:14)
     at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
@@ -119,92 +118,90 @@ TypeError: multiply is not a function
     at node:internal/main/run_main_module:23:47
 ```
 
-We cannot invoke an `undefined` value as a function. `undefined()` doesn't make any sense.
+Não podemos chamar um valor `undefined` como uma função. `undefined()` não faz nenhum sentido.
 
-Let’s export all the functions from the `calculator` module.
+Vamos exportar todas as funções do módulo `calculadora`.
 
 ```jsx
-// calculator.js
+// calculadora.js
 
-function add(num_one, num_two) {...}
+function adiciona(num_um, num_dois) {...}
 
-function subtract(num_one, num_two) {...}
+function subtrai(num_um, num_dois) {...}
 
-function multiply(num_one, num_two) {...}
+function multiplica(num_um, num_dois) {...}
 
-function divide(num_one, num_two) {...}
+function divide(num_um, num_dois) {...}
 
-// Only export add and subtract
+// Exportando todas as funções
 module.exports = {
-  add,
-  subtract,
-  multiply,
+  adiciona,
+  subtrai,
+  multiplica,
   divide,
 };
 ```
-
-In the `index.js` file, call all those functions to see if everything’s working as expected.
+No arquivo `index.js`, vamos chamar todas as funções para ver se tudo está funcionando como esperado.
 
 ```jsx
 // index.js
 
-const { add, divide, multiply, subtract } = require("./calculator");
+const { adiciona, divide, multiplica, subtrai } = require("./calculadora");
 
-console.log(add(1, 2));
-console.log(subtract(1, 2));
-console.log(multiply(1, 2));
+console.log(adiciona(1, 2));
+console.log(subtrai(1, 2));
+console.log(multiplica(1, 2));
 console.log(divide(1, 2));
 
-// outputs
+// saída
 3 - 1;
 2;
 0.5;
 ```
+Recapitulando o que acabou de ser estabelecido acima: O `module.exports` é simplesmente um objeto. Adicionamos apenas o que queremos exportar nos campos deste objeto.
 
-Recall what was just stated above: `module.exports` is simply an object. We only add fields to that object that we wish to export.
-
-So instead of doing `module.exports = { add, subtract, .. }`, you could also do this
+Então ao invés de fazer `module.exports = { adiciona, subtrai, .. }`, você pode fazer isso
 
 ```jsx
-// calculator.js
+// calculadora.js
 
-module.exports.add = function add(num_one, num_two) {
-    return num_one + num_two;
+module.exports.adiciona = function adiciona(num_um, num_dois) {
+    return num_um + num_dois;
 };
 
-module.exports.subtract = function subtract(num_one, num_two) {
-    return num_one - num_two;
+module.exports.subtrai = function subtrai(num_um, num_dois) {
+    return num_um - num_dois;
 };
 
-module.exports.multiply = function multiply(num_one, num_two) {
-    return num_one * num_two;
+module.exports.multiplica = function multiplica(num_um, num_dois) {
+    return num_um * num_dois;
 };
 
-module.exports.divide = function divide(num_one, num_two) {
-    return num_one / num_two;
+module.exports.divide = function divide(num_um, num_dois) {
+    return num_um / num_dois;
 };
 ```
 
-It’s a matter of preference. But there’s a big downside and nuance to this approach. You cannot use these functions in the same file.
+É uma questão de preferência. Mas há uma grande desvantagem e nuance nessa abordagem. Você não pode usar essas funções no mesmo arquivo.
 
-_We’ll use the term `file` and `module` interchangeably, even though they’re not actually the same in theory_
+_Vamos utilizar os termos `arquivo` e `módulo` de forma alternada, mesmo que em teoria eles não sejam a mesma coisa._
 
 ```jsx
-// calculator.js
-module.exports.add = function add(num_one, num_two) {..}
-module.exports.subtract = function subtract(num_one, num_two) {..}
-module.exports.multiply = function multiply(num_one, num_two) {..}
-module.exports.divide = function divide(num_one, num_two) {..}
+// calculadora.js
+module.exports.adiciona = function adiciona(num_um, num_dois) {..}
+module.exports.subtrai = function subtrai(num_um, num_dois) {..}
+module.exports.multiplica = function multiplica(num_um, num_dois) {..}
+module.exports.divide = function divide(num_um, num_dois) {..}
 
 divide(1,2)
 
-// Outputs
-/Users/ishtmeet/Code/intro-to-node/calculator.js:16
+// Saída
+/Users/ishtmeet/Code/intro-to-node/calculadora.js:16
 divide(1, 2);
 ^
 
 ReferenceError: divide is not defined
-    at Object.<anonymous> (/Users/ishtmeet/Code/intro-to-node/calculator.js:16:1)
+    at Object.<anonymous> (/Users/ishtmeet/Code/intro-to-node/calculadora.js:16:1)
     at Module._compile (node:internal/modules/cjs/loader:1256:14)
     at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
     at Module.load (node:internal/modules/cjs/loader:1119:32)
@@ -216,98 +213,98 @@ ReferenceError: divide is not defined
     at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
 ```
 
-This is because `divide` and all the other functions declared in this module are a part of `module.exports` object, and they’re not available in the scope. Let’s break it down into an easy example
+Isso acontece porque `divide` e todas as outras funções declaradas nesse módulo são parte do objeto `module.exports`, e elas não estão disponíveis no escopo. Vamos analisar isso em um exemplo fácil
 
 ```jsx
-let person = {};
-person.get_age = function get_age() {...}
+let pessoa = {};
+pessoa.obter_idade = function obter_idade() {...}
 
-// `get_age` is not defined as it can only be accessed using
-// `person.get_age()`
-get_age();
+// `obter_idade` "is not defined" já que só pode ser acessada usando
+// `pessoa.obter_idade()`
+obter_idade();
 ```
 
-I hope this makes it clear. Instead you could do something like this
+Eu espero que tenha ficado claro. Você poderia fazer algo assim.
 
 ```jsx
-// calculator.js
+// calculadora.js
 
 ...
 
-// Can do this
-module.exports.add = add;
-module.exports.subtract = subtract;
-module.exports.multiply = multiply;
+// Você pode fazer isso
+module.exports.adiciona = adiciona;
+module.exports.subtrai = subtrai;
+module.exports.multiplica = multiplica;
 module.exports.divide = divide;
 
-// Or this
+// Ou isso
 module.exports = {
-  add,
-  subtract,
-  multiply,
+  adiciona,
+  subtrai,
+  multiplica,
   divide,
 };
 ```
 
-The first method isn’t the best way to create your library’s API. The second option is more concise and easier to read. It clearly shows that you're exporting a group of functions as properties of an object. This can be particularly useful when you have many functions to export. Also, everything is nicely placed at a single place. You don’t have to keep searching for `module.exports.export_name` to find out what this module exports.
+O primeiro método não é a melhor maneira de criar a biblioteca da sua API. A segunda opção é mais concisa e fácil de ler. Ela claramente demonstra que você está exportando um grupo de funções como propriedades de um objeto. Isso pode ser particularmente útil quando você tem muitas funções para exportar. Além disso, tudo fica bem acomodado em um único lugar. Você não precisa ficar procurando por `module.exports.nome_de_exportar` até encontrar qual módulo quer exportar.
 
-### Let’s get back to `files`
+### Vamos voltar aos `arquivos`
 
-In Node.js, a `file` is a way to interact with the data in a file. The **`fs`** module is used to handle file operations. It works by using unique identifiers assigned by the operating system to each file, called [file descriptors](https://en.wikipedia.org/wiki/File_descriptor).
+No Node.js, uma `file` é uma forma de interagir com os dados em um arquivo. O módulo **`fs`** é usado para lidar com operações de arquivos. Ele funciona usando identificadores únicos atribuídos a cada arquivo pelo sistema operacional, chamados de [descritores de arquivos](https://en.wikipedia.org/wiki/File_descriptor).
 
-With the **`fs`** module, you can perform several operations on files, such as reading, writing, updating, and deleting. Node.js provides both synchronous and asynchronous methods for these operations. The synchronous methods can slow down your application's responsiveness, while the asynchronous methods allow non-blocking execution.
+Com o módulo **`fs`**, você pode realizar diversas operações nos arquivos, como ler, gravar, atualizar e deletar. O Node.js fornece métodos síncronos e assíncronos para essas operações. Os métodos síncronos podem diminuir a capacidade de resposta do seu aplicativo, enquanto os métodos assíncronos permitem execução não bloqueante.
 
-Node.js interacts (indirectly, through ) with the operating system's I/O subsystem to manage file operations, making system calls such as **`open`**, **`read`**, **`write`**, and **`close`**. When you open a file, Node.js requests the operating system to allocate a file descriptor, which is used to read or write data from the file. Once the operation is complete, the file descriptor is released.
+O Node.js interage (indiretamente, através) com o subsistema de entrada e saída (I/O) do sistema operacional para gerenciar operações de arquivos, realizando chamadas de sistema como **`open`**, **`read`**, **`write`** e **`close`**. Quando você abre um arquivo, o Node.js solicita ao sistema operacional para alocar um descritor de arquivo, que é usado para ler e gravar dados em um arquivo. Assim que a operação é concluída, o descritor de arquivo é liberado.
 
-> A file descriptor is a way of representing an open file in a computer operating system. It's like a special number that identifies the file, and the operating system uses it to keep track of what's happening to the file. You can use the file descriptor to read, write, move around in the file, and close it.
+> Um descritor de arquivo é uma forma de representar um arquivo aberto no sistema operacional de um computador. É como um número especial que o identifica e que o sistema operacional usa para monitorar o que está acontecendo com o arquivo. Você pode utilizar o descritor de arquivo para ler, gravar, se mover pelo arquivo e para fechá-lo.
 
-### A little more about file descriptors
+### Um pouco mais sobre descritores de arquivos
 
-When a file is opened by a process, the operating system assigns a unique file descriptor to that open file. This descriptor is essentially an integer value that serves as an identifier for the open file within the context of that process. File descriptors are used in various [system calls](https://en.wikipedia.org/wiki/System_call) and APIs to perform operations like reading, writing, seeking, and closing files.
+Quando um arquivo é aberto por um processo, o sistema operacional atribui um descritor de arquivo único para aquele arquivo aberto. Esse descritor é essencialmente um valor inteiro que serve como um identificador para o arquivo aberto dentro do contexto daquele processo. Descritores de arquivos são utilizados em várias [chamadas de sistema](https://en.wikipedia.org/wiki/System_call) e APIs para performar operações como ler, gravar, buscar e fechar arquivos.
 
-In Unix-like systems, including Linux, file descriptors are often managed using a data structure called a [file table](https://man7.org/linux/man-pages/man5/table.5.html) or [file control block](https://en.wikipedia.org/wiki/File_Control_Block). This table keeps track of the properties and status of each open file, such as the file's current position, permissions, and other relevant information. The file descriptor acts as an **_index_** or key into this table, allowing the operating system to quickly look up the details of the open file associated with a particular descriptor, which is more efficient, and more performant than to iterate over a vector/array of files and find a particular file.
+Em sistemas do tipo Unix, incluindo o Linux, descritores de arquivos normalmente são gerenciados através de uma estrutura de dados chamada de [tabela de arquivos](https://man7.org/linux/man-pages/man5/table.5.html) ou [controle de bloqueio de arquivo](https://en.wikipedia.org/wiki/File_Control_Block). Essa tabela monitora as propriedades e status de cada aquivo aberto, assim como a posição atual do arquivo, permissões e outras informações relevantes. O descritor de arquivo age como um **_index_** ou chave para essa tabela, permitindo que o sistema operacional busque rapidamente pelos detalhes do arquivo aberto associado com aquele descritor de arquivo em particular, o que é mais eficiente e performático do que iterar sobre um vetor/matriz de arquivos e achar um arquivo específico.
 
-When you interact with files or file descriptors, you're typically dealing with numeric values. For instance, in C, the **`open()`** system call returns a file descriptor, and other functions like **`read()`**, **`write()`**, and **`close()`** require this descriptor to operate on the corresponding file. In a runtime like Node.js, the **`fs`** module abstracts the direct use of file descriptors by providing a more user-friendly API, but it still relies on them behind the scenes to manage file operations.
+Quando você interage com arquivos ou descritores de arquivos, normalmente você está lidando com valores numéricos. Por exemplo, em C, a chamada de sistema **`open()`** retorna um descritor de arquivo. Outras funções, como **`read()`**, **`write()`**, e **`close()`**, necessitam desse descritor para operar no arquivo correspondente. Em um ambiente de execução como o Node.js, o módulo **`fs`** abstrai o uso direto de descritores de arquivo oferecendo uma API mais amigável, mas ainda depende dele nos bastidores para gerenciar operações com arquivos.
 
-> A file descriptor is a small, non-negative integer that serves as an index to an entry in the process's table of open file descriptors. This integer is used in subsequent system calls (such as read, write, lseek, fcntl, etc.) to refer to the open file. The successful call will **_return the lowest-numbered file_** descriptor that is not currently open for the process.
+> Um descritor de arquivo é pequeno, um inteiro não negativo que serve como um índice de entrada na tabela de descritores de arquivos abertos do processo. Esse inteiro é utilizado em chamadas de sistema subsequentes (como read, write, lseek, fcntl, etc.) para se referir ao arquivo aberto. Uma chamada bem-sucedida retornará para o processo **_o descritor de arquivo de menor número_** que não está aberto no momento.
 
-### Creating our first file
+### Criando nosso primeiro arquivo
 
-The `node:fs` module lets you work with the file system using standard [POSIX](https://en.wikipedia.org/wiki/POSIX) functions. Node.js provides multiple ways to work with files. It exposes many flavours of its FileSystem API. A _promise-based asynchronous_ _API_, a _callback-based API_ and a _synchronous API._
+O módulo `node:fs` te permite trabalhar com o sistema de arquivos utilizando funções [POSIX](https://en.wikipedia.org/wiki/POSIX) padrão. O Node.js oferece múltiplas maneiras de trabalhar com arquivos. Isso demonstra os diversos sabores que a FileSystem API dele possui. Uma _API assíncrona baseada em promises_, uma _API baseada em callbacks_ e uma _API síncrona._
 
-Let’s create a new module, `files.js`, in the same folder where your `calculator` module and the `index.js` file lives. Let’s import the `fs` module to start working with files.
+Vamos criar um novo módulo, `files.js`, na mesma pasta que contém o seu módulo `calculadora` e o arquivo `index.js`. Vamos importar o módulo `fs` para começar a trabalhar com arquivos.
 
 ```jsx
-// Promise based API
+// API baseada em Promise
 const fs = require("node:fs/promises");
 
-// Sync/Callback based API
+// API baseada em Callback/Síncrona
 const fs = require("node:fs");
 ```
 
-A general rule of thumb is - always prefer asynchronous API, unless you’re dealing with a situation that specifically demands synchronous behaviour.
+Uma regra geral é: sempre prefira API assíncrona, a menos que você esteja lidando com uma situação específica que necessite de comportamento síncrono.
 
-Asynchronous APIs have two main benefits: they make your code more responsive and scalable. These APIs let your code keep running while it waits for slow tasks like I/O operations or network requests. By not blocking other operations, these APIs allow your application to handle many tasks at once, which improves its overall performance.
+APIs assíncronas possuem dois principais benefícios: elas aumentam a resposta do seu código e o tornam mais escalável. Essas APIs permitem que seu código continue rodando enquanto aguarda por tarefas mais lentas como operações de entrada e saída (I/O) ou requisições de rede. Por não bloquear outras operações, essas APIs possibilitam sua aplicação lidar com diversas tarefas ao mesmo tempo, o que aumenta a performance geral.
 
-Asynchronous code is better for managing multiple tasks happening at the same time than traditional callback-based approaches. With callbacks, it can be hard to keep track of what's going on, leading to a **callback hell**. Using promises and async/await helps make the code easier to read and manage, making it less likely to have issues with complex nested callbacks.
+Código assíncrono é melhor para gerenciar múltiplas tarefas acontecendo ao mesmo tempo do que a tradicional abordagem baseada em callbacks. Com callbacks, pode ser difícil se manter a par do que está acontecendo, levando a um **callback hell**. Utilizar promises e async/await ajuda a tornar o código mais fácil de ler e gerenciar, tornando-o menos suscetível a sofrer com complexos callbacks aninhados.
 
-> I will be using the promise-based API of Node.js. However, you may use other options to see what issues arise when your code becomes more complex.
+> Vou utilizar a API baseada em promises do Node.js. No entanto, você pode usar outras opções para ver quais problemas aparecem quando seu código se torna mais complexo.
 
-Inside `files.js` add this snippet of code
+Adicione esse trecho de código no arquivo `files.js`
 
 ```jsx
 // files.js
 const fs = require("node:fs/promises");
 
 async function open_file() {
-    const file_handle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+    const file_handle = await fs.open("calculadora.js", "r", fs.constants.O_RDONLY);
     console.log(file_handle);
 }
 
 module.exports = open_file;
 ```
 
-and in `index.js`
+E esse no arquivo `index.js`
 
 ```jsx
 // index.js
@@ -326,163 +323,164 @@ FileHandle {
  */
 ```
 
-Let’s break this down.
+Vamos destrinchar isso aqui
 
 ```jsx
 const fs = require("node:fs/promises");
 ```
 
-This line brings in the **`fs`** module from Node.js. It specifically imports the **`fs/promises`** sub-module, which provides file system operations that can be executed asynchronously and are wrapped in Promises.
+Essa linha traz o módulo **`fs`** do Node.js. Ela importa especificamente o sub-módulo **`fs/promises`**, que oferece operações de sistema de arquivos que podem ser executadas de maneira assíncrona e envelopadas em Promises.
 
 ```jsx
-fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+fs.open("calculadora.js", "r", fs.constants.O_RDONLY);
 ```
 
-The **`fs.open`** function is used to open a file. It takes three arguments - file’s `path`, `flag`, and a `mode`.
+A função **`fs.open`** é utilizada para abrir um arquivo. Ela recebe três argumentos: o `path` (caminho) do arquivo, uma `flag` e um `mode`.
 
-The `path` takes an argument of type **`PathLike`** which is a type that represents a file path. It's a concept used in Node.js API to indicate that a value should be a string representing a valid file path. Let’s the see type definition of `PathLike`
+O `path` recebe um argumento do tipo **`PathLike`**, que é um tipo que representa o caminho de um arquivo (path). É um conceito utilizado na API do Node.js para indicar que o valor deve ser uma string representando um caminho de arquivo válido. Vamos ver a definição do tipo `PathLike`
 
 ```jsx
 export type PathLike = string | Buffer | URL;
 ```
 
-### `path` argument
+### O argumento `path`
 
 1. String **Paths:**
-   The most common way to represent file paths is as strings. A string path can be either a relative or an absolute path. It's simply a sequence of characters that specifies the location of a file on the computer.
-   - Example of relative string path: **`"./calculator.js"`**
-   - Example of absolute string path: **`"/Users/ishtmeet/Code/intro-to-node/calculator.js"`**
+   A forma mais comum de representar o path de um arquivo é através de uma string. A string de um path pode representar o caminho de maneira relativa ou absoluta. É uma sequência simples de caracteres que especificam o local do arquivo no computador.
+   - Exemplo de uma string passando um path relativo: **`"./calculadora.js"`**
+   - Exemplo de uma string passando um path absoluto: **`"/Users/ishtmeet/Code/intro-to-node/calculadora.js"`**
 2. **Buffer Paths:**
-   While strings are the most common way to represent paths, Node.js also allows you to use **`Buffer`** objects to represent paths. A **`Buffer`** is a low-level data structure that can hold binary data. In reality, using **`Buffer`** objects for paths is less common. Read about [Buffers](#buffers) here
+   Apesar de strings serem a maneira mais comum de representar paths, o Node.js também te permite usar objetos **`Buffer`** para representar paths. Um **`Buffer`** é uma estrutura de dados de baixo nível que pode armazenar dados binários. Na realidade, usar objetos **`Buffer`** para paths é pouco comum. Leia sobre [Buffers](#buffers) aqui.
 3. **URL Paths:**
-   With the **`URL`** module in Node.js, you can also represent file paths using URLs. The URL must be of scheme file.
-   Example URL path:
+   Com o módulo **`URL`** do Node.js, você também pode representar paths de arquivo usando URLs. Precisa ser a URL do esquema de arquivos.
+   Exemplo de URL Paths:
 
 ```jsx
-const url_path = new URL("file:///home/user/projects/calculator.js");
+const url_path = new URL("file:///home/user/projects/calculadora.js");
 ```
 
-### `flag` argument
+### O argumento `flag`
 
-The `flag` argument indicates the mode (not to confused by `mode` argument) in which you wish to open the file. Here are the supported values as a `flag` -
+O argumento `flag` indica o modo (não confundir com o argumento `mode`) no qual você deseja abrir o arquivo. Aqui estão os valores suportados como argumento `flag` -
 
-- `'a'`: Open file for appending. The file is created if it does not exist.
-- `'ax'`: Like `'a'` but fails if the path exists.
-- `'a+'`: Open file for reading and appending. The file is created if it does not exist.
-- `'ax+'`: Like `'a+'` but fails if the path exists.
-- `'as'`: Open file for appending in synchronous mode. The file is created if it does not exist.
-- `'as+'`: Open file for reading and appending in synchronous mode. The file is created if it does not exist.
-- `'r'`: Open file for reading. An exception occurs if the file does not exist.
-- `'rs'`: Open file for reading in synchronous mode. An exception occurs if the file does not exist.
-- `'r+'`: Open file for reading and writing. An exception occurs if the file does not exist.
-- `'rs+'`: Open file for reading and writing in synchronous mode. Instructs the operating system to bypass the local file system cache.
-- `'w'`: Open file for writing. The file is created (if it does not exist) or truncated (if it exists).
-- `'wx'`: Like `'w'` but fails if the path exists.
-- `'w+'`: Open file for reading and writing. The file is created (if it does not exist) or truncated (if it exists).
-- `'wx+'`: Like `'w+'` but fails if the path exists.
+- `'a'`: Abre o arquivo para anexar dados. O arquivo é criado se não existir.
+- `'ax'`: Funciona como a flag `'a'`, mas falha se o path existir.
+- `'a+'`: Abre o arquivo para leitura e para anexar dados. O arquivo é criado se não existir.
+- `'ax+'`: Funciona como a flag `'a+'`, mas falha se o path existir.
+- `'as'`: Abre o arquivo para anexar dados de modo síncrono. O arquivo é criado se não existir.
+- `'as+'`: Abre o arquivo para leitura e para anexar dados de modo síncrono. O arquivo é criado se não existir.
+- `'r'`: Abre o arquivo para leitura. Uma exceção acontece se o arquivo não existir.
+- `'rs'`: Abre o arquivo para leitura em modo síncrono. Uma exceção acontece se o arquivo não existir.
+- `'r+'`: Abre o arquivo para leitura e gravação. Uma exceção acontece se o arquivo não existir.
+- `'rs+'`: Abre o arquivo para leitura e gravação em modo síncrono. Instrui o sistema operacional a ignorar o cache do sistema de arquivos local.
+- `'w'`: Abre o arquivo para gravação. O arquivo é criado (se não existir) ou truncado (se existir).
+- `'wx'`: Funciona como a flag `'w'`, mas falha se o path existir.
+- `'w+'`: Abre o arquivo para leitura e gravação. O arquivo é criado (se não existir) ou truncado (se existir).
+- `'wx+'`: Funciona como a flag `'w+'`, mas falha se o path existir.
 
-> You do not need to remember all of these, but it can be useful to write consistent APIs to ensure that no undefined behavior occurs.
+> Você não precisa lembrar de todos esses argumentos, mas pode ser útil para escrever APIs consistentes e garantir que nenhum comportamento não definido ocorra.
 
-Let’s use `wx+` to show a small example. `wx+` will open a file for read and write, but fail to open a file if it already exists. If the file doesn’t exists it will create a file and work just fine.
+Vamos utilizar o `wx+` para demonstrar um pequeno exemplo. O `wx+` vai abrir um arquivo para leitura e gravação, mas falha em abrir o arquivo se ele já existir. Se o arquivo não existir, ele será criado e tudo funcionará corretamente.
 
 ```jsx
-// calculator.js
+// files.js
 const file_handle = await fs.open(
-    "calculator.js",
+    "calculadora.js",
     "wx+",
     fs.constants.O_RDONLY
   );
 
-// Outputs
+// Saída
 node:internal/process/promises:288
             triggerUncaughtException(err, true /* fromPromise */);
             ^
 
-[Error: EEXIST: file already exists, open 'calculator.js'] {
+[Error: EEXIST: file already exists, open 'calculadora.js'] {
   errno: -17,
   code: 'EEXIST',
   syscall: 'open',
-  path: 'calculator.js'
+  path: 'calculadora.js'
 }
 ```
 
-It’s a good practice to specify the `flag` argument.
+Especificar o argumento `flag` é uma boa prática.
 
-### `mode` argument
+### O argumento `mode`
 
-The `mode` argument specifies the permissions to set for the file when its created. `mode`s are always interpreted **in octal.** For example,
+O argumento `mode` especifica as permissões definidas para o arquivo quando ele é criado. Os argumentos `mode` são sempre interpretados **em octal.**
+Por exemplo:
 
-- **`0o400`** (read-only for the owner)
-- **`0o600`** (read and write for the owner)
-- **`0o644`** (read for everyone, write only for the owner)
+- **`0o400`** (apenas leitura para o proprietário)
+- **`0o600`** (leitura e gravação para o proprietário)
+- **`0o644`** (leitura para todos, gravação apenas para o proprietário)
 
-You don’t need to remember the octal representation. Simply use the `fs.constants.your_mode` to access it.
+Você não precisa se lembrar da representação octal. Simplesmente utilize `fs.constants.seu_modo` para acessá-lo.
 
-In our case, the permissions are specified as `fs.constants.O_RDONLY`. Here is a list of available `modes` that can be used. Notice the `O_` prefix, which is short for `Open`. This prefix tells us that it will only work when used with `fs.open()`.
+No nosso caso, as permissões estão especificadas como `fs.constants.O_RDONLY`. Aqui está uma lista de `modes` disponíveis para uso. Repare que o prefixo `O_` é uma abreviação para `Open`. Esse prefixo nos diz que isso só vai funcionar quando utilizado com `fs.open()`.
 
-**Modes to use with `fs.open()`**
+**Modes para usar com `fs.open()`**
 
 ```jsx
-/** Flag indicating to open a file for read-only access. */
+/** Modo que indica a abertura de um arquivo somente para leitura. */
 const O_RDONLY: number;
 
-/** Flag indicating to open a file for write-only access. */
+/** Modo que indica a abertura de um arquivo somente para gravação. */
 const O_WRONLY: number;
 
-/** Flag indicating to open a file for read-write access. */
+/** Modo que indica a abertura de um arquivo para leitura e gravação. */
 const O_RDWR: number;
 
-/** Flag indicating to create the file if it does not already exist. */
+/** Modo que indica a criação de um arquivo se ele não existir. */
 const O_CREAT: number;
 
-/** Flag indicating that opening a file should fail if the O_CREAT flag is set and the file already exists. */
+/** Modo indicando que a abertura de um arquivo deve falhar se o mode O_CREAT estiver definido e o arquivo já existir. */
 const O_EXCL: number;
 
-/** Flag indicating that if the file exists and is a regular file, and the file is opened successfully for write access, its length shall be truncated to zero. */
+/** Modo indicando que se o arquivo existir e for um arquivo normal, e o arquivo for aberto com sucesso para gravação, seu comprimento deverá ser truncado para zero. */
 const O_TRUNC: number;
 
-/** Flag indicating that data will be appended to the end of the file. */
+/** Modo indicando que dados serão adicionados ao final do arquivo. */
 const O_APPEND: number;
 
-/** Flag indicating that the open should fail if the path is not a directory. */
+/** Modo indicando que a abertura deve falhar se o path não for um diretório. */
 const O_DIRECTORY: number;
 
-/** Flag indicating that the open should fail if the path is a symbolic link. */
+/** Modo indicando que a abertura deve falhar se o path não for um link simbólico. */
 const O_NOFOLLOW: number;
 
-/** Flag indicating that the file is opened for synchronous I/O. */
+/** Modo indicando que o arquivo está aberto para entrada e saída (I/O) síncrona. */
 const O_SYNC: number;
 
-/** Flag indicating that the file is opened for synchronous I/O with write operations waiting for data integrity. */
+/** Modo indicando que o arquivo está aberto para entrada e saída (I/O) síncrona com operações de gravação aguardando a integridade dos dados. */
 const O_DSYNC: number;
 
-/** Flag indicating to open the symbolic link itself rather than the resource it is pointing to. */
+/** Modo indicando para abrir o próprio link simbólico ao invés do recurso para o qual está apontando. */
 const O_SYMLINK: number;
 
-/** When set, an attempt will be made to minimize caching effects of file I/O. */
+/** Quando definido, será feita uma tentativa de minimizar os efeitos de cache da entrada e saída do arquivo. */
 const O_DIRECT: number;
 
-/** Flag indicating to open the file in nonblocking mode when possible. */
+/** Modo que indica a abertura do arquivo em modo não bloqueante quando possível. */
 const O_NONBLOCK: number;
 ```
 
-Going back to the code we wrote in the `files` module
+Retornando ao código que escrevemos no módulo `files`
 
 ```jsx
 // files.js
 const fs = require("node:fs/promises");
 
 async function open_file() {
-    const file_handle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+    const file_handle = await fs.open("calculadora.js", "r", fs.constants.O_RDONLY);
     console.log(file_handle);
 }
 
 module.exports = open_file;
 ```
 
-The return type of `fs.open()` is a `FileHandle`. A file handle is like a connection between the application and the file on the storage device. It lets the application work with files without worrying about the technical details of how files are stored on the device.
+O tipo de retorno de `fs.open()` é um `FileHandle`. Um file handle (manipulador de arquivos) é como uma conexão entre uma aplicação e o arquivo no dispositivo de armazenamento. Ele permite que a aplicação trabalhe com arquivos sem se preocupar com os detalhes técnicos de como os arquivos são armazenados no dispositivo.
 
-We previously discussed **file descriptors**. You can check which descriptor is assigned to an opened file.
+Nós discutimos sobre **descritores de arquivo** anteriormente. Você pode checar qual descritor de arquivo está atribuído a um arquivo aberto.
 
 ```jsx
 // files.js
@@ -490,16 +488,16 @@ We previously discussed **file descriptors**. You can check which descriptor is 
 ..
 
 async function open_file() {
-    const file_handle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
-    console.log(file_handle.fd); // Print the value of the file descriptor `fd`
+    const file_handle = await fs.open("calculadora.js", "r", fs.constants.O_RDONLY);
+    console.log(file_handle.fd); // Imprime o valor do descritor de arquivo `fd` (file descriptor)
 }
 
 ..
 
-// Outputs -> 20
+// Saída -> 20
 ```
 
-You may get the same integer value for the file descriptor if you try to run the program multiple times. But if you try to create another file handle, it should have a different file descriptor
+Você deve obter o mesmo valor como descritor de arquivo se tentar rodar o programa várias vezes. Mas se você tentar criar outro file handle, ele deverá ter um descritor de arquivo diferente
 
 ```jsx
 // files.js
@@ -507,53 +505,53 @@ You may get the same integer value for the file descriptor if you try to run the
 ..
 
 async function open_file() {
-    const file_handle     = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
-    const file_handle_two = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+    const file_handle     = await fs.open("calculadora.js", "r", fs.constants.O_RDONLY);
+    const file_handle_two = await fs.open("calculadora.js", "r", fs.constants.O_RDONLY);
     console.log(file_handle.fd);
     console.log(file_handle_two.fd);
 }
 
 ..
 
-// Outputs ->
+// Saída ->
 20
 21
 ```
 
-> Note that if a `FileHandle` is not closed using the `file_handle.close()` method, it will try to automatically close the file descriptor and emit a process warning, helping to prevent memory leaks. It’s always good practice to call `file_handle.close()` to explicitly close it. However, in our case, the program exits just after running the `open_file` function, so it doesn't matter in our case.
+> Note que se um `FileHandle` não for fechado utilizando o método `file_handle.close()`, ele tentará fechar o descritor de arquivo automaticamente e emitir um alerta do processo, ajudando a previnir vazamento de memória. É sempre uma boa prática chamar o método `file_handle.close()` para fechá-lo explicitamente. No entanto, no nosso caso, o programa só existe depois da função `open_file` ser executada, então isso não importa.
 
-One import thing to note is, `open`ing a file can fail, and will throw an exception.
+Uma coisa importante a ser notada é: a abertura (`open`) de um arquivo pode falhar e exibir uma exceção.
 
-`fs.open()` can throw errors in various scenarios, including:
+O `fs.open()` pode exibir erros em vários cenários, incluindo:
 
-- `EACCES`: Access to the file is denied or permission is lacking, or the file doesn't exist and parent directory isn't writable.
-- `EBADF`: The directory file descriptor is invalid.
-- `EBUSY`: The file is a block device in use or mounted.
-- `EDQUOT`: Disk quota for user is exceeded when creating a file.
-- `EEXIST`: File already exists while trying to create it exclusively.
-- `EFAULT`: Path is outside accessible memory.
-- `EFBIG` / `EOVERFLOW`: File is too large to open.
-- `EINTR`: Opening a slow device is interrupted by a signal.
-- `EINVAL`: Invalid flags or unsupported operations.
-- `EISDIR`: Attempting to write to a directory, or using `O_TMPFILE` on a version that doesn't support it.
-- `ELOOP`: Too many symbolic links encountered.
-- `EMFILE`: Process reached its limit of open file descriptors.
-- `ENAMETOOLONG`: Pathname is too long.
-- `ENFILE`: System-wide limit on open files is reached.
-- `ENOENT`: File or component in path doesn't exist.
-- `ENOMEM`: Insufficient memory for FIFO buffer or kernel memory.
-- `ENOSPC`: No space left on device.
-- `ENOTDIR`: Component in path is not a directory.
-- `ENXIO`: File doesn't correspond to device, socket, or FIFO.
-- `EOPNOTSUPP`: Filesystem doesn't support `O_TMPFILE`.
-- `EROFS`: File is on read-only filesystem.
-- `ETXTBSY`: File is being executed, used as swap, or read by kernel.
-- `EPERM`: Operation prevented by file seal or mismatched privileges.
-- `EWOULDBLOCK`: `O_NONBLOCK` specified, incompatible lease held on the file.
+- `EACCES`: O acesso ao arquivo foi negado ou faltam permissões, ou o arquivo não existe e o diretório pai não é gravável.
+- `EBADF`: O descritor de arquivo do diretório é inválido.
+- `EBUSY`: O arquivo é um dispositivo de bloco em uso ou montado.
+- `EDQUOT`: A cota de disco do usuário foi excedida ao criar o arquivo.
+- `EEXIST`: O arquivo já existe ao tentar criá-lo exclusivamente.
+- `EFAULT`: O path está fora da memória acessível
+- `EFBIG` / `EOVERFLOW`: O arquivo é muito grande para abrir.
+- `EINTR`: A abertura de um dispositivo lento é interrompida por um sinal.
+- `EINVAL`: Modos inválidos ou operações não suportadas.
+- `EISDIR`: Tentativa de gravar em um diretório ou de usar o `O_TMPFILE` em uma versão não suportada.
+- `ELOOP`: Muitos links simbólicos encontrados.
+- `EMFILE`: O processo atingiu o seu limite de abertura de descritores de arquivos.
+- `ENAMETOOLONG`: O nome do path é muito longo.
+- `ENFILE`: O limite de arquivos abertos no sistema foi atingido.
+- `ENOENT`: O arquivo ou componente no path não existe.
+- `ENOMEM`: Memória insuficiente para o buffer FIFO ou memória do kernel.
+- `ENOSPC`: Não há mais espaço no dispositivo.
+- `ENOTDIR`: O componente no path não é um diretório.
+- `ENXIO`: O arquivo não corresponde ao dispositivo, socket ou FIFO.
+- `EOPNOTSUPP`: O sistema de arquivos não suporta o `O_TMPFILE`.
+- `EROFS`: O arquivo está em um sistema de arquivos somente leitura.
+- `ETXTBSY`: O arquivo está sendo executado, usado como swap ou sendo lido pelo kernel.
+- `EPERM`: Operação impedida por selo de arquivo ou privilégios incompatíveis.
+- `EWOULDBLOCK`: `O_NONBLOCK` especificado, concessão incompatível mantida no arquivo.
 
-Make sure to handle errors gracefully. There may be cases where you don't need to handle the errors and want the program to fail, exit, or throw an error to the client. For example, if you're writing a CLI application that compresses an image using the `path/to/image` provided as an argument, you want it to fail to let the user know that there is an issue with the file/path provided.
+Certifique-se de tratar os erros de maneira elegante. Haverá casos nos quais você não precisará tratar erros e vai querer que o programa falhe, feche ou exiba um erro ao usuário. Por exemplo, se você está escrevendo uma aplicação de linha de comando que comprime imagens utilizando o caminho `path/to/image` como argumento, você vai querer que o programa falhe para informar ao usuário que há um problema com o arquivo/caminho fornecido.
 
-To catch errors, wrap the code inside a `try/catch` block.
+Para capturar erros, envelope o código com um bloco `try/catch`
 
 ```jsx
 // files.js
@@ -563,18 +561,18 @@ To catch errors, wrap the code inside a `try/catch` block.
 async function open_file() {
   try {
     const file_handle = await fs.open("config", "r", fs.constants.O_WRONLY);
-        // do something with the `file_handle`
+        // faz alguma coisa com o `file_handle`
   } catch (err) {
-    // Do something with the `err` object
+    // faz alguma coisa com o objeto `err`
   }
 }
 
 ..
 ```
 
-## Reading from a file
+## Lendo de um arquivo
 
-Too much of the theory. We’ll work on a real example now. Let’s try to read from a file. We’ll create a `log_config.json` file, in the `config` folder. The directory structure will look something like this (get rid of the `calculator` module)
+Já vimos muito teoria. Vamos trabalhar em um exemplo real agora. Tentaremos ler de um arquivo. Vamos criar um arquivo `log_config.json` dentro da pasta `config`. A estrutura do diretório vai ficar mais ou menos assim (se livre do módulo `calculadora`)
 
 ```
 .
@@ -584,7 +582,7 @@ Too much of the theory. We’ll work on a real example now. Let’s try to read 
 └── index.js
 ```
 
-Add these content inside the `log_config.json` file
+Adicione o seguinte conteúdo no arquivo `log_config.json`
 
 ```jsx
 // log_config.json
@@ -594,55 +592,55 @@ Add these content inside the `log_config.json` file
 }
 ```
 
-Node.js provides many utility methods for reading from a specific file using the `file_handle`. There are different ways to handle interactions with the files from the `node:fs` and the `node:fs/promises` modules. But we’re specifically going to use a `file_handle` for now.
+O Node.js fornece muitos métodos úteis para ler de um arquivo específico utilizando o `file_handle`. Há diferentes maneiras de lidar com as interações com os arquivos dos módulos `node:fs` e `node:fs/promises`. Mas no momento vamos utilizar um `file_handle` especificamente.
 
 ```jsx
 // files.js
 
 const fs = require("node:fs/promises");
 
-// This function asynchronously opens a file, reads it line by line
-// and logs each line on the console.
+// Essa função abre um arquivo de maneira assíncrona, lê ele linha por linha
+// e registra cada linha no console.
 async function read_file() {
     try {
-        // open the file in read-only mode.
+        // abre o arquivo em modo somente leitura.
         const file_handle = await fs.open("./index.js", "r", fs.constants.O_RDONLY);
 
-        // create a stream to read the lines of the file.
+        // cria uma stream para ler as linhas do arquivo.
         let stream = file_handle.readLines({
-            // start reading from the beginning of the file.
+            // começa a ler do início do arquivo.
             start: 0,
 
-            // read till the end of the file.
+            // lê até o fim do arquivo.
             end: Infinity,
 
-            // specify the encoding to be utf8, or else the stream
-            // will emit buffer objects instead of strings.
+            // especifica a codificação como utf8, caso contrário,
+            // a stream vai emitir objetos buffer em vez de strings.
             encoding: "utf8",
 
             /**
-             * If autoClose is false, then the file descriptor won't be closed,
-             * even if there's an error. It is the application's responsibility
-             * to close it and make sure there's no file descriptor leak. If
-             * autoClose is set to true (default behavior), on 'error' or 'end' the
-             * file descriptor will be closed automatically.
+             * Se o autoClose for false, então o descritor de arquivo não será fechado,
+             * mesmo se houver um erro. É responsabilidade da aplicação fechá-lo e
+             * certificar-se de que não há vazamento de descritores de arquivo.
+             * Se o autoClose for true (comportamento padrão), com um 'error' ou
+             * com um 'end', o descritor de arquivo será fechado automaticamente.
              */
             autoClose: true,
 
             /**
-             * If emitClose is true, then the `close` event will be emitted
-             * after reading is finished. Default is `true`.
+             * Se emitClose for true, então o evento `close` será emitido 
+             * depois que a leitura for finalizada. O comportamento padrão é true.
              */
             emitClose: true,
         });
 
-        // The 'close' event is emitted when the file_handle has been closed
-        // and can no longer be used.
+        // O evento close é emitido quando um file_handle é fechado
+        // e não pode mais ser usado.
         stream.on("close", () => {
             console.log("File handle %d closed", file_handle.fd);
         });
 
-        // The 'line' event be fired whenver a line is read from the file.
+        // O evento 'line' é disparado sempre que uma linha é lida do arquivo.
         stream.on("line", (line) => {
             console.log("Getting line -> %s", line);
         });
@@ -654,7 +652,7 @@ async function read_file() {
 module.exports = read_file;
 ```
 
-This outputs
+Vai gerar a saída
 
 ```
 Getting line -> const open_file = require("./files");
@@ -663,27 +661,27 @@ Getting line -> open_file();
 File handle 20 closed
 ```
 
-The code above has a function called `read_file` that does three things: open a file, read each line, and show each line on the console.
+O código acima tem uma função chamada `read_file` que faz três coisas: abrir um arquivo, ler cada linha e mostrar cada linha no console.
 
-This function uses the `fs` module. It opens a read-only file and creates a stream to read it. The function can read only some lines using the `start` and `end` options. The function also needs to know the file's characters using the `encoding` option.
+Essa função usa o módulo `fs`. Ela abre um arquivo no modo somente leitura e cria uma stream para lê-lo. A função só pode ler alguma linha usando as opções `start` e `end`. A função também precisa saber quais são os caracteres do arquivo utilizando a opção `encoding`.
 
-This function also sets two options to handle the file descriptor automatically when the reading is finished. Finally, this function creates two listeners to handle two events: `close` and `line`. The `close` event tells the function that the file handle has been closed. The `line` event tells the function that it has read a line from the file.
+Essa função também define duas opções para manipular o descritor de arquivo automaticamente quando a leitura é finalizada. Finalmente, a função cria dois escutadores (listeners) para lidar com dois eventos: `close` e `line`. O evento `close` diz à função que o file handler foi fechado. O evento `line` diz à função que uma linha do arquivo foi lida.
 
-If there's an error while reading the file, the function shows an error message on the console.
+Se houver um erro durante a leitura do arquivo, a função exibirá uma mensagem de erro no console.
 
-One thing to note is that we used string substitution `%s` instead of template literals. When passing a string to one of the methods of the `console` object that accepts a string, you may use these substitution strings:
+Uma coisa a ser notada é que nós usamos a string substitution (substituição de strings) `%s` em vez de um template literals. Ao passar uma string para um dos métodos do objeto `console` que aceita uma string, você pode usar essas strings substitutas:
 
-- `%o` or `%O`: Outputs a JavaScript object. Clicking the object name opens more information about it in the inspector (browser).
-- `%d`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %d", 1)` will output the number as an number (will retain floating point value).
-- `%i`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %i", 1.1)` will output the number as an integer (will truncate the floating point value).
-- `%s`: Outputs a string.
-- `%f`: Outputs a floating-point value. Formatting is supported. For example, `console.log("Foo %f", 1.1)` will output "Foo 1.1".
+- `%o` ou `%O`: Exibe um objeto JavaScript. Clicar sobre o nome do objeto no inspetor (navegador), exibe mais informações sobre ele.
+- `%d`: Exibe um inteiro. Formatação de números suportada. Por exemplo, `console.log("Exemplo %d", 1)` vai exibir o número como um número (manterá o valor do ponto flutuante).
+- `%i`: Exibe um inteiro. Formatação de números suportada. Por exemplo, `console.log("Exemplo %i", 1.1)` vai exibir o número como um inteiro (vai truncar o valor do ponto flutuante).
+- `%s`: Exibe uma string.
+- `%f`: Exibe um valor flutuante. Formatação suportada. Por exemplo, `console.log("Exemplo %f", 1.1)` vai exibir "Exemplo 1.1".
 
-> Using `%o` to show the output on terminal, just prints the whole object as a string, this is something that the string substitution has an advantage over template literals.
+> Utilizar `%o` ao exibir a saída no terminal, simplesmente imprime o objeto inteiro como uma string, isso é uma vantagem que as strings substitution possuem em comparação aos template literals.
 
-We can simplify the above code. I included all possible option keys previously just to show that they exist, and you could use them if you want to have more control over what you’re doing.
+Podemos simplificar o código acima. Eu incluí todas as chaves opcionais possíveis anteriormente apenas para mostrar que elas existem, e que você pode usá-las se quiser ter mais controle sobre o que está fazendo.
 
-The simplified version looks like this
+A versão simplificada fica assim
 
 ```jsx
 // files.js
@@ -695,7 +693,7 @@ async function read_file() {
     const file_handle = await fs.open("./index.js");
     const stream = file_handle.readLines();
 
-    // we'll get to this syntax in a bit
+    // chegaremos nesta sintaxe daqui a pouco
     for await (const line of stream) {
       console.log("Reading line of length %d -> %s", line.length, line);
     }
@@ -707,7 +705,7 @@ async function read_file() {
 ...
 ```
 
-This outputs
+Vai gerar a seguinte saída
 
 ```
 Reading line of length 59 -> const { read_entire_file, read_file } = require("./files");
@@ -715,98 +713,98 @@ Reading line of length 0 ->
 Reading line of length 12 -> read_file();
 ```
 
-Notice that we get rid of all those options since they are already set to default values for our convenience. Only specify them if you wish to choose values other than the defaults.
+Repare que nos livramos de todas aquelas opções, já que elas já estão definidas como o valor padrão por conveniência. Apenas especifique-as se quiser alterar o valor para outro que não seja o padrão.
 
-## A small primer on `for..of` and `for await..of` in javascript
+## Uma pequena cartilha para o `for..of` e o `for await..of` no javascript
 
 ### `for..of`
 
-The **`for..of`** loop is a JavaScript feature that provides an easy and straightforward way to go through elements in an array, string, or other [iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols) objects. It makes it simpler to iterate through each item without the need to manage the loop's index or length manually.
+O loop **`for..of`** é um recurso do JavaScript que fornece uma maneira fácil e direta de percorrer os elementos em um array, string ou outro objeto [iterável](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols). Ele torna a iteração através de cada item mais simples, sem precisar controlar uma variável de índice ou de comprimento do array manualmente.
 
-Let's look at the syntax:
+Vamos dar uma olhada na sintaxe:
 
 ```js
 for (const element of iterable) {
-  // Code to be executed for each element
+  // Código que será executado para cada elemento
 }
 ```
 
-Here's an overview of how the **`for..of`** loop works:
+Aqui está uma visão geral de como o loop **`for..of`** funciona:
 
-1. **`for`**: This is the keyword that indicates the start of the loop structure.
-2. **`element`**: This is a variable that you define to represent the current element of the iterable in each iteration of the loop. In each iteration, the **`element`** variable will hold the value of the current element in the iterable.
-3. **`of`**: This is a keyword that signifies the relationship between the **`element`** variable and the **`iterable`** you're looping through.
-4. **`iterable`**: This is the collection or object you want to iterate over. It can be an array, a string, a set, a map, or any other object that has a collection of items.
+1. **`for`**: Essa é a palavra-chave que indica o início da estrutura de repetição (loop).
+2. **`element`**: Essa é a variável que você define para representar o elemento atual de cada iteração do loop. A cada iteração, a variável **`element`** vai conter o valor do elemento atual do iterável.
+3. **`of`**: Essa é uma palavra-chave que representa a relação entre a variável **`element`** e o **`iterável`** pelo qual você está percorrendo.
+4. **`iterable`**: É uma coleção ou objeto pelo qual você quer percorrer. Pode ser um array, uma string, um set, um map ou qualquer outro objeto que possui uma coleção de itens.
 
-Here's an example of using **`for..of`** to loop through an array:
+Aqui está um exemplo de como usar o **`for..of`** para percorrer um array:
 
 ```jsx
-const fruits = ['apple', 'banana', 'orange', 'grape'];
+const frutas = ['maçã', 'banana', 'laranja', 'uva'];
 
-for (const fruit of fruits) {
-  console.log(fruit);
+for (const fruta of frutas) {
+  console.log(fruta);
 }
 ```
 
-The loop will iterate through each element in the **`fruits`** array, and in each iteration, the **`fruit`** variable will contain the value of the current fruit. The loop will log:
+O loop vai iterar através de cada elemento do array **`frutas`**, e a cada iteração, a variável **`fruta`** vai conter o valor da fruta atual. Saída do loop:
 
 ```
-apple
+maçã
 banana
-orange
-grape
+laranja
+uva
 ```
 
-The **`for..of`** loop is particularly useful when you don't need to access the index of the elements directly. It provides a cleaner and more concise way to work with iterable objects.
+O loop **`for..of`** é particularmente útil quando você não precisa acessar o índice dos elementos diretamente. Ele fornece uma maneira mais limpa e concisa de trabalhar com objetos iteráveis.
 
-Note that the **`for..of`** loop can't be used to directly loop over properties of an object. It's specifically designed for iterating over values in iterable collections. If you need to loop through object properties, the traditional **`for..in`** loop or using **`Object.keys()`**, **`Object.values()`**, or **`Object.entries()`** would be more appropriate.
+Repare que o loop **`for..of`** não pode ser usado para iterar diretamente através das propriedades de um objeto. Foi feito especificamente para iteração através de valores em coleções iteráveis. Se você precisa percorrer através das propriedades de um objeto, o tradicional loop **`for..in`** ou usar **`Object.keys()`**, **`Object.values()`** ou **`Object.entries()`**, seria mais apropriado.
 
 ### `for await..of`
 
-The **`for await..of`** loop is an extension of the **`for..of`** loop. It is used for asynchronous operations and iterables. It can iterate over asynchronous iterable objects like those returned by asynchronous [generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator) or promises. The loop is useful when dealing with asynchronous operations like fetching data from APIs or reading from streams, just like we did above!
+O loop **`for await..of`** é uma extensão do loop **`for..of`**. Ele é utilizado para operações assíncronas e iteráveis. Ele pode iterar através de objetos iteráveis assíncronos como aqueles retornados por [generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator) assíncronos ou promises. O loop é útil quando estamos lidando com operações assíncronas como buscar dados de APIs ou ler de streams, assim como fizemos acima!
 
-Here's how the **`for await..of`** loop works:
+Aqui está como o loop **`for await..of`** funciona:
 
 ```jsx
 for await (const element of async_iterable) {
-  // Asynchronous code to be executed for each element
+  // Código assíncrono a ser executado para cada elemento
 }
 ```
 
-Let's break down the key components:
+Vamos analisar os componentes chave:
 
-1. **`for await`**: These keywords start the asynchronous loop structure.
-2. **`element`**: This variable represents the current element of the asynchronous iterable in each iteration of the loop.
-3. **`async_iterable`**: This is an asynchronous iterable object, such as an asynchronous generator, a promise that resolves to an iterable, or any other object that implements the asynchronous [iteration protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
+1. **`for await`**: Essas palavras-chave iniciam a estrutura de loop assíncrona.
+2. **`element`**: Essa variável representa o elemento atual do iterável assíncrono em cada loop da iteração.
+3. **`async_iterable`**: Esse é um objeto iterável assíncrono, como um generator assíncrono, uma promise que resulta em um iterável ou qualquer outro objeto que implementa o [protocolo de iteração](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols) assíncrona.
 
-Here's an example of using **`for await..of`** to loop through an asynchronous iterable:
+Aqui está um exemplo do uso do loop **`for await..of`** para percorrer através de um iterável assíncrono:
 
 ```jsx
-async function fetch_fruits() {
-  const fruits = ['apple', 'banana', 'orange', 'grape'];
+async function fetch_frutas() {
+  const frutas = ['maçã', 'banana', 'laranja', 'uva'];
 
-  for await (const fruit of fruits) {
-    console.log(fruit);
+  for await (const fruta of frutas) {
+    console.log(fruta);
 
-    // a dummy async operation simulation
+    // simulação de uma operação assíncrona fictícia
     await new Promise(resolve => setTimeout(resolve, 1000)); 
   }
 }
 
-fetch_fruits();
+fetch_frutas();
 ```
 
-Here, the **`fetchFruits`** function uses the **`for await..of`** loop to iterate through the **`fruits`** array asynchronously. For each fruit, it logs the fruit name and then simulates an asynchronous operation using **`setTimeout`** to pause for a second.
+Aqui, a função **`fetchFrutas`** usa o loop **`for await..of`** para iterar através do array frutas de maneira assíncrona. Para cada fruta, ele imprime o nome da fruta e então simula uma operação assíncrona usando o **`setTimeout`** para pausar por um segundo.
 
-The **`for await..of`** loop is a handy tool when working with asynchronous operations. It allows us to iterate over the results of promises or asynchronous generators in a more readable and intuitive way. It ensures that the asynchronous operations within the loop are executed sequentially, one after the other, even if they have varying completion times.
+O loop **`for await..of`** é uma ferramenta útil quando estamos trabalhando com operações assíncronas. Ele nos permite percorrer através dos resultados de promises ou de generators assíncronos de uma maneira mais legível e intuitiva. Ele garante que as operações assíncronas dentro do loop sejam executadas sequencialmente, uma depois da outra, mesmo que elas possuam tempos de conclusão variados.
 
-## Reading the `json` file
+## Lendo o arquivo `json`
 
-However, reading a json file line by line isn’t the best way. The `readLine` is a very memory-efficient way to read files. It does not load all the contents of the file into memory, which is usually what we want. But if the file is small, and you know before hand, that the file is not really big, it’s usually quicker, and more performant to load the entire file at once into the memory.
+No entanto, ler um arquivo json linha por linha não é a melhor maneira. O `readLine` é uma maneira com muita eficiência de memória para ler arquivos. Ela não carrega todo o conteúdo do arquivo na memória, o que é normalmente o que queremos. Mas se o arquivo é pequeno, e você sabe de antemão que ele não é muito grande, é normalmente mais rápido e performático carregar o arquivo inteiro de uma vez na memória.
 
-> If you're dealing with large files, it's usually better to use a buffered version, i.e `createReadStream()` or `readLines()`
+> Se você está lidando com arquivos grandes, é normalmente melhor usar uma versão em buffer, como `createReadStream()` ou `readLines()`
 
-Let’s update the code
+Vamos atualizar o código
 
 ```jsx
 ...
@@ -825,7 +823,7 @@ async function read_file() {
 ...
 ```
 
-Outputs
+Saída
 
 ```jsx
 [File contents] ->
@@ -834,63 +832,63 @@ Outputs
 }
 ```
 
-Nice. But what happens, if we do not use the string substitution with `%s`?
+Legal. Mas o que acontece se a gente não usar a string substitution `%s`?
 
 ```jsx
 console.log("[File contents] ->\n", stream);
 ```
 
-Strangely, this outputs some weird looking stuff
+Estranhamente, vai exibir um conteúdo meio esquisito
 
 ```
 [File contents] ->
  <Buffer 7b 0a 20 20 22 6c 6f 67 5f 70 72 65 66 69 78 22 3a 20 22 5b 4c 4f 47 5d 3a 20 22 0a 7d 0a>
 ```
 
-Why is it so? And what is a `Buffer`? This is one of the most unvisited topics of programming. Let’s take a minute to understand it.
+Por que isso é assim e o que é um `Buffer`? Esse é um dos tópicos menos visitados da programação. Vamos parar um minuto para entender.
 
 # Buffers
 
-`Buffer` objects are used to represent a fixed-length sequence of bytes, in memory. **`Buffer`** objects are more memory-efficient compared to JavaScript strings when dealing with data, especially very large datasets. This is because strings in JavaScript are UTF-16 encoded, which can lead to higher memory consumption for certain types of data.
+Objetos `Buffer` são utilizados para representar uma sequência de tamanho fixo de bytes na memória. Objetos **`Buffer`** possuem mais eficiência de memória do que strings JavaScript ao lidar com dados, especialmente conjuntos de dados muito grandes. Isso é porque strings são codificadas em UTF-16 no JavaScript, o que pode levar a um maior consumo de memória para certos tipos de dados.
 
-Q: But why does the `readLines()` method returned strings if it’s not “efficient”?
+Pergunta: Mas por que o método `readLines()` retornou strings se não é "eficiente"?
 
-Well turns out, they do indeed use buffers internally to efficiently read and process data from files or streams. `readLines()` is a special variant of `createReadStream()` which is designed to provide a convenient interface for working with lines of text content, making it easier for developers to interact with the data without needing to handle low-level buffer operations directly.
+O que acontece, é que na verdade o método usa buffers internamente para ler e processar dados de arquivos ou streams de maneira eficiente. O `readLines()` é uma variação especial do `createReadStream()`, que é feito para fornecer uma interface conveniente para trabalhar com linhas de conteúdo de texto, tornando a interação com dados mais fácil para desenvolvedores, sem a necessidade de lidar diretamente com operações de buffer de baixo nível.
 
-So, what you're looking at when you see the value of a buffer is just a raw representation of binary data in **_hexadecimal format_**. This raw data might not make much sense to us as humans because it's not in a readable format like text.
+Então, o que você está vendo ao olhar para o valor do buffer é apenas uma representação crua de dados binários no **_formato hexadecimal_**. Esses dados crus podem não fazer muito sentido para nós humanos porque não está em um formato legível como texto.
 
-To print the json file to the console, we have 3 ways.
+Para imprimir o arquivo json no console, temos 3 formas.
 
-**First method**
+**Primeiro método**
 
 ```jsx
 console.log("[File contents] ->\n", stream.toString("utf-8"));
 ```
 
-**Second method**
+**Segundo método**
 
-String substitution to the rescue again
+Usando string substitution novamente
 
 ```jsx
 console.log("[File contents] ->\n %s", stream);
 ```
 
-The second method is much more user friendly. They automatically serialize the binary content into a string. But, to use and manipulate the string contents, we’ll have to fall back to the first method.
+O segundo método é muito mais amigável. Ele automaticamente serializa o conteúdo binário em uma string. Mas, para usar e manipular conteúdos de string, vamos precisar retornar ao primeiro método.
 
-**Third method**
+**Terceiro método**
 
-Set the `encoding` option to `utf-8`
+Defina a opção `encoding` para `utf-8`
 
 ```jsx
 const stream = await file_handle.readFile({ encoding: "utf-8" });
 console.log("[File contents] ->\n", stream);
 ```
 
-### Parsing the `json` file
+### Analisando o arquivo `json`
 
-To read the `log_prefix` property that we specified into the `config/log_config.json` file, let’s parse the contents of the file.
+Para ler a propriedade `log_prefix` que especificamos dentro do arquivo `config/log_config.json`, vamos analisar o conteúdo do arquivo.
 
-> Many people use the `require('file.json')` way, but there are several drawbacks to it. First, the entire file is loaded into memory when your program encounters the require statement. Second, if you update the json file during runtime, the program will still refer to the old data. It is recommended to use `require()` only when you expect the file not to change, and it is not excessively large; otherwise, it will always remain in memory.
+> Muitas pessoas usam a forma `require('file.json')`, mas há sérias desvantagens nela. Primeira, o arquivo inteiro é carregado na memória quando seu programa encontra a declaração de require. Segunda, se você atualizar o arquivo json durante a execução, o programa ainda vai fazer referência aos dados antigos. A utilização de `require()` é recomendada somente quando você espera que não haverá mudanças no arquivo e ele não for excessivamente grande; caso contrário, ele vai sempre permanecer na memória.
 
 ```jsx
 // files.js
@@ -904,11 +902,11 @@ console.log('Log prefix is: "%s"', config.log_prefix);
 
 ...
 
-// Outputs ->
+// Saída ->
 // Log prefix is: "[LOG]: "
 ```
 
-This looks fine, but it is not a very good practice to specify paths like this. Using **`"./config/log_config.json"`** assumes that the **`config`** directory is located in the same directory as the current working directory of the terminal. This might not always be the case, especially if your script is being run from a different working directory, eg. from the config folder. To test this behavior, `cd config` and run `node ../index.js`
+Isso parece bom, mas não é uma boa prática especificar paths dessa maneira. Usar **`"./config/log_config.json"`** assume que o diretório **`config`** está localizado no mesmo diretório de trabalho atual do terminal. Esse pode nem sempre ser o caso, especialmente se o seu script está sendo executado de um diretório de trabalho diferente, como da pasta config. Para testar esse comportamento, se mova usando o comando `cd config` e execute com o comando `node ../index.js`.
 
 ```jsx
 Error occurred while reading file: [Error: ENOENT: no such file or directory, open './config/log_config.json'] {
@@ -921,9 +919,9 @@ Error occurred while reading file: [Error: ENOENT: no such file or directory, op
 }
 ```
 
-This expects the path is relative to the current working directory, hence not what we expect. We should be able to run the script from anywhere, no matter what folder we are in. This is very useful for large projects having folders multiple levels deep.
+Desse jeito, o esperado é que o path seja relativo ao diretório atual, mas não é o que nós esperamos. Deveríamos ser capazes de executar o nosso script de qualquer lugar, não importa em qual diretório estamos no momento. Isso é muito útil para projetos grandes contendo pastas com múltiplos níveis de profundidade.
 
-Update the code to include the `path` module in scope
+Atualize o código para incluir o módulo `path` no escopo
 
 ```jsx
 // files.js
@@ -938,13 +936,13 @@ const stream = await (await fs.open(log_path)).readFile();
 ...
 ```
 
-Using **`__dirname`** and the **`path`** module ensures that you are referencing the correct path regardless of the current working directory you’re in.
+Usar o **`__dirname`** e o módulo **`path`** garante que você está referenciando o caminho correto independente do diretório de trabalho no qual você está.
 
-`__dirname` is a special (module-level) variable that represents the absolute path of the directory containing the current JavaScript file. Isn’t it magic?
+`__dirname` é uma variável especial (module-level) que representa o caminho absoluto do diretório contendo o arquivo JavaScript em questão. Não é mágico?
 
-`path.join()` method joins all given `path` segments together using the **platform-specific separator** as a delimiter, then normalizes the resulting path. Zero-length `path` segments are ignored. If the joined path string is a zero-length string then `'.'` will be returned, representing the current working directory.
+O método `path.join()` junta todos os segmentos de `path` fornecidos utilizando o **separador específico da plataforma** como um delimitador, retornando o caminho normalizado. Segmentos de `path` com comprimento zero são ignorados. Se a string do path já reunida for uma string de comprimento zero, então `'.'` será retornado, representando o diretório de trabalho atual.
 
-The full code of `files.js` looks like this now.
+O código completo do arquivo `files.js` ficou assim agora
 
 ```jsx
 const fs = require("node:fs/promises");
@@ -962,7 +960,7 @@ async function read_file() {
 }
 ```
 
-Now you can run the code from whatever directory, no matter how much deeply nested it is, it is going to work fine unless you move the `files.js` file to a different location.
+Agora você pode rodar o código de qualquer diretório, não importa o quão profundamente aninhado ele está, vai funcionar corretamente a menos que você mova o arquivo `files.js` para um local diferente.
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch04-logtar-our-logging-library.md)
 
