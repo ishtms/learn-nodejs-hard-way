@@ -1,14 +1,14 @@
 # Node.js é muito mais rápido do que você pensa
 
-> Para as pessoas que vieram aqui ler o livro, você seguramente pode pular o [primeiro capítulo deste livro](/chapters/ch01-what-is-a-web-server-anyway.md). Mas se ainda sim você deseja ler esta parte, saiba que você pode não entender muitos termos mencionados aqui".
+> Para as pessoas que vieram aqui ler o livro, você seguramente pode pular para o [primeiro capítulo deste livro](/chapters/ch01-what-is-a-web-server-anyway.md). Mas se ainda sim você deseja ler esta parte, saiba que você pode não entender muitos termos mencionados aqui".
 
-**"Node.js é lento."** Essa é uma afirmação que você pode ter escutado muitas vezes, talvez espalhada nos ciclos de desenvolvedores ou debatidas nos fóruns online. O Node.js tem sido injustamente criticado por não ser adequado para aplicações de alta performance.
+**"Node.js é lento."** Essa é uma afirmação que você deve ter escutado muitas vezes, talvez espalhada nos ciclos de desenvolvedores ou debatidas nos fóruns online. O Node.js tem sido injustamente criticado por não ser adequado para aplicações de alta performance.
 
 A comunidade tech elogia frequentemente linguagens como Go ou Rust por sua execução ***extremamente rápida***, muitas vezes duvidando que o JavaScript e seu parceiro do lado do servidor, Node.js, consigam acompanhar. As críticas mais comuns vão desde o Node.js ser single-thread até as limitações fundamentais do JavaScript em si. Mas e se eu te dissesse que essas críticas não são somente superficiais, mas na maioria das vezes enganosas?
 
 Por que o Node.js é considerado lento? Será a arquitetura single-thread? Ou talvez pelo fato de usar JavaScript - a linguagem originalmente desenvolvida para o lado do cliente - como sua espinha dorsal? Esses são apenas alguns dos muitos equívocos que contribuem para a subestimação do Node.js. Mas, como você descobrirá em breve, o Node.js pode não apenas ficar lado a lado com as tecnologias concorrentes de back-end, como também, nas circunstâncias certas, ter um desempenho tão bom quanto outras linguagens “rápidas”.
 
-## Candidatos ao teste
+## Candidatos ao Teste
 
 Vamos comparar alguns frameworks considerados rápidos e confrontá-los com o Node.js.
 
@@ -28,11 +28,11 @@ Essa biblioteca sempre é usada como referência para qualquer benchmark. Eu ado
 
 ### Velocy - Node.js
 
-Velocy é uma biblioteca HTTP que estou construindo como parte deste livro. Para contextualizar, este repositório do github funciona como um livro que estou escrevendo - [Learn Node.js the hard way](https://github.com/ishtms/learn-nodejs-hard-way). O Velocy ainda é um produto inacabado, pois foi iniciado há apenas 7 dias. Eu consegui construir uma classe `Router` de alto desempenho usando a estrutura de dados Radix Tree para gerenciar rotas e extrair parâmetros de path. Nosso roteador atual oferece funcionalidade suficiente para que o Velocy possa competir neste benchmark. Você pode encontrar a fonte do Velocy. - [aqui](https://github.com/ishtms/velocy)
+Velocy é uma biblioteca HTTP que estou construindo como parte deste livro. Para contextualizar, este repositório do github funciona como um livro que estou escrevendo - [Learn Node.js the hard way](https://github.com/ishtms/learn-nodejs-hard-way). O Velocy ainda é um produto inacabado, pois foi iniciado há apenas 7 dias. Eu consegui construir uma classe `Router` de alto desempenho usando a estrutura de dados Radix Tree para gerenciar rotas e extrair parâmetros de path. Nosso roteador atual oferece funcionalidade suficiente para que o Velocy possa competir neste benchmark. Você pode encontrar a fonte do Velocy - [aqui](https://github.com/ishtms/velocy)
 
-## O benchmark
+## O Benchmark
 
-A questão é, como vamos realizar o benchmark? Vamos adotar a abordagem do `bun`. Caso você não saiba, o `bun` usa [uWebsockets](https://github.com/uNetworking/uWebSockets) por baixo do capô do seu servidor web. Vamos ver o que o criador do `uWebsockets` [tem a dizer sobre benchmarking](https://github.com/uNetworking/uWebSockets/tree/master/benchmarks#why-hello-world-benchmarking):
+A questão é, como vamos realizar o benchmark? Vamos adotar a abordagem do `bun`. Caso você não saiba, o `bun` usa o [uWebsockets](https://github.com/uNetworking/uWebSockets) por baixo do capô do seu servidor web. Vamos ver o que o criador do `uWebsockets` [tem a dizer sobre benchmarking](https://github.com/uNetworking/uWebSockets/tree/master/benchmarks#why-hello-world-benchmarking):
 
 ```tex
 Porque o benchmarking com "hello world"?
@@ -47,7 +47,7 @@ Bate-papo (sobrecarga de memória)
 Notificações (sobrecarga de memória)
 ```
 
-De acordo com eles, os benchmarls de hello world dão um resultado do mundo real. No entando, eu não acho que isso é real. Aplicações do mundo real normalmente envolvem muito mais do que só enviar uma mensagem de "hello world". Normalmente há camadas adicionais de complexidade, como segurança, acesso de dados, regras de negócio, etc..., que esses benchmarks não dão conta. Em todos os exemplos acima há uma camada intermediária - em outras palavras, um banco de dados - que não deveria ser ignorada quando falamos em "benchmarks do mundo real".
+De acordo com eles, os benchmarls de hello world dão um resultado do mundo real. No entanto, eu não acho que isso é real. Aplicações do mundo real normalmente envolvem muito mais do que só enviar uma mensagem de "hello world". Normalmente há camadas adicionais de complexidade, como segurança, acesso de dados, regras de negócio, etc..., que esses benchmarks não dão conta. Em todos os exemplos acima há uma camada intermediária - em outras palavras, um banco de dados - que não deveria ser ignorada quando falamos em "benchmarks do mundo real".
 
 Já que os "benchmarks de hello world" testam absolutamente o mínimo, eles podem nos dar uma falsa percepção de performance às vezes. Por exemplo, um framework pode ser excelente em tarefas básicas, mas falhar ao lidar com operações mais complexas.
 
@@ -65,7 +65,7 @@ Ainda assim, vamos usar o método de benchmarking do elysia/`bun` -
 
 - Serializando. É uma tarefa que exige um pouco mais da CPU do que fazer algo como um I/O. Por esse motivo, ao invés de retornar um objeto Javascript, vamos retornar um JSON (serializado) de resposta ao cliente. O Bun afirma que o [JSON.stringify() no Bun é 3.5x mais rápido do que no Node.js](https://twitter.com/jarredsumner/status/1552409321245265920/photo/1). Isso também deveria proporcionar um impacto significativo em nossos servidores Node.js, certo? 
 
-## Source code
+## Código Fonte
 
 Vamos examinar a fonte de todos os frameworks que serão utilizados no benchmarking. Eu também fornecerei as informações necessárias, como suas versões, etc, caso necessário.
 
@@ -181,8 +181,9 @@ app.get("/bench/:name", (req, res) => {
     const { name } = req.params;
     const id = req.query.id;
     
-    // res.end() does not set the content-length implicitly, so the `transfer-encoding: chunked` assume.
-    // Definindo manualmente o `content-length` para se livrar dele.
+    // res.end() não define o `content-length` (comprimento do conteúdo)
+    // implicitamente, então o `transfer-encoding: chunked` é assumido.
+    // Definindo manualmente o `content-length` para se livrar disso.
     const response = JSON.stringify({ name, id });
     headers["content-length"] = response.length;
 
@@ -213,7 +214,8 @@ router.get("/bench/:name", (req, res) => {
     const { name } = req.params;
     const id = req.queryParams.get("id");
 
-    // Same, setting content-length to get rid of `transfer-encoding: chunked`.
+    // A mesma coisa, definindo manualmente o `content-length`
+    // para se livrar do `transfer-encoding: chunked`.
     const response = JSON.stringify({ name, id });
     headers["content-length"] = response.length;
 
@@ -224,21 +226,21 @@ router.get("/bench/:name", (req, res) => {
 createServer(router).listen(3000);
 ```
 
-## Results - Typical benchmark
+## Resultados - Típico Benchmark
 
-For this round, we're only going to test single-instance performance of all the servers. This will be an example of typical benchmarks that are produced to say - Node.js is slower than X technology.
+Para essa rodada, vamos testar apenas a performance single-instance de todos os servidores. Esse será um exemplo de típicos benchmarks produzidos para dizer - O Node.js é mais lento que X tecnologia.
 
-Testing machine - Macbook, M1 Max
+Máquina de teste - Macbook, M1 Max
 
-Testing tool - [`wrk`](https://github.com/wg/wrk)
+Ferramenta de teste - [`wrk`](https://github.com/wg/wrk)
 
-Testing method - 
+Método de teste - 
 
 ```bash
 wrk -t1 -c256 -d30s --latency http://localhost:3000/bench/testing?id=10
 ```
 
-### Result: Elysia - Bun/Zig (149,047 req/s)
+### Resultado: Elysia - Bun/Zig (149,047 req/s)
 
 ```bash
 Running 30s test @ http://localhost:3000/bench/testing?id=10
@@ -258,7 +260,7 @@ Transfer/sec:     29.57MB
 
 ```
 
-### Result: Axum - Rust (208,938 req/s)
+### Resultado: Axum - Rust (208,938 req/s)
 
 ```bash
 Running 30s test @ http://localhost:3000/bench/testing?id=10
@@ -277,7 +279,7 @@ Requests/sec: 208938.22
 Transfer/sec:     41.45MB
 ```
 
-### Result: Express - Node.js (28,923 req/s)
+### Resultado: Express - Node.js (28,923 req/s)
 
 ```bash
 Running 30s test @ http://localhost:3000/bench/testing?id=10
@@ -296,9 +298,9 @@ Requests/sec:  28923.88
 Transfer/sec:      5.74MB
 ```
 
-A little mathematical calculation leads us to an obvious conclusion - Express is **~5.1** times slower than Elysia, **not 18** as they claimed.
+Um pequeno cálculo matemático nos leva a uma óbvia conclusão - O Express é **~5.1** vezes mais lento que o Elysya, **não 18** como eles alegaram.
 
-## Result: Velocy - Node.js (83,689)
+## Resultado: Velocy - Node.js (83,689)
 
 ```bash
 Running 30s test @ http://localhost:3000/bench/testing?id=10
@@ -317,64 +319,64 @@ Requests/sec:  83689.19
 Transfer/sec:     16.60MB
 ```
 
-## Graphs
+## Gráficos
 
-### Latency
+### Latência
 
 ![](/assets/imgs/max_latency.png)
 
-### Requests/sec
+### Requisições/seg
 
 ![](/assets/imgs/rps.png)
 
-### Idle memory
+### Memória Ociosa
 
 ![](/assets/imgs/idle_memory.png)
 
-### Memory under constant load
+### Memória Sob Carga Constante
 
 ![](/assets/imgs/mem_const_load.png)
 
-### Verdict - Typical benchmark
+### Veredito - Típico Benchmark
 
-Axum is clearly the fastest server framework out of the four we looked at. Elysia is fast too, but not as fast as it claims to be. Many people think Express is slow, but that's not really true. Express only slows down if you add more features or middlewares, which can be said for any other web framework as well.
+O Axum é claramente o framework de servidor mais rápido entre os quatro que analisamos. O Elysia é rápido também, mas não tanto quanto alega ser. Muitas pessoas pensam que o Express é lento, mas isso não é realmente verdade. O Express fica lento apenas se você adicionar mais recursos ou middlewares, o que pode ser dito para qualquer outro framework web também.
 
-My own web framework, [Velocy](https://github.com/ishtms/velocy), did really well! Plus, it only uses 10 MB of memory when it's idle. Many people assume that Node.js uses a lot of memory, but that's not always true. It's mostly software that are built on top of Electron, use a lot of memory, not server-side apps if written properly. My goal with Velocy is to create a backend framework, without every doing `npm install` - i.e no dependencies. That is what this book is all about.
+Meu próprio framework web, o [Velocy](https://github.com/ishtms/velocy), foi realmente bem! Além disso, usa apenas 10MB de memória quando está ocioso. Muitas pessoas assumem que o Node.js usa muita memória, mas isso não é sempre verdade. Em maioria, são softwares construídos em Electron que usam muita memória, e não aplicações server-side se escritas corretamente. O meu objetivo com o Velocy é criar um framework backend sem fazer nenhum `npm install` - ou seja, sem dependências. É disso que este livro se trata.
 
-Now, it's time to test our app as if we were actually using it in the production ready environment.
+Agora, é hora de testar nossa aplicação como se estivéssemos realmente a usando no ambiente de produção pronto.
 
-## The real benchmark
+## O Benchmark Real
 
-Often, developers make bold claims about the speed of their web server frameworks, touting metrics like "8.5 times faster than Fastify" or "20 times quicker than Express." However, these claims often lack context - faster at doing what? Running `console.log` statements? Handling HTTP requests? Brewing virtual coffee? Sending emojis blazingly fast? Additionally, many of these benchmarks are skewed, tailored to conditions that favor their particular framework.
+Com frequência, desenvolvedores fazem afirmações ousadas sobre a velocidade de seus frameworks de servidor web, divulgando métricas como “8.5 vezes mais rápido que o Fastify” ou “20 vezes mais rápido que o Express”. Porém, essas alegações geralmente carecem de contexto - mais rápido fazendo o que? Executando declarações `console.log`? Lidando com requisições HTTP? Preparando café virtual? Enviando emojis extremamente rápido? Em adição, muitos desses benchmarks estão distorcidos, adaptados às condições que favorecem seus frameworks em particular.
 
-For instance, a frequent argument is, "My framework uses only one process, while yours uses two. Therefore, double my framework's performance numbers." This sort of reasoning neglects the real-world conditions under which these frameworks would operate in a production environment.
+Por exemplo, um argumento frequente é, "Meu framework usa apenas um processo, enquanto o seu usa dois. Portanto, dobre os números de desempenho do meu framework." Esse típo de raciocínio negligencia as condições do mundo real sob qual esses frameworks operariam em um ambiente de produção.
 
-Now, let's consider a practical scenario: Imagine you have a multi-core AWS instance. Using just a single core would be a waste of resources. Node.js inherently provides the capability to create a "cluster," allowing you to take full advantage of multi-core processors. So why not utilize it? We are not using any external tools, we're utilizing the Node.js standard library.
+Agora, vamos considerar um cenário prático: Imagine que você tem uma instância multi-core na AWS. Usar somente um core seria desperdício de recursos. O Node.js, de maneira inerente, fornece a capacidade de criar um "cluster", possibilitando tirar toda a vantagem de processadores multi-core. Então por que não utilizar? Não estamos usando quaisquer ferramentas externas, estamos utilizando a biblioteca padrão do Node.js.
 
-The significant critique against Bun's benchmark numbers is its lack of support for clustering. As a result, Bun can only be marginally faster than a Node.js application configured with clustering capabilities. Bun's primary selling point is its "speed," but that comes with the caveat of not supporting multi-core utilization, making it less practical for production settings.
+A crítica significativa contra os números de benchmark do Bun, é sua falta de suporte para clustering. Como resultado, o Bun só pode ser ligeiramente mais rápido que uma aplicação Node.js se configurado com capacidades de clustering. O argumento de venda primário do Bun é a "velocidade", mas isso vem com a ressalva de não suportar multi-core, tornando-o menos prático para configurações de produção.
 
-While you could run multiple Bun instances and set up a load balancer, that's not the point. Node.js offers a seamless interface for clustering, which is one of its major advantages. Bun may claim to be fast, but without support for multi-core optimization, it falls short of being a fully scalable solution (for me) for production environments, without the added hassle of setting up a load balancer.
+Claro que você poderia rodar múltiplas instâncias do Bun e definir um load balancer, mas esse não é o ponto. O Node.js oferece uma interface perfeita para o Clustering, que é uma das suas maiores vantagens. O Bun alega ser mais rápido, mas sem suporte para otimização multi-core, não chega a ser uma solução totalmente escalável (para mim) para ambientes de produção, sem o incômodo adicional de configurar um load balancer.
 
-### Updating our code
+### Atualizando Nosso Código
 
 #### Axum
 
-Axum remains unchanged. Axum runs on top of the tokio runtime which by default creates a thread-pool, and work on with new connections/request using a work-stealing algorithm. 
+O Axum permanece inalterado. O Axum roda sobre o runtime tokio que cria uma thread-pool por padrão, e trabalha com novas conexões/requisições utilizando um algoritmo work-stealing (roubo de trabalho).
 
 ### Elysia
 
-Unfortunately, bun does not support working with `node`'s cluster module. When you try to fork, it throws an error:
+Infelizmente, o Bun não suporta trabalhar com o módulo cluster do `node`. Quando você tenta realizar o fork, um erro é apresentado:
 
 ```bash
 NotImplementedError: node:cluster is not yet implemented in Bun. Track the status & thumbs up the issue: https://github.com/oven-sh/bun/issues/2428
  code: "ERR_NOT_IMPLEMENTED"
 ```
 
-So elysia's code remains unchanged as well.
+Então o código do Elysia permanece inalterado também.
 
 ### Express
 
-The cluster module provides a utility function: **fork** that spawns a new **worker process**. When a new connection comes in, the master process can distribute the connection to one of the workers, in a [round-robin fashion](https://en.wikipedia.org/wiki/Round-robin_scheduling).
+O módulo cluster oferece uma função utilitária: um **fork** que gera um novo **worker process** (processo de trabalho). Quando uma nova conexão é recebida, o processo master pode distribuir a conexão para um dos workers, ao [modo round-robin](https://en.wikipedia.org/wiki/Round-robin_scheduling).
 
 ```js
 const express = require("express");
@@ -450,13 +452,13 @@ if (cluster.isMaster) {
 }
 ```
 
-## Results - A real-world use-case
+## Resultados - Um Caso de Uso do Mundo Real
 
-**Axum** and **Elysia**'s results remain unchanged. We'll look at the new numbers for express and velocy.
+Os resultados do **Axum** e **Elysia** permaneceram inalterados. Vamos olhar os números do Express e do Velocy.
 
-> Note, I am only spawning 2 workers for both express and velocy.
+> Nota, estou gerando apenas 2 workers para ambos, express e velocy.
 
-### Result: Express - Node (50,275 req/sec)
+### Resultados: Express - Node (50,275 req/seg)
 
 ```bash
 Running 30s test @ http://localhost:3000/bench/testing?id=10
@@ -475,7 +477,7 @@ Requests/sec:  50275.21
 Transfer/sec:      9.97MB
 ```
 
-### Result: Velocy - Node (138,956 req/sec)
+### Resultado: Velocy - Node (138,956 req/sec)
 
 ```bash
 Running 30s test @ http://localhost:3000/bench/testing?id=10
@@ -494,47 +496,47 @@ Requests/sec: 138956.60
 Transfer/sec:     27.56MB
 ```
 
-Graphs
+Gráficos
 
-### Latency
+### Latência
 
 ![](/assets/imgs/latency_2.png)
 
-Too high `max` latency due to the fact that the requests have to be distributed to the workers and all worker processes in a cluster share the same server ports, and the OS scheduler decides which worker process will handle an incoming request. This can cause contention and variability in response time. Some workers may get stuck with long-running requests, thereby delaying other incoming requests.
+Latência `máxima` muito alta devido ao fato das requisições precisarem ser distribuídas entre os workers, e por todos os processos de trabalho em um cluster compartilharem as mesmas portas. O scheduler do sistema operacional decide qual worker vai lidar com uma requisição recebida. Isso pode causar contenção e variação no tempo de resposta. Alguns workers podem ficar presos à requisições de longa duração, atrasando assim outras requisições recebidas.
 
-Let's ignore `max. latency` and zoom in for some exciting results -
+Vamos ignorar a `latência máxima` (max latency) e ampliar a análise para alguns resultados interessantes -
 
-### Latency without `max latency` bar
+### Latência Sem a Barra `max latency`
 
 ![](/assets/imgs/latency_without_max.png)
 
-Velocy, our young, immature Node.js framework (in yellow) is performing almost the same as the super fast bun server (in blue)!
+O Velocy, nosso jovem e imaturo framework Node.js (em amarelo), está performando quase a mesma coisa que o super rápido servidor Bun (em azul)!
 
-### Requests/sec
+### Requisições/seg
 
 ![](/assets/imgs/rps_2.png)
 
-### Idle memory
+### Memória Ociosa
 
-This is due to 3 separate processes consuming the memory - One master node, and two workers. Still, not much difference.
+Isso é devido a 3 processos separados consumindo a memória - Um nó master e dois workers. Ainda assim, não há muita diferença.
 
 ![](/assets/imgs/mem_idle_2.png)
 
-### Memory under constant load
+### Memória Sob Carga Constante
 
 ![](/assets/imgs/mem_const_load_2.png)
 
-## Final verdict
+## Veredito Final
 
-If you need speed - for both - CPU and IO/resource intensive tasks, you're better off working with languages like Rust, GoLang, C++ (Drogon) or Zig directly. Node.js is perfect for demanding IO workloads and is not slow at all. We just saw, how a small, immature web framework, almost achieved the same speed of Bun, that claimed to be orders of magnitude faster than Node.js counterparts. Stop looking at benchmarks. They're hardly a valid reason to choose a particular tool.
+Se você precisa de velocidade - para ambos - CPU e tarefas intensas em IO/recursos, é melhor trabalhar diretamente com linguagens como Rust, GoLang, C++ (Drogon) ou Zig. O Node.js é perfeito para cargas de trabalho de I/O exigentes e não é nada lento. Acabamos de ver, como um pequeno e imaturo framework, quase atingiu a mesma velocidade do Bun, que alega ser ordens de grandeza mais rápido que o similar em Node.js. Pare de olhar para os benchmarks. Eles dificilmente são uma razão válida para escolher uma ferramenta em particular.
 
-The things that's important is - the tooling, the community, library ecosystem, job market and the list goes on. Node.js can be thought of as #1 on this list as far as server side programming is concerned. Axum is my go-to framework if I want to build something which involves security heavy things like managing a wallet system, or sub microsecond latency - and that's it. 
+As coisas importantes são - as ferramentas, a comunidade, o ecossistema de bibliotecas, o mercado de trabalho e a lista continua. O Node.js pode ser considerado o #1 nesta lista em termos de programação do lado do servidor. O Axum é meu framework de escolha quando quero construir alguma coisa que envolve segurança pesada, como gerenciar um sistema de carteira digital ou latência sub microsegundos - e é isso.
 
-On the other hand, you can work both on server and client applications by knowing just one language. This is the most under-rated part of working with Node.js.
+Por outro lado, você pode trabalhar em ambos, aplicações do cliente e servidor, sabendo apenas uma linguagem. Essa é a parte mais subestimada em trabalhar com Node.js.
 
-Node.js does use a threadpool internally, through **libuv**. Libuv is the underlying C library that powers Node.js's event loop and non-blocking I/O operations. The use of a thread pool in Node.js is primarily for tasks that are not suitable for non-blocking, asynchronous processing. These tasks include, but are not limited to, file I/O, DNS queries, and certain types of network operations. 
+O Node.js usa uma thread pool internamente, através da **libuv**. Libuv é a biblioteca subjacente em C que alimenta o loop de eventos do Node.js e as operações não-bloqueantes de I/O. O uso de thread pool no Node.js é principalmente para tarefas que não são adequadas para processamento assíncrono, não-bloqueante. Essas tarefas incluem, mas não estão limitadas a: I/O de arquivos, consultas DNS e certos tipos de operações de rede.
 
-> TBD: Create benchmarks using `rewrk` too.
+> A Definir: Crie benchmarks usando `rewrk` também.
 
 [![Read Prev](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
 
