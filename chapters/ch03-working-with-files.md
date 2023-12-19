@@ -29,51 +29,51 @@ Quando você cria um arquivo **`.js`** no Node.js, ele pode se tornar um módulo
 
 Essa abordagem modular é importante para manter seu código organizado e separado, tornando fácil a reutilização de partes do seu código em diferentes lugares. Isso também ajuda a manter seu código seguro contra erros que podem acontecer quando diferentes partes de código interagem de forma inesperada.
 
-Vamos ver um exemplo criando um módulo chamado `calculadora`
+Vamos ver um exemplo criando um módulo chamado `calculator`
 
-Crie um arquivo chamado `calculadora.js` e adicione o conteúdo a seguir nele
+Crie um arquivo chamado `calculator.js` e adicione o conteúdo a seguir nele
 
 ```jsx
-// calculadora.js
+// calculator.js
 
-function adiciona(num_um, num_dois) {
-    return num_um + num_dois;
+function add(num_one, num_two) {
+    return num_one + num_two;
 }
 
-function subtrai(num_um, num_dois) {
-    return num_um - num_dois;
+function subtract(num_one, num_two) {
+    return num_one - num_two;
 }
 
-function multiplica(num_um, num_dois) {
-    return num_um * num_dois;
+function multiply(num_one, num_two) {
+    return num_one * num_two;
 }
 
-function divide(num_um, num_dois) {
-    return num_um / num_dois;
+function divide(num_one, num_two) {
+    return num_one / num_two;
 }
 
-// Apenas exporta as funções adiciona e subtrai
+// Apenas exporta as funções add e subtract
 module.exports = {
-    adiciona,
-    subtrai,
+    add,
+    subtract,
 };
 ```
 
 Ao especificar a propriedade `exports` no objeto global `module`, declaramos quais propriedades ou métodos específicos devem ser expostos publicamente e definidos como acessíveis a partir de todos os outros módulos/arquivos durante a execução.
 
-Note, nós não exportamos `multiplica` e `divide` e veremos em breve o que acontece quando tentamos acessar e chamar essas funções.
+Note, nós não exportamos `multiply` e `divide` e veremos em breve o que acontece quando tentamos acessar e chamar essas funções.
 
-> Nota: Forneça o caminho relativo para o arquivo `calculadora.js`. No meu caso, está localizado no mesmo diretório e no mesmo nível na hierarquia de pastas.
+> Nota: Forneça o caminho relativo para o arquivo `calculator.js`. No meu caso, está localizado no mesmo diretório e no mesmo nível na hierarquia de pastas.
 
 No seu arquivo `index.js`, você pode importar as funções exportadas como demonstrado a seguir.
 
 ```jsx
-const { adiciona, divide, multiplica, subtrai } = require("./calculadora");
+const { add, divide, multiply, subtract } = require("./calculator");
 
 // Você também pode escrever desse jeito, mas é preferível omitir a extensão `.js`
-const { adiciona, divide, multiplica, subtrai } = require("./calculadora.js");
+const { add, divide, multiply, subtract } = require("./calculator.js");
 ```
-Repare que estamos importando as funções `multiplica` e `divide` mesmo que não tenhamos exportado elas no módulo `calculadora.js`. Isso não causará nenhum problema até que a gente tente usar essas funções. Se você rodar o código acima com o comando `node index`, ele executará normalmente, mas não vai produzir nenhuma saída. Vamos tentar entender o porque a execução não falha.
+Repare que estamos importando as funções `multiply` e `divide` mesmo que não tenhamos exportado elas no módulo `calculator.js`. Isso não causará nenhum problema até que a gente tente usar essas funções. Se você rodar o código acima com o comando `node index`, ele executará normalmente, mas não vai produzir nenhuma saída. Vamos tentar entender o porque a execução não falha.
 
 O `module.exports` é basicamente um javascript `Object`, e quando você aplica um `require` a partir de outro arquivo, ele tenta avaliar os campos com os nomes fornecidos (resumindo, desestruturação).
 
@@ -81,34 +81,34 @@ Sendo assim, você pode pensar nesse processo como algo desse tipo:
 
 ```jsx
 const my_module = {
-    fn_um: function fn_um() {...},
-    fn_dois: function fn_dois() {...}
+    fn_one: function fn_one() {...},
+    fn_two: function fn_two() {...}
 }
 
-const { fn_um, fn_dois, fn_tres } = my_module;
-fn_um;   // fn_um() {}
-fn_dois;   // fn_dois() {}
-fn_tres; // undefined
+const { fn_one, fn_two, fn_three } = my_module;
+fn_one;   // fn_one() {}
+fn_two;   // fn_two() {}
+fn_three; // undefined
 ```
 
 Isso deve esclarecer o porque não são apresentados erros quando tentamos incluir uma função/propriedade que não está sendo explicitamente exportada por outro módulo. Se aquele identidicador não for encontrado, ele se torna simplesmente `undefined`.
 
-Então, os identificadores acima, `multiplica` e `divide`, estão apenas como `undefined`. No entanto, se tentarmos adicionar essa linha:
+Então, os identificadores acima, `multiply` e `divide`, estão apenas como `undefined`. No entanto, se tentarmos adicionar essa linha:
 
 ```jsx
 // index.js
 
-let num_dois = multiplica(1, 2);
+let num_two = multiply(1, 2);
 ```
 
 O programa quebra:
 
 ```jsx
 /Users/ishtmeet/Code/intro-to-node/index.js:5
-let num_dois = multiplica(1, 2);
+let num_two = multiply(1, 2);
               ^
 
-TypeError: multiplica is not a function
+TypeError: multiply is not a function
     at Object.<anonymous> (/Users/ishtmeet/Code/intro-to-node/index.js:5:15)
     at Module._compile (node:internal/modules/cjs/loader:1256:14)
     at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
@@ -120,24 +120,24 @@ TypeError: multiplica is not a function
 
 Não podemos chamar um valor `undefined` como uma função. `undefined()` não faz nenhum sentido.
 
-Vamos exportar todas as funções do módulo `calculadora`.
+Vamos exportar todas as funções do módulo `calculator`.
 
 ```jsx
-// calculadora.js
+// calculator.js
 
-function adiciona(num_um, num_dois) {...}
+function add(num_one, num_two) {...}
 
-function subtrai(num_um, num_dois) {...}
+function subtract(num_one, num_two) {...}
 
-function multiplica(num_um, num_dois) {...}
+function multiply(num_one, num_two) {...}
 
-function divide(num_um, num_dois) {...}
+function divide(num_one, num_two) {...}
 
 // Exportando todas as funções
 module.exports = {
-  adiciona,
-  subtrai,
-  multiplica,
+  add,
+  subtract,
+  multiply,
   divide,
 };
 ```
@@ -146,11 +146,11 @@ No arquivo `index.js`, vamos chamar todas as funções para ver se tudo está fu
 ```jsx
 // index.js
 
-const { adiciona, divide, multiplica, subtrai } = require("./calculadora");
+const { add, divide, multiply, subtract } = require("./calculator");
 
-console.log(adiciona(1, 2));
-console.log(subtrai(1, 2));
-console.log(multiplica(1, 2));
+console.log(add(1, 2));
+console.log(subtract(1, 2));
+console.log(multiply(1, 2));
 console.log(divide(1, 2));
 
 // saída
@@ -160,25 +160,25 @@ console.log(divide(1, 2));
 ```
 Recapitulando o que acabou de ser estabelecido acima: O `module.exports` é simplesmente um objeto. Adicionamos apenas o que queremos exportar nos campos deste objeto.
 
-Então ao invés de fazer `module.exports = { adiciona, subtrai, .. }`, você pode fazer isso
+Então ao invés de fazer `module.exports = { add, subtract, .. }`, você pode fazer isso
 
 ```jsx
-// calculadora.js
+// calculator.js
 
-module.exports.adiciona = function adiciona(num_um, num_dois) {
-    return num_um + num_dois;
+module.exports.add = function add(num_one, num_two) {
+    return num_one + num_two;
 };
 
-module.exports.subtrai = function subtrai(num_um, num_dois) {
-    return num_um - num_dois;
+module.exports.subtract = function subtract(num_one, num_two) {
+    return num_one - num_two;
 };
 
-module.exports.multiplica = function multiplica(num_um, num_dois) {
-    return num_um * num_dois;
+module.exports.multiply = function multiply(num_one, num_two) {
+    return num_one * num_two;
 };
 
-module.exports.divide = function divide(num_um, num_dois) {
-    return num_um / num_dois;
+module.exports.divide = function divide(num_one, num_two) {
+    return num_one / num_two;
 };
 ```
 
@@ -187,21 +187,21 @@ module.exports.divide = function divide(num_um, num_dois) {
 _Vamos utilizar os termos `arquivo` e `módulo` de forma alternada, mesmo que em teoria eles não sejam a mesma coisa._
 
 ```jsx
-// calculadora.js
-module.exports.adiciona = function adiciona(num_um, num_dois) {..}
-module.exports.subtrai = function subtrai(num_um, num_dois) {..}
-module.exports.multiplica = function multiplica(num_um, num_dois) {..}
-module.exports.divide = function divide(num_um, num_dois) {..}
+// calculator.js
+module.exports.add = function add(num_one, num_two) {..}
+module.exports.subtract = function subtract(num_one, num_two) {..}
+module.exports.multiply = function multiply(num_one, num_two) {..}
+module.exports.divide = function divide(num_one, num_two) {..}
 
 divide(1,2)
 
 // Saída
-/Users/ishtmeet/Code/intro-to-node/calculadora.js:16
+/Users/ishtmeet/Code/intro-to-node/calculator.js:16
 divide(1, 2);
 ^
 
 ReferenceError: divide is not defined
-    at Object.<anonymous> (/Users/ishtmeet/Code/intro-to-node/calculadora.js:16:1)
+    at Object.<anonymous> (/Users/ishtmeet/Code/intro-to-node/calculator.js:16:1)
     at Module._compile (node:internal/modules/cjs/loader:1256:14)
     at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
     at Module.load (node:internal/modules/cjs/loader:1119:32)
@@ -216,32 +216,32 @@ ReferenceError: divide is not defined
 Isso acontece porque `divide` e todas as outras funções declaradas nesse módulo são parte do objeto `module.exports`, e elas não estão disponíveis no escopo. Vamos analisar isso em um exemplo fácil
 
 ```jsx
-let pessoa = {};
-pessoa.obter_idade = function obter_idade() {...}
+let person = {};
+person.get_age = function get_age() {...}
 
-// `obter_idade` "is not defined" já que só pode ser acessada usando
-// `pessoa.obter_idade()`
-obter_idade();
+// `get_age` "is not defined" já que só pode ser acessada usando
+// `person.get_age()`
+get_age();
 ```
 
 Eu espero que tenha ficado claro. Você poderia fazer algo assim.
 
 ```jsx
-// calculadora.js
+// calculator.js
 
 ...
 
 // Você pode fazer isso
-module.exports.adiciona = adiciona;
-module.exports.subtrai = subtrai;
-module.exports.multiplica = multiplica;
+module.exports.add = add;
+module.exports.subtract = subtract;
+module.exports.multiply = multiply;
 module.exports.divide = divide;
 
 // Ou isso
 module.exports = {
-  adiciona,
-  subtrai,
-  multiplica,
+  add,
+  subtract,
+  multiply,
   divide,
 };
 ```
@@ -272,7 +272,7 @@ Quando você interage com arquivos ou descritores de arquivos, normalmente você
 
 O módulo `node:fs` te permite trabalhar com o sistema de arquivos utilizando funções [POSIX](https://en.wikipedia.org/wiki/POSIX) padrão. O Node.js oferece múltiplas maneiras de trabalhar com arquivos. Isso demonstra os diversos sabores que a FileSystem API dele possui. Uma _API assíncrona baseada em promises_, uma _API baseada em callbacks_ e uma _API síncrona._
 
-Vamos criar um novo módulo, `files.js`, na mesma pasta que contém o seu módulo `calculadora` e o arquivo `index.js`. Vamos importar o módulo `fs` para começar a trabalhar com arquivos.
+Vamos criar um novo módulo, `files.js`, na mesma pasta que contém o seu módulo `calculator` e o arquivo `index.js`. Vamos importar o módulo `fs` para começar a trabalhar com arquivos.
 
 ```jsx
 // API baseada em Promise
@@ -297,7 +297,7 @@ Adicione esse trecho de código no arquivo `files.js`
 const fs = require("node:fs/promises");
 
 async function open_file() {
-    const file_handle = await fs.open("calculadora.js", "r", fs.constants.O_RDONLY);
+    const file_handle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
     console.log(file_handle);
 }
 
@@ -332,7 +332,7 @@ const fs = require("node:fs/promises");
 Essa linha traz o módulo **`fs`** do Node.js. Ela importa especificamente o sub-módulo **`fs/promises`**, que oferece operações de sistema de arquivos que podem ser executadas de maneira assíncrona e envelopadas em Promises.
 
 ```jsx
-fs.open("calculadora.js", "r", fs.constants.O_RDONLY);
+fs.open("calculator.js", "r", fs.constants.O_RDONLY);
 ```
 
 A função **`fs.open`** é utilizada para abrir um arquivo. Ela recebe três argumentos: o `path` (caminho) do arquivo, uma `flag` e um `mode`.
@@ -347,8 +347,8 @@ export type PathLike = string | Buffer | URL;
 
 1. String **Paths:**
    A forma mais comum de representar o path de um arquivo é através de uma string. A string de um path pode representar o caminho de maneira relativa ou absoluta. É uma sequência simples de caracteres que especificam o local do arquivo no computador.
-   - Exemplo de uma string passando um path relativo: **`"./calculadora.js"`**
-   - Exemplo de uma string passando um path absoluto: **`"/Users/ishtmeet/Code/intro-to-node/calculadora.js"`**
+   - Exemplo de uma string passando um path relativo: **`"./calculator.js"`**
+   - Exemplo de uma string passando um path absoluto: **`"/Users/ishtmeet/Code/intro-to-node/calculator.js"`**
 2. **Buffer Paths:**
    Apesar de strings serem a maneira mais comum de representar paths, o Node.js também te permite usar objetos **`Buffer`** para representar paths. Um **`Buffer`** é uma estrutura de dados de baixo nível que pode armazenar dados binários. Na realidade, usar objetos **`Buffer`** para paths é pouco comum. Leia sobre [Buffers](#buffers) aqui.
 3. **URL Paths:**
@@ -356,7 +356,7 @@ export type PathLike = string | Buffer | URL;
    Exemplo de URL Paths:
 
 ```jsx
-const url_path = new URL("file:///home/user/projects/calculadora.js");
+const url_path = new URL("file:///home/user/projects/calculator.js");
 ```
 
 ### O argumento `flag`
@@ -385,7 +385,7 @@ Vamos utilizar o `wx+` para demonstrar um pequeno exemplo. O `wx+` vai abrir um 
 ```jsx
 // files.js
 const file_handle = await fs.open(
-    "calculadora.js",
+    "calculator.js",
     "wx+",
     fs.constants.O_RDONLY
   );
@@ -395,11 +395,11 @@ node:internal/process/promises:288
             triggerUncaughtException(err, true /* fromPromise */);
             ^
 
-[Error: EEXIST: file already exists, open 'calculadora.js'] {
+[Error: EEXIST: file already exists, open 'calculator.js'] {
   errno: -17,
   code: 'EEXIST',
   syscall: 'open',
-  path: 'calculadora.js'
+  path: 'calculator.js'
 }
 ```
 
@@ -471,7 +471,7 @@ Retornando ao código que escrevemos no módulo `files`
 const fs = require("node:fs/promises");
 
 async function open_file() {
-    const file_handle = await fs.open("calculadora.js", "r", fs.constants.O_RDONLY);
+    const file_handle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
     console.log(file_handle);
 }
 
@@ -488,7 +488,7 @@ Nós discutimos sobre **descritores de arquivo** anteriormente. Você pode checa
 ..
 
 async function open_file() {
-    const file_handle = await fs.open("calculadora.js", "r", fs.constants.O_RDONLY);
+    const file_handle = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
     console.log(file_handle.fd); // Imprime o valor do descritor de arquivo `fd` (file descriptor)
 }
 
@@ -505,8 +505,8 @@ Você deve obter o mesmo valor como descritor de arquivo se tentar rodar o progr
 ..
 
 async function open_file() {
-    const file_handle     = await fs.open("calculadora.js", "r", fs.constants.O_RDONLY);
-    const file_handle_two = await fs.open("calculadora.js", "r", fs.constants.O_RDONLY);
+    const file_handle     = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
+    const file_handle_two = await fs.open("calculator.js", "r", fs.constants.O_RDONLY);
     console.log(file_handle.fd);
     console.log(file_handle_two.fd);
 }
@@ -572,7 +572,7 @@ async function open_file() {
 
 ## Lendo de um arquivo
 
-Já vimos muito teoria. Vamos trabalhar em um exemplo real agora. Tentaremos ler de um arquivo. Vamos criar um arquivo `log_config.json` dentro da pasta `config`. A estrutura do diretório vai ficar mais ou menos assim (se livre do módulo `calculadora`)
+Já vimos muito teoria. Vamos trabalhar em um exemplo real agora. Tentaremos ler de um arquivo. Vamos criar um arquivo `log_config.json` dentro da pasta `config`. A estrutura do diretório vai ficar mais ou menos assim (se livre do módulo `calculator`)
 
 ```
 .
@@ -739,20 +739,20 @@ Aqui está uma visão geral de como o loop **`for..of`** funciona:
 Aqui está um exemplo de como usar o **`for..of`** para percorrer um array:
 
 ```jsx
-const frutas = ['maçã', 'banana', 'laranja', 'uva'];
+const fruits = ['apple', 'banana', 'orange', 'grape'];
 
-for (const fruta of frutas) {
-  console.log(fruta);
+for (const fruit of fruits) {
+  console.log(fruit);
 }
 ```
 
-O loop vai iterar através de cada elemento do array **`frutas`**, e a cada iteração, a variável **`fruta`** vai conter o valor da fruta atual. Saída do loop:
+O loop vai iterar através de cada elemento do array **`fruits`**, e a cada iteração, a variável **`fruit`** vai conter o valor da fruta atual. Saída do loop:
 
 ```
-maçã
+apple
 banana
-laranja
-uva
+orange
+grape
 ```
 
 O loop **`for..of`** é particularmente útil quando você não precisa acessar o índice dos elementos diretamente. Ele fornece uma maneira mais limpa e concisa de trabalhar com objetos iteráveis.
@@ -780,21 +780,21 @@ Vamos analisar os componentes chave:
 Aqui está um exemplo do uso do loop **`for await..of`** para percorrer através de um iterável assíncrono:
 
 ```jsx
-async function fetch_frutas() {
-  const frutas = ['maçã', 'banana', 'laranja', 'uva'];
+async function fetch_fruits() {
+  const fruits = ['apple', 'banana', 'orange', 'grape'];
 
-  for await (const fruta of frutas) {
-    console.log(fruta);
+  for await (const fruit of fruits) {
+    console.log(fruit);
 
     // simulação de uma operação assíncrona fictícia
     await new Promise(resolve => setTimeout(resolve, 1000)); 
   }
 }
 
-fetch_frutas();
+fetch_fruits();
 ```
 
-Aqui, a função **`fetchFrutas`** usa o loop **`for await..of`** para iterar através do array frutas de maneira assíncrona. Para cada fruta, ele imprime o nome da fruta e então simula uma operação assíncrona usando o **`setTimeout`** para pausar por um segundo.
+Aqui, a função **`fetchfruits`** usa o loop **`for await..of`** para iterar através do array fruits de maneira assíncrona. Para cada fruta, ele imprime o nome da fruta e então simula uma operação assíncrona usando o **`setTimeout`** para pausar por um segundo.
 
 O loop **`for await..of`** é uma ferramenta útil quando estamos trabalhando com operações assíncronas. Ele nos permite percorrer através dos resultados de promises ou de generators assíncronos de uma maneira mais legível e intuitiva. Ele garante que as operações assíncronas dentro do loop sejam executadas sequencialmente, uma depois da outra, mesmo que elas possuam tempos de conclusão variados.
 
