@@ -1,22 +1,22 @@
 [![Read Prev](/assets/imgs/prev.png)](/chapters/ch06.4-the-need-for-a-trie.md)
 
-# Exercise 1 - Implementing a `Trie`
+# Exercício 1 - Implementando uma `Trie`
 
-> This exercise will motivate you to work on implementing your solution independently. Once you have completed the exercise, you can move on to the next challenge or read the solution to find a different approach.
+> Esse exercício vai te motivar a trabalhar implementando sua solução de maneira independente. Assim que você tiver completado o exercício, você pode partir para o próximo desafio ou ler a solução para encontrar uma abordagem diferente.
 >
-> In these exercises, we are not focusing on performance, so it's important to focus on making your solution work correctly the first time you attempt to solve a problem.
+> Nesses exercícios, não estamos focando em performance, então o importante, é focar em fazer sua solução funcionar corretamente na primeira vez que você tenta resolver um problema.
 
-To re-iterate, Trie (pronounced "try") is a tree-like data structure that stores a dynamic set of strings, typically used to facilitate operations like searching, insertion, and deletion. Tries are particularly useful for tasks that require quick lookups of strings with a common prefix, such as in text autocomplete or in a Router implementation to find the matching paths.
+Para reiterar, Trie (pronuncia-se "try") é uma estrutura de dados do tipo árvore que armazena um conjunto dinâmico de strings, tipicamente utilizada para facilitar operações como busca, inserção e deleção. Tries são particularmente úteis para tarefas que exigem pesquisas rápidas de strings com um prefixo em comum, como em um texto com autocompletar ou na implementação de um Router para achar os paths correspondentes.
 
-Here's an illustration that shows how does a `Trie` look like in theory:
+Aqui está uma ilustração que mostra como uma `Trie` se parece na teoria:
 
 ![](/assets/imgs/trie-overview.png)
 
-Here's how you can visualize the Trie above based on the words "OK", "TO", "CAR", "CAT", and "CUP":
+Aqui está como você pode visualizar a Trie acima, com base nas palavras "OK", "TO", "CAR", "CAT" e "CUP":
 
-## Root Node
+## Nó Root
 
-The Trie starts with a root node that doesn't hold any character. It serves as the starting point of the Trie.
+A Trie começa com um nó root (raiz) que não armazena nenhum caracter. Ele serve como o ponto inicial de uma Trie.
 
 ```bash
       Root
@@ -24,59 +24,59 @@ The Trie starts with a root node that doesn't hold any character. It serves as t
     T   O   C
 ```
 
--   **Level 1**: You have the characters "O", "T", and "C" branching from the root node.
--   **Level 2 and Beyond**: These nodes further branch out to form the words.
-    -   "O" branches to "K", completing the word "OK".
-    -   "T" branches to "O", completing the word "TO".
-    -   "C" branches to "A" and "U":
-        -   "A" further branches to "R" for "CAR" and "T" for "CAT".
-        -   "U" further branches to "P", completing the word "CUP".
+- **Nível 1**: Você tem os caracteres "O", "T" e "C" como ramificações do nó root.
+- **Nível 2 e Seguintes**: Esses nós se ramificam mais para formar as palavras.
+    -   "O" se ramifica para "K", completando a palavra "OK".
+    -   "T" se ramifica para "O", completando a palavra "TO".
+    -   "C" se ramifica para "A" e "U":
+        -   "A" se ramifica mais até "R" para "CAR" e até T para "CAT".
+        -   "U" se ramifica para "P", completando a palavra "CUP".
 
-## End of the word
+## Fim de Palavra
 
-The "end of the word" is often represented by a boolean flag at a node to signify that the path from the root of the Trie to that node corresponds to a complete word. This flag helps distinguish between a string that is merely a prefix and one that is a full word in the Trie.
+O "fim de palavra" é geralmente representado por um marcador boleano em um nó, para significar que o path da raiz da Trie até aquele nó, corresponde a uma palavra completa. Esse marcador ajuda a distinguir entre uma string que é meramente um prefixo e uma que é uma palavra completa na árvore Trie.
 
-For example, consider a Trie that stores the words "car", "cat", and "cup". The node corresponding to the last 't' in "cat" and the last 'p' in "cup" would have the end-of-word marker, indicating that they are complete words, as opposed to just prefixes. Same for 'k' in "ok" and 'o' in "to"
+Por exemplo, considere uma Trie que armazena as palavras "car", "cat" e "cup". O nó correspondendo ao 't' em "cat" e ao 'p' em "cup" teriam o marcador de fim de palavra, indicando que eles são palavras completas e não apenas prefixos. O mesmo para 'k' em "ok" e 'o' em "to".
 
-By doing so, if someone searches for "ca" it should not return true, since we only stored "cat" and "car" where as "ca" is just a prefix.
+Ao fazer isso, se alguém buscar por "ca" não será retornado true, já que armazenamos apenas "cat" e "car", e "ca" é somente um prefixo.
 
-Here's an another illustration to explain the "end-of-word" (EOW):
+Aqui está outra ilustração para explicar o fim de palavra ("end-of-word", ou EOW):
 
 ![](/assets/imgs/trie-eow.png)
 
-## Challenge 1: Basic Trie with `insert` Method
+## Desafio 1: Trie Básica com o Método `insert`
 
-In this first challenge, your task is to implement a Trie data structure with only one functionality: inserting a word into the Trie.
+Neste primeiro desafio, sua tarefa é implementar uma estrutura de dados Trie com apenas uma funcionalidade: inserir uma palavra na árvore Trie.
 
-### Requirements
+### Requisitos
 
-1. Create a class called `Trie`.
-2. Implement an `insert(word)` method that takes a string `word` and inserts it into the Trie.
+1. Crie uma classe chamada `Trie`.
+2. Implemente um método `insert(word)`, que recebe uma string `word` e a insere na Trie.
 
-### More details
+### Mais detalhes
 
-1. **Initialization**: You'll begin with a root node. This node will be the starting point for all word insertions, and it won't store any character itself.
+1. **Inicialização**: Você vai começar com um nó root. Esse nó será o ponto inicial para todas as inserções de palavras e não vai armazenar nenhum caracter em si.
 
-2. **Traversal**: For each character in the word you want to insert, you'll traverse the Trie from the root node, going as far down as the current character sequence allows.
+2. **Travessia**: Para cada caracter na palavra que você quer inserir, você atravessará a Trie partindo do nó root até onde a atual sequência de caracteres permitir.
 
-3. **Node Creation**: If a character in the word doesn't match any child node of the current node:
+3. **Criação de Nó**: Se um caracter da palavra não corresponder a nenhum nó filho do nó atual:
 
-    - Create a new node for that character.
-    - Link this new node to the current one.
-    - Move down to this new node and continue with the next character in the word.
+    - Crie um novo nó para aquele caracter.
+    - Ligue esse novo nó ao nó atual.
+    - Mova-se para esse novo nó e continue a partir do próximo caracter da palavra.
 
-4. **End-of-Word**: When you've inserted all the characters for a particular word, mark the last node in some way to indicate that it's the end of a valid word. This could be a boolean property in the node object, for example.
+4. **Fim de Palavra**: Quando você tiver inserido todos os caracteres de uma palavra em particular, marque o último nó de alguma forma para indicar que é o fim de uma palavra válida. Pode ser uma propriedade boleana no objeto nó, por exemplo.
 
-Here's the boilerplate to get you started.
+Aqui está o modelo padrão para você começar.
 
-> Note: If you wish, you may code everything from scratch, without using the boilerplate below. I recommend doing it that way if you're comfortable.
+> Nota: Se você desejar, você pode codar tudo do zero, sem usar o modelo abaixo. Eu recomendo fazer desse jeito se você estiver confortável.
 
 ```js
 class TrieNode {
     constructor() {
-        this.children = {}; // To store TrieNode children with char keys
-        // this.children = new Map(); You may also use a Map instead.
-        this.isEndOfWord = false; // To mark the end of a word
+        this.children = {}; // Para armazenar os filhos de TrieNode com chaves de caracteres
+        // this.children = new Map(); Você também pode usar um Map no lugar.
+        this.isEndOfWord = false; // Para marcar o final de uma palavra.
     }
 }
 
@@ -86,25 +86,25 @@ class Trie {
     }
 
     insert(word) {
-        // Your code here
+        // Seu código vem aqui
     }
 }
 ```
 
-Once implemented, your code should allow operations like:
+Uma vez implementado, seu código deve permitir operações como:
 
 ```js
 const trie = new Trie();
 trie.insert("hello");
 ```
 
-Go ahead and implement the `insert` method, and then share your code to help others or to receive feedback in the [Github discussions](https://github.com/ishtms/learn-nodejs-hard-way/discussions) section. I'll try to review all the code submissions and provide feedback if required.
+Vá em frente e implemente o método `insert`, e então compartilhe o seu código para ajudar outros ou para receber um feedback na seção de [Discussões do Github](https://github.com/ishtms/learn-nodejs-hard-way/discussions). Tentarei revisar todos os códigos de resposta e fornecer feedback se necessário.
 
-Great. You just implemented a `Trie` which is a Tree data structure. You've also wrote code to traverse a tree which is generally called "tree traversal".
+Ótimo. Você acabou de implementar uma `Trie`, que é uma estrutura de dados em árvore. Você também escreveu código para atravessar uma árvore, o que é geralmente chamado de "travessia de árvore".
 
-> In case you were not able to figure out what to do, I would still like you to scrap the code you've written and start again from scratch. Get a pen and paper, and visualize it. That way you can convert hard problems into easier ones.
+> No caso de você não ter conseguido descobrir o que fazer, eu ainda gostaria que você se desfizesse do código que escreveu e começasse de novo do zero. Pegue uma caneta, um papel e visualize. Dessa forma, você pode converter problemas difíceis em outros mais fáceis.
 
-### Solution
+### Solução
 
 ```js
 class Trie {
@@ -132,7 +132,7 @@ class Trie {
 class TrieNode {
     constructor() {
         /**
-         * Children will be Map<key(String), node(TrieNode)>
+         * Os filhos serão Map<key(String), node(TrieNode)>
          */
         this.isEndOfWord = false;
         this.children = new Map();
@@ -153,7 +153,7 @@ trie.insert("note");
 trie.insert("not");
 ```
 
-Let's take a look at the code:
+Vamos dar uma olhada no código:
 
 ```js
 class TrieNode {
@@ -164,10 +164,10 @@ class TrieNode {
 }
 ```
 
-Initializes an instance of the `TrieNode` class. A TrieNode has two properties:
+Inicializa uma instância da classe `TrieNode`. Uma TrieNode tem duas propriedades:
 
--   `isEndOfWord`: A boolean flag that denotes whether the node is the last character of a word in the Trie. Initially set to `false`.
--   `children`: A Map to store the children nodes. The keys are letters, and the values are TrieNode objects.
+-   `isEndOfWord`: Um marcador boleano que denota quando um nó é o último caracter de uma palavra na Trie. Inicialmente definido como `false`.
+-   `children`: Um Map para armazenar os nós filhos. As chaves são letras e os valores são objetos TrieNode.
 
 ```js
 add(letter, _isLastCharacter) {
@@ -179,58 +179,58 @@ add(letter, _isLastCharacter) {
 }
 ```
 
-I've created a utility method on `TrieNode` to extract some logic from the `Trie.insert` method. This adds a new `TrieNode` as a child of the current node, corresponding to the given letter.
+Eu criei um método utilitário em `TrieNode` para extrair certa lógica do método `Trie.insert`. Isso adiciona um novo `TrieNode` como um filho do nó atual, correspondendo à letra fornecida.
 
 ```js
 class Trie {
     insert(wordToInsert, node = this.root) {
         let length = wordToInsert.length;
 
-        // Exit condition: If the word to insert is empty, terminate the recursion.
+        // Condição de saída: Se a palavra a ser inserida está vazia, termina a recursão.
         if (length == 0) return;
 
-        // Convert the string into an array of its individual characters.
+        // Converte a string em um array com seus caracteres individuais.
         const letters = wordToInsert.split("");
 
-        // Attempt to retrieve the TrieNode corresponding to the first letter
-        // of the word from the children of the current node.
+        // Tenta recuperar o TrieNode correspondente a primeira letra
+        // da palavra a partir dos filhos do nó atual.
         const foundNode = node.children.get(wordToInsert[0]);
 
         if (foundNode) {
-            // The first letter already exists as a child of the current node.
-            // Continue inserting the remaining substring (sans the first letter)
-            // starting from this found node.
+            // A primeira letra já existe como um filho do nó atual.
+            // Continua inserindo a substring restante (sem a primeira letra)
+            // começando por este nó encontrado.
             this.insert(letters.slice(1).join(""), foundNode);
         } else {
-            // The first letter doesn't exist in the children of the current node.
-            // Create a new TrieNode for this letter and insert it as a child of the current node.
-            // Also, set the node's 'isEndOfWord' flag if this is the last character of the word.
+            // A primeira letra não existe nos filhos do nó atual.
+            // Cria um novo TrieNode para essa letra e a insere como um filho do nó atual.
+            // Também define o marcador 'isEndOfWord' do nó se esse for o último caracter da palavra.
             let insertedNode = node.add(letters[0], length == 1);
 
-            // Continue inserting the remaining substring (without the first letter)
-            // starting from this new node.
+            // Continua inserindo a substring restante (sem a primeira letra)
+            // começando a partir desse novo nó.
             this.insert(letters.slice(1).join(""), insertedNode);
         }
     }
 }
 ```
 
-## Challenge 2: Implement `search` method
+## Desafio 2: Implemente o Método `search`
 
-Now that we have a Trie with insertion capabilities, let's add a `search` method.
+Agora que temos uma Trie com capacidades de inserção, vamos adicionar um método `search`.
 
-### Requirements
+### Requisitos
 
-1. Add a `search(word)` method to the `Trie` class.
-2. The method should return `true` if the word exists in the Trie and `false` otherwise.
+1. Adicione um método `search(word)` à classe `Trie`.
+2. O método deve retornar `true` se a palavra existir na Trie e `false` caso contrário.
 
-### More details
+### Mais Detalhes
 
-1. **Start at the Root**: Begin your search at the root node.
-2. **Traversal**: For each character in the word, traverse down the Trie, going from one node to its child that corresponds to the next character.
-3. **Word Existence**: If you reach a node that is marked as the end of a word (`isEndOfWord = true`), and you've exhausted all the characters in the word you're searching for, then the word exists in the Trie.
+1. **Comece Pela Raiz**: Comece sua busca no nó root.
+2. **Travessia**: Para cada caracter na palavra, atravesse a Trie, indo de um nó para o filho que corresponda ao próximo caracter.
+3. **Existência de Palavra**: Se você atingir um nó que está marcado como o fim de uma palavra (`isEndOfWord = true`), e se esgotaram todos os caracteres na palavra que você estava buscando, então a palavra existe na Trie.
 
-Once implemented, your code should allow:
+Uma vez implementado, seu código deve permitir:
 
 ```js
 const trie = new Trie();
@@ -244,62 +244,62 @@ found = trie.search("cod");
 console.log(found); // false
 ```
 
-Go ahead and implement the `Trie.search` method. Don't read anything below before implementing it yourself.
+Vá em frente e implemente o método `Trie.search`. Não leia nada abaixo antes de implementar por você mesmo.
 
-If you are having trouble or are stuck, here are some hints to help you with the implementation -
+Se você está tendo problemas ou está empacado, aqui estão algumas dicas para ajudar com sua implementação - 
 
-### Hints
+### Dicas
 
-1. **Starting Point**: Similar to the `insert` method, you'll start at the root node and traverse the Trie based on the characters in the word you're searching for.
+1. **Ponto Inicial**: Similar ao método `insert`, você vai começar no nó raiz e atravessar a Trie com base nos caracteres da palavra pela qual está buscando.
 
-2. **Character Check**: For each character in the word, check if there's a child node for that character from the current node you're at.
+2. **Conferência de Caracteres**: Para cada caracter na palavra, confira se existe um nó filho para aquele caracter a partir do nó atual no qual você está.
 
-    - **If Yes**: Move to that child node.
-    - **If No**: Return `false`, as the word can't possibly exist in the Trie.
+    - **Se Sim**: Mova-se para esse nó.
+    - **Se Não**: Retorne `false`, já que não é possível que a palavra exista na Trie.
 
-3. **End-of-Word Check**: If you've reached the last character of the word, check the `isEndOfWord` property of the current node. If it's `true`, the word exists in the Trie; otherwise, it doesn't.
+3. **Conferência do Fim de Palavra**: Se você atingiu o último caracter da palavra, confira a propriedade `isEndOfWord` do nó atual. Se for `true`, a palavra existe na Trie; ao contrário, não existe.
 
-4. **Recursion or Loop**: You can choose to implement this method either recursively or iteratively.
+4. **Recursão ou Loop**: Você pode escolher implementar esse método de forma recursiva ou iterativa.
 
-    - **Recursion**: If you opt for recursion, you might want to include an additional parameter in the `search` method for the current node, similar to how you did it for the `insert` method.
-    - **Loop**: If you prefer loops, you can use a `for` loop to go through each character in the word, updating your current node as you go along.
+    - **Recursão**: Se você optar pela recursão, você pode querer incluir um parâmetro adicional no método `search` para o nó atual, similar a como você fez para o método `insert`.
+    - **Loop**: Se você prefere loops, você pode usar um loop `for` para passar por cada caracter na palavra, atualizando o seu nó atual conforme avança.
 
-5. **Return Value**: Don't forget to return `true` or `false` to indicate whether the word exists in the Trie.
+5. **Valor de Retorno**: Não se esqueça de retornar `true` ou `false` para indicar quando a palavra existe na Trie.
 
-Good luck!
+Boa sorte!
 
-### Solution
+### Solução
 
-I chose to implement tree traversal using a for loop this time, to showcase different ways of doing things. I usually prefer for-loops over recursion most of the time, due to the over head of function calls.
+Escolhi implementar a travessia de árvore utilizando o loop for desta vez, para mostrar maneiras diferentes de fazer as coisas. Eu normalmente prefiro loops-for ao invés da recursão na maior parte do tempo, devido a sobrecarga de chamadas de funções.
 
 ```js
 search(word) {
-    // Initialize 'currentNode' to the root node of the Trie.
+    // Inicializa o 'currentNode' para o nó raiz da Trie.
     let currentNode = this.root;
 
-    // Loop through each character in the input word.
+    // Executa um loop através de cada caracter na palavra inserida.
     for (let index = 0; index < word.length; index++) {
 
-        // Check if the current character exists as a child node
-        // of the 'currentNode'.
+        // Confere se o caracter atual existe como um
+        // nó filho de 'currentNode'.
         if (currentNode.children.has(word[index])) {
 
-            // If it does, update 'currentNode' to this child node.
+            // Se existir, atualiza o 'currentNode' para esse nó filho.
             currentNode = currentNode.children.get(word[index]);
         } else {
 
-            // If it doesn't, the word is not in the Trie. Return false.
+            // Se não, a palavra não está na Trie. Retorna false.
             return false;
         }
     }
 
-    // After looping through all the characters, check if the 'currentNode'
-    // marks the end of a word in the Trie.
+    // Depois de iterar por todos os caracteres, confere se o 'currentNode'
+    // marca o fim de uma palavra na Trie.
     return currentNode.isEndOfWord;
 }
 ```
 
-Awesome work. Now you know the basics of the `Trie` data structure and how to implement it. In the next exercise, we'll implement our `Router` from scratch! The next exercise will be more challenging and exhaustive.
+Excelente trabalho. Agora você conhece o básico de uma estrutura de dados `Trie` e como implementá-la. No próximo exercício, vamos implementar nosso `Router` do zero! O próximo exercício será mais desafiador e exaustivo.
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch08-ex-implementing-router.md)
 
