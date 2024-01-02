@@ -2,7 +2,7 @@ const { RollingTimeOptions, RollingSizeOptions } = require("../utils/rolling-opt
 
 class RollingConfig {
     /**
-     * Roll/Create new file every time the current file size exceeds this threshold in `seconds`.
+     * Rotaciona/Cria um novo arquivo toda vez que o tamanho atual do arquivo exceder este limite em `segundos`.
      *
      * @type {RollingTimeOptions}
      * @private
@@ -17,15 +17,15 @@ class RollingConfig {
     #size_threshold = RollingSizeOptions.FiveMB;
 
     /**
-     * @returns {RollingConfig} A new instance of RollingConfig with default values.
+     * @returns {RollingConfig} Uma nova instância de RollingConfig com os valores padrão.
      */
     static with_defaults() {
         return new RollingConfig();
     }
 
     /**
-     * @param {number} size_threshold Roll/Create new file every time the current file size exceeds this threshold.
-     * @returns {RollingConfig} The current instance of RollingConfig.
+     * @param {number} size_threshold Rotaciona/Cria um novo arquivo toda vez que o tamanho atual do arquivo exceder este limite.
+     * @returns {RollingConfig} A instância atual de RollingConfig.
      */
     with_size_threshold(size_threshold) {
         RollingSizeOptions.assert(size_threshold);
@@ -34,9 +34,9 @@ class RollingConfig {
     }
 
     /**
-     * @param {time_threshold} time_threshold Roll/Create new file every time the current file size exceeds this threshold.
-     * @returns {RollingConfig} The current instance of RollingConfig.
-     * @throws {Error} If the time_threshold is not an instance of RollingTimeOptions.
+     * @param {time_threshold} time_threshold Rotaciona/Cria um novo arquivo toda vez que o tempo de criação do arquivo atual exceder este limite.
+     * @returns {RollingConfig} A instância atual de RollingConfig.
+     * @throws {Error} Se o time_threshold não for uma instância de RollingTimeOptions.
      */
     with_time_threshold(time_threshold) {
         RollingTimeOptions.assert(time_threshold);
@@ -45,9 +45,9 @@ class RollingConfig {
     }
 
     /**
-     * @param {Object} json The json object to be parsed into {RollingConfig}.
-     * @returns {RollingConfig} A new instance of RollingConfig with values from the json object.
-     * @throws {Error} If the json is not an object.
+     * @param {Object} json O objeto json a ser analisado em {RollingConfig}.
+     * @returns {RollingConfig} Uma nova instância de RollingConfig com os valores do objeto json.
+     * @throws {Error} Se o json não for um objeto.
      */
     static from_json(json) {
         let rolling_config = new RollingConfig();
