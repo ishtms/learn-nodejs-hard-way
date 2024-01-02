@@ -1,30 +1,30 @@
-# Exercise 3 - Adding `HTTP` method support
+# Exercício 3 - Adicionando Suporte a Métodos `HTTP`
 
-So far, we've built a router capable of matching URL paths to specific handlers. This is a good starting point, but as of now, our router does not differentiate between different HTTP methods like GET, POST, PUT, DELETE, etc. In real-world applications, the same URL path can behave differently based on the HTTP method used, making our current router almost useless for such scenarios.
+Até agora, construímos um roteador capaz de corresponder paths de URL para handlers específicos. Esse é um bom ponto inicial, mas até o momento, nosso roteador não diferencia entre diferentes métodos como GET, POST, PUT, DELETE, etc. Em aplicações do mundo real, o mesmo path de URL pode se comportar de maneira diferente baseado no método HTTP utilizado, tornando nosso atual roteador praticamente inútil para esses cenários.
 
-## Requirements
+## Requisitos
 
-To make our router more useful and versatile, we need to extend the existing `TrieRouter` and `RouteNode` classes to support different HTTP methods (GET, POST, PUT, DELETE, etc.). This means that each node in the Trie could potentially have multiple handler functions, one for each HTTP method.
+Para tornar nosso roteador mais útil e versátil, precisamos extender as classes existentes `TrieRouter` e `RouteNode` para suportar diferentes métodos HTTP (GET, POST, PUT, DELETE, etc.). Isso significa que cada nó na Trie poderia potencialmente ter múltiplas funções handler, uma para cada método HTTP.
 
-## More details
+## Mais Detalhes
 
-1. Continue with the existing router class `TrieRouter`. Add new functionalities to it.
+1. Continue com a classe roteadora existente `TrieRouter`. Adicione novas funcionalidades nela.
 
-2. Modify the `RouteNode` class's `handler` member variable. It should now be a `Map` instead of a function, that will store HTTP methods and their corresponding handler functions.
+2. Modifique a variável membro `handler` da classe `RouteNode`. Agora ela deveria ser um `Map` ao invés de uma função, que vai armazenar métodos HTTP e suas funções handler correspondentes.
 
-3. The key in the `handler` `Map` will be the HTTP method as a string (like "GET", "POST") and the value will be the handler function for that HTTP method.
+3. A chave no `Map` `handler` será o método HTTP como uma string (tipo "GET", "POST") e o valor será a função handler para aquele método HTTP.
 
-4. Modify the `addRoute` method of the `TrieRouter` class to take an additional parameter `method`.
+4. Modifique o método `addRoute` da classe `TrieRouter` para receber um parâmetro adicional `method`.
 
--   `method`: A string representing the HTTP method. This could be "GET", "POST", "PUT", "DELETE", etc.
+-   `method`: Uma string representando o método HTTP. Poderia ser "GET", "POST", "PUT", "DELETE", etc.
 
-5. Also update the `findRoute` method. Now it will have another parameter - `method`, to search for routes based on the HTTP method as well as the path.
+1. Também atualize o método `findRoute`. Agora ele terá outro parâmetro - `method`, para buscar rotas com base no método HTTP e no path também.
 
-6. If a handler for a specific path and HTTP method is already present, the new handler should override the old one.
+2. Se um handler para um path e método HTTP específicos já está presente, o novo handler deve substituir o antigo.
 
-## Example
+## Exemplo
 
-Once implemented, the usage might look like this:
+Uma vez implementado, o uso deve parecer algo desse tipo:
 
 ```js
 const trieRouter = new TrieRouter();
@@ -36,31 +36,31 @@ trieRouter.addRoute("/home", "GET", getHandler);
 trieRouter.addRoute("/home", "POST", postHandler);
 
 console.log(trieRouter.findRoute("/home", "GET")); // -> fn getHandler() {..}
-console.log(trieRouter.findRoute("/home", "PATCH")); // -> null or undefined
+console.log(trieRouter.findRoute("/home", "PATCH")); // -> null ou undefined
 console.log(trieRouter.findRoute("/home", "POST")); // -> fn postHanlder() {..}
 ```
 
-Go ahead and add the functionality to our `TrieRouter` class. This will involve making a lot of changes to the previous code. Feel free to share your implementation or ask for feedback in the [Github discussions](https://github.com/ishtms/learn-nodejs-hard-way/discussions) section.
+Vá em frente e adicione a funcionalidade a nossa classe `TrieRouter`. Isso vai envolver a realização de muitas mudanças no código anterior. Sinta-se livre para compartilhar a sua implementação ou solicitar por um feedback na seção de [Discussões do Github](https://github.com/ishtms/learn-nodejs-hard-way/discussions).
 
-## Hints
+## Dicas
 
-1. When you're adding or searching for a route, make sure to consider both the path and the HTTP method.
+1. Quando você estiver adicionando ou buscando por uma rota, tenha certeza de considerar ambos, o path e o método HTTP.
 
-2. Take care to handle the HTTP method case-insensitively (prefer uppercase). It's common to receive HTTP method names in different cases.
+2. Tenha cuidado ao lidar com o case-insensitive do método HTTP (prefira caixa alta). É comum receber nomes de métodos HTTP em diferentes caixas, alta e baixa.
 
-3. Be careful with your error-handling logic to correctly manage the situation where the client does not provide a valid HTTP method.
+3. Seja cuidadoso com sua lógica de tratamento de erros, a fim de gerenciar corretamente situações onde o cliente não fornece um método HTTP válido.
 
-4. As with Challenge 1, start by making sure the Trie works for a simple case before diving into the more complex functionalities.
+4. Assim como no Desafio 1, comece garantindo que a Trie funcione para um caso simples antes de mergulhar em funcionalidades mais complexas.
 
-5. Don't forget to update your utility functions and other methods to be compatible with these new requirements.
+5. Não se esqueça de atualizar suas funções utilitárias e outros métodos para ficarem compatíveis com estes novos requisitos.
 
-## Solution
+## Solução
 
-Here's the solution I came up with:
+Aqui está a solução que eu trouxe:
 
 ```js
 function getRouteParts(path) {
-    /** stays the same **/
+    /** continua o mesmo **/
 }
 
 const HTTP_METHODS = {
@@ -144,7 +144,7 @@ class Router {
     }
 
     printTree(node = this.rootNode, indentation = 0) {
-        /** unchanged **/
+        /** inalterado **/
     }
 }
 
@@ -156,7 +156,7 @@ class RouteNode {
 }
 ```
 
-The new HTTP method implementation introduces several key changes to extend the existing router implementation to support HTTP methods. Below are the details of what was changed and why:
+A nova implementação dos métodos HTTP introduziu várias mudanças chaves para extender a implementação existente do roteador, dando suporte a métodos HTTP. A seguir estão os detalhes do que foi alterado e porque:
 
 ```js
 const HTTP_METHODS = {
@@ -172,7 +172,7 @@ const HTTP_METHODS = {
 };
 ```
 
-Firstly, we've defined a constant object named `HTTP_METHODS` to represent the different HTTP methods. This serves as a reference for the HTTP methods that our `TrieRouter` class will support. We might even do some validation, but that is not necessary (we'll look at it in a later chapter why validation isn't required here)
+Primeiramente, definimos um objeto constante chamado `HTTP_METHODS` para representar os diferentes métodos HTTP. Isso serve como uma referência para os métodos HTTP que nossa classe `TrieRouter` dará suporte. Podemos ainda fazer algumas validações, mas isso não é necessário (vamos dar uma olhada nisso em um capítulo mais adiante, do porque a validação não é necessária aqui).
 
 ```js
 class TrieRouter {
@@ -181,22 +181,22 @@ class TrieRouter {
 }
 ```
 
-In our `TrieRouter` class, we updated the `addRoute` method. It now takes an additional argument, `method`, which specifies the HTTP method for the route.
+Em nossa classe `TrieRouter`, atualizamos o método `addRoute`. Ele agora recebe um argumento adicional, `method`, que especifica o método HTTP para a rota.
 
 ```js
 if (typeof path != "string" || typeof handler != "function" || typeof method != "string") { ... }
 ```
 
-The error handling has been updated to ensure the `method` is also a string.
+O tratamento de erros foi atualizado para garantir que o `method` também é uma string.
 
 ```js
 method = method.toUpperCase();
 ```
 
-The `method` string is converted to uppercase to standardize the HTTP methods.
+A string `method` é convertida para maiúsculo para padronizar os métodos HTTP.
 
 ```js
 this.handler = new Map();
 ```
 
-The `handler` in `RouteNode` has changed from a single function reference to a `Map`. This allows you to store multiple handlers for the same path but with different HTTP methods.
+O `handler` em `RouteNode` foi alterado de uma referência à uma única função para um `Map`. Isso permite que você armazene múltiplos handlers para o mesmo path, mas com diferentes métodos HTTP.
