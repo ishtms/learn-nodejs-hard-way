@@ -7,7 +7,7 @@ class LogConfig {
     /**
      * @type {LogLevel}
      * @private
-     * @description The log level to be used.
+     * @description O log level a ser utilizado.
      */
     #level = LogLevel.Info;
 
@@ -20,10 +20,10 @@ class LogConfig {
     /**
      * @type {string}
      * @private
-     * @description The prefix to be used for the log file name.
+     * @description O prefixo a ser utilizado como nome do arquivo de log.
      *
-     * If the file prefix is `MyFilePrefix_` the log files created will have the name
-     * `MyFilePrefix_2021-09-01.log`, `MyFilePrefix_2021-09-02.log` and so on.
+     * Se o prefixo do arquivo for `MyFilePrefix_` o arquivo de log criado terá o nome
+     * `MyFilePrefix_2021-09-01.log`, `MyFilePrefix_2021-09-02.log` e assim por diante.
      */
     #file_prefix = "Logtar_";
 
@@ -32,16 +32,16 @@ class LogConfig {
     }
 
     /**
-     * @returns {LogConfig} A new instance of LogConfig with default values.
+     * @returns {LogConfig} Uma nova instância de LogConfig com os valores padrão.
      */
     static with_defaults() {
         return new LogConfig();
     }
 
     /**
-     * @param {string} file_path The path to the config file.
-     * @returns {LogConfig} A new instance of LogConfig with values from the config file.
-     * @throws {Error} If the file_path is not a string.
+     * @param {string} file_path O path para o arquivo de configuração.
+     * @returns {LogConfig} Uma nova instância de LogConfig com os valores do arquivo de configuração.
+     * @throws {Error} Se o file_path não for uma string.
      */
     static from_file(file_path) {
         const file_contents = fs.readFileSync(file_path);
@@ -49,8 +49,8 @@ class LogConfig {
     }
 
     /**
-     * @param {Object} json The json object to be parsed into {LogConfig}.
-     * @returns {LogConfig} A new instance of LogConfig with values from the json object.
+     * @param {Object} json O objeto json a ser analisado em {LogConfig}.
+     * @returns {LogConfig} Uma nova instância de LogConfig com os valores do objeto json.
      */
     static from_json(json) {
         let log_config = new LogConfig();
@@ -71,8 +71,8 @@ class LogConfig {
     }
 
     /**
-     * @param {LogConfig} log_config The log config to be validated.
-     * @throws {Error} If the log_config is not an instance of LogConfig.
+     * @param {LogConfig} log_config A configuração de log a ser validada.
+     * @throws {Error} Se o log_config não for uma instância de LogConfig.
      */
     static assert(log_config) {
         if (arguments.length > 0 && !(log_config instanceof LogConfig)) {
@@ -83,16 +83,16 @@ class LogConfig {
     }
 
     /**
-     * @returns {LogLevel} The current log level.
+     * @returns {LogLevel} O log level atual.
      */
     get level() {
         return this.#level;
     }
 
     /**
-     * @param {LogLevel} log_level The log level to be set.
-     * @returns {LogConfig} The current instance of LogConfig.
-     * @throws {Error} If the log_level is not an instance of LogLevel.
+     * @param {LogLevel} log_level O log level a ser definido.
+     * @returns {LogConfig} A atual instância de LogConfig.
+     * @throws {Error} Se o log_level não for uma instância de LogLevel.
      */
     with_log_level(log_level) {
         LogLevel.assert(log_level);
@@ -101,16 +101,16 @@ class LogConfig {
     }
 
     /**
-     * @returns {RollingConfig} The current rolling config.
+     * @returns {RollingConfig} A configuração de rotação atual.
      */
     get rolling_config() {
         return this.#rolling_config;
     }
 
     /**
-     * @param {RollingConfig} config The rolling config to be set.
-     * @returns {LogConfig} The current instance of LogConfig.
-     * @throws {Error} If the config is not an instance of RollingConfig.
+     * @param {RollingConfig} config A configuração de rotação a ser definida.
+     * @returns {LogConfig} A instância atual de LogConfig.
+     * @throws {Error} Se config não for uma instância de RollingConfig.
      */
     with_rolling_config(config) {
         this.#rolling_config = RollingConfig.from_json(config);
@@ -118,16 +118,16 @@ class LogConfig {
     }
 
     /**
-     * @returns {String} The current max file size.
+     * @returns {String} O tamanho máximo de arquivo atual.
      */
     get file_prefix() {
         return this.#file_prefix;
     }
 
     /**
-     * @param {string} file_prefix The file prefix to be set.
-     * @returns {LogConfig} The current instance of LogConfig.
-     * @throws {Error} If the file_prefix is not a string.
+     * @param {string} file_prefix O prefixo de arquivo a ser definido.
+     * @returns {LogConfig} A instância atual de LogConfig.
+     * @throws {Error} Se o file_prefix não for uma string.
      */
     with_file_prefix(file_prefix) {
         if (typeof file_prefix !== "string") {
