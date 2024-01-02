@@ -1,3 +1,5 @@
+[![Read Prev](/assets/imgs/prev.png)](/chapters/ch08-ex-implementing-router.md)
+
 # Exercício 3 - Adicionando Suporte a Métodos `HTTP`
 
 Até agora, construímos um roteador capaz de corresponder paths de URL para handlers específicos. Esse é um bom ponto inicial, mas até o momento, nosso roteador não diferencia entre diferentes métodos como GET, POST, PUT, DELETE, etc. Em aplicações do mundo real, o mesmo path de URL pode se comportar de maneira diferente baseado no método HTTP utilizado, tornando nosso atual roteador praticamente inútil para esses cenários.
@@ -200,3 +202,5 @@ this.handler = new Map();
 ```
 
 O `handler` em `RouteNode` foi alterado de uma referência à uma única função para um `Map`. Isso permite que você armazene múltiplos handlers para o mesmo path, mas com diferentes métodos HTTP.
+
+[![Read Next](/assets/imgs/next.png)](/chapters/ch10-ex-dynamic-routing.md)
