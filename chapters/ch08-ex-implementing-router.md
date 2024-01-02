@@ -1,59 +1,59 @@
 [![Read Prev](/assets/imgs/prev.png)](/chapters/ch07-ex-implementing-a-trie.md)
 
-# Exercise 2 - Implementing our Trie based `Router`
+# Exercício 2 - Implementando Nosso `Router` Baseado em Trie
 
-> This challenge is designed to push your boundaries and is considered to be more advanced than usual. It's completely okay if you don't crack it on your first attempt. The key is to persist, revisit your logic, and don't hesitate to iterate on your solutions.
+> Este desafio foi projetado para ultrapassar seus limites e é considerado mais avançado que o normal. Está totalmente okay se você não decifrá-lo na primeira tentativa. A chave é persistir, revisite sua lógica e não hesite em iterar pelas suas soluções.
 
-Since we just built a Trie data structure that can efficiently insert and search words, we can further enhance its capabilities by extending it to implement a Trie-based router for matching URL patterns. This powerful application of `Trie` data structure is commonly utilized in web frameworks, where it plays a crucial role in efficiently routing incoming HTTP requests to their respective handler functions.
+Já que acabamos de construir uma estrutura de dados Trie, que pode inserir e buscar palavras de maneira eficiente, podemos seguir aprimorando suas capacidades ao extendê-la para implementar um roteador baseado em Trie, para corresponder padrões de URL. Essa poderosa aplicação da estrutura de dados `Trie` é comumente utilizada em frameworks web, onde exerce um papel crucial ao rotear requisições HTTP que estão chegando às suas respectivas funções handler de maneira eficiente.
 
-By building a `Trie`-based router, our framework can achieve optimal performance and scalability, ensuring that each request is efficiently directed to the appropriate handler for processing.
+Ao construir um roteador baseado em `Trie`, nosso framework pode atingir escalabilidade e performance otimizada, garantindo que cada requisição seja eficientemente direcionada ao handler apropriado para processamento.
 
-## Challenge 1: Implementing the `addRoute` method
+## Desafio 1: Implementando o Método `addRoute`
 
-### Requirements
+### Requisitos
 
-Create a new class, `TrieRouter`, similar to what we had earlier - `Trie`. Add a method, `addRoute`, that takes in a URL pattern (like `/home` or `/user/status/play`) as a first parameter and a handler function as second parameter. Then insert the URL pattern into the `TrieRouter`, associating the handler function with the last node of that pattern.
+Crie uma nova classe, `TrieRouter`, similar ao que tínhamos anteriormente - `Trie`. Adicione um método, `addRoute`, que recebe um modelo de URL (tipo `/home` ou `/user/status/play`) como primeiro parâmetro e uma função handler como segundo parâmetro. Então, insira o modelo de URL em `TrieRouter`, associando a função handler com o último nó daquele modelo.
 
-### More details
+### Mais Detalhes
 
-1. **Class Definition**: Define a class named `TrieRouter`. This class should contain:
+1. **Definição de Classe**: Defina uma classe chamada `TrieRouter`. Essa classe deve conter:
 
-    - A root node, which is the starting point of the Trie.
-    - A method called `addRoute`.
+    - Um nó root, que é o ponto inicial de uma Trie.
+    - Um método chamado `addRoute`.
 
-2. **Route Node**: Define a class named `RouteNode` which will represent all the nodes.
+2. **Nós de Rota**: Defina uma classe chamada `RouteNode`, que vai representar todos os nós.
 
-    1. `RouteNode` should contain the handler function, which will be `null` or `undefined` for all nodes except the end nodes of each URL pattern.
+    1. `RouteNode` deve conter a função handler, que será `null` ou `undefined`, para todos os nós, exceto para os nós finais de cada modelo de URL.
 
-    2. `RouteNode` should also contain a `Map` to store its children nodes, where the key will be the URL segment eg "home" or "user", and the value will be another `RouteNode`
+    2. `RouteNode` também deve conter um `Map` para armazenar os nós filhos, onde a chave será o segmento de URL, como "home" ou "user", e o valor será outro `RouteNode`.
 
-3. **Root Node**: The root node is an empty node of the type `RouteNode`, that serves as the starting point for inserting new URL patterns into the Trie. Initialize it in the constructor of `TrieRouter`.
+3. **Nó Raiz**: O nó raiz é um nó vazio do tipo `RouteNode`, que serve como o ponto inicial para inserção de novos modelos de URL na Trie. Inicialize-o no constructor de `TrieRouter`.
 
-4. **Method - `addRoute`**: This method takes in two parameters:
+4. **Método - `addRoute`**: Esse método recebe dois parâmetros:
 
-    - `path`: A string representing the URL pattern to add to the Trie. The URL pattern will be segmented by forward slashes `/`.
+    - `path`: Uma string representando o modelo de URL para adicionar na Trie. O modelo de URL será segmentado por barras `/`.
 
-    - `handler`: A function that should be called when the URL pattern is matched.
+    - `handler`: Uma função que deve ser chamada quando um modelo de URL corresponder.
 
-    - Remove the trailing slash `/` from the `path` if it exists.
+    - Remova a barra final `/` do `path` se existir.
 
-    - The method should insert the `path` into the `TrieRouter`, associating the `handler` function with the last node of that pattern.
+    - O método deve inserir o `path` em `TrieRouter`, associando a função `handler` com o último nó daquele modelo.
 
-5. **Trailing forward-slashes**: You should treat routes that end with a forward slash `/` the same as those that don't, so that `/home/` and `/home` point to the same handler.
+5. **Barras Finais**: Você deve tratar rotas que terminam com uma barra `/` da mesma forma que aquelas que não terminam, para que `/home/` e `/home` apontem para o mesmo handler.
 
-6. **Repeated forward-slashes**: You should remove all the repeated `/` in the path.
+6. **Barras Repetidas**: Você deve remover todas as `/` repetidas do path.
 
-    1. `/user//hello////` should resolve as `/user/hello`
+    1. `/user//hello////` deve resultar em `/user/hello`
 
-    2. `/user//////////` should resolve as `/user`
+    2. `/user//////////` deve resultar em `/user`
 
-7. **Remove whitespaces** before and after all the url segments. For example `/   user/ node  /` should resolve as `/user/node`
+7. **Remova Espaços em Branco** antes e depois de todos os segmentos de URL. Por exemplo, `/   user/ node  /` deve resultar em `/user/node`
 
-8. **Reject URLs** that do not start with `/`
+8. **Rejeite URLs** que não começam com `/`
 
-    1. If someone uses `trieRouter.addRoute("hi/something")`, your code should throw an error.
+    1. Se alguém usar `trieRouter.addRoute("hi/something")`, seu código deve exibir um erro.
 
-Once implemented, we should be able to do something like this:
+Assim que implementado, deveríamos ser capazes de fazer algo desse tipo:
 
 ```js
 const trieRouter = new TrieRouter();
@@ -63,15 +63,15 @@ function ref() {}
 trieRouter.addRoute("/home/", ref);
 trieRouter.addRoute("/  user/  status/play", function inline() {});
 
-// /home -> valid
-// /user/status/play -> valid
-// /user/status -> invalid
-// /user -> invalid
-// /home/ -> valid
-// /user/status/play/ -> invalid
+// /home -> válido
+// /user/status/play -> válido
+// /user/status -> inválido
+// /user -> inválido
+// /home/ -> válido
+// /user/status/play/ -> inválido
 ```
 
-You don't need to worry about making HTTP requests just yet. A correctly implemented `TrieRouter` should look like this after adding both the routes mentioned above -
+Você não precisa se preocupar em fazer requisições HTTP ainda. Um `TrieRouter` implementado corretamente, deve ficar assim depois de adicionar ambas as rotas mencionadas acima -
 
 ```bash
                 (Root)
@@ -88,9 +88,9 @@ function ref   "status"
          function inline
 ```
 
-Go ahead and implement your version of the `TrieRouter`, `RouteNode` and `addRoute`. Here's a starting boilerplate for the challenge. You may proceed without using the boilerplate code if you're comfortable.
+Vá em frente e implemente sua versão de `TrieRouter`, `RouteNode` e `addRoute`. Aqui está um modelo inicial para o desafio. Você pode prosseguir sem usar o modelo de código se estiver confortável.
 
-You may then share your code to help others or to receive feedback in the [Github discussions](https://github.com/ishtms/learn-nodejs-hard-way/discussions) section. I'll try to review all the code submissions and provide feedback if required.
+Você pode então compartilhar o seu código para ajudar outros ou para receber um feedback na seção de [Discussões do Github](https://github.com/ishtms/learn-nodejs-hard-way/discussions). Tentarei revisar todos os códigos de resposta e fornecer feedback se necessário.
 
 ```js
 class TrieRouter {
@@ -99,36 +99,36 @@ class TrieRouter {
     }
 
     addRoute(path, handler) {
-        /* Add route code goes here */
+        /* O código para adicionar rotas vai aqui */
     }
 }
 
 class RouteNode {
     constructor() {
-        /** Define handler and children map **/
+        /** Define o handler e os nós filhos **/
     }
 }
 ```
 
-### Hints
+### Dicas
 
-1. Remember that a Trie is a tree-like structure where each node represents a piece/segment of a URL. Understanding the hierarchy can simplify the process.
+1. Lembre-se que uma Trie é uma estrutura do tipo árvore, onde cada nó representa um pedaço/segmento de uma URL. Entender a hierarquia pode simplificar o processo.
 
-2. Before diving into implementing all the conditions like removing trailing slashes or spaces, make sure your Trie works with the simplest case, such as adding a single route.
+2. Antes de mergulhar na implementação de todas as condições, como remover barras finais ou espaços, garanta que sua Trie esteja funcionando com o mais simples caso, como adicionar uma rota única.
 
-3. Consider breaking the URL path into segments using `split("/")` and loop through the segments to traverse the Trie.
+3. Considere quebrar o caminho da URL em segmentos utilizando o `split("/")` e iterar através dos segmentos para atravessar a Trie.
 
-4. Keep in mind that the handler function is associated with the end node of the URL pattern. Make sure you place the handler only at the right node.
+4. Tenha em mente que a função handler é associada com o nó final do modelo de URL. Garanta que o handler seja colocado somente no nó correto.
 
-5. Use the `Map` in each node to store its children. When adding a new route, check if a node for a segment exists; if it does, traverse to it. Otherwise, create a new node.
+5. Use o `Map` em cada nó para armazenar seus filhos. Ao adicionar uma nova rota, confira se um nó para o segmento já existe; se existir, atravesse para ele. Caso contrário, crie um novo nó.
 
-6. To deal with trailing slashes, repeated slashes, and whitespaces, you could write utility functions that normalize the path before processing it.
+6. Para lidar com barras finais, barras repetidas e espaços em branco, você pode escrever funções utilitárias que normalizem o path antes de processá-lo.
 
-### Solution
+### Solução
 
-Kudos to those who successfully implemented the `addRoute` function in the `TrieRouter` class. You've just completed the first difficult exercise in this book, showcasing not only your coding abilities but also your problem-solving skills.
+Parabéns aos que implementaram a função `addRoute` na classe `TrieRouter` com sucesso. Você acabou de completar o primeiro exercício difícil neste livro, demonstrando não somente suas habilidades em codar, mas também sua capacidade de resolver problemas.
 
-For those who found this challenge particularly challenging, don't get discouraged. The complexities you faced are what deepen your understanding and enhance your coding skills. Consider revisiting this exercise after looking at the solution or scraping and starting again from scratch.
+Aos que acharam esse desafio particularmente desafiador, não fique desencorajado. As complexidades que você enfrentou são o que vão aprofundar seu conhecimento e aprimorar suas habilidades de código. Considere revisitar este exercício depois de olhar a solução ou descartá-lo e começar novamente do zero.
 
 ```js
 class RouteNode {
@@ -193,7 +193,7 @@ trieRouter.addRoute("/  user/  status/play", function inline() {});
 trieRouter.addRoute("/home/id", ref);
 ```
 
-Let's visualize our tree. I've created a new method inside the `TrieRouter` class, which prints all the nodes of our `TrieRouter` recursively:
+Vamos visualizar nossa árvore. Criei um novo método dentro da classe `TrieRouter`, que imprime todos os nós do nosso `TrieRouter` recursivamente:
 
 ```js
 class TrieRouter {
@@ -212,7 +212,7 @@ class TrieRouter {
 }
 ```
 
-To check our output, let's execute our file:
+Para checar nosso output, vamos executar nosso arquivo:
 
 ```js
 const trieRouter = new TrieRouter();
@@ -225,12 +225,12 @@ trieRouter.addRoute("/home/id", ref);
 trieRouter.printTree();
 ```
 
-Output:
+Saída:
 
 ```bash
 $node trie_router.js
 
-# OUTPUT
+# SAÍDA
 -home
 --id
 -user
@@ -238,51 +238,51 @@ $node trie_router.js
 ---play
 ```
 
-Looks perfect. Let's go through the code and understand what's going on.
+Parece perfeito. Vamos passar pelo código e entender o que está acontecendo.
 
-### Explanation
+### Explicação
 
 ```js
 class RouteNode {
     constructor() {
-        // Initialize the handler to null
+        // Inicializa o handler como null
         this.handler = null;
 
-        // Create a Map to store children nodes
+        // Cria um Map para armazenar os nós filhos
         this.children = new Map();
     }
 }
 ```
 
-In the `RouteNode` class, each node is initialized with a `handler` set to `null`. This handler will hold a reference to the function we want to execute when a route matching the URL pattern is requested. Alongside the handler, we created a `children` Map. This Map will contain references to the next nodes in the Trie, allowing us to navigate through the Trie using URL segments as keys.
+Na classe `RouteNode`, cada nó é inicializado com um `handler` definido como `null`. Esse handler vai hospedar uma referência para a função que queremos executar quando uma rota corresponder ao modelo de URL requisitado. Juntamente com o handler, criamos um `children` Map. Esse Map vai conter referências aos próximos nós na Trie, nos permitindo navegar através da Trie utilizando segmentos de URL como chaves.
 
 ```js
 class TrieRouter {
     constructor() {
-        // Create a rootNode upon TrieRouter instantiation
+        // Cria um rootNode quando o TrieRouter é instanciado.
         this.rootNode = new RouteNode();
     }
 }
 ```
 
-The `TrieRouter` class acts as a manager for the Trie data structure. When an instance of this class is created, a `rootNode` is initialized. This root node acts as the entry point for any operation that needs to traverse the Trie, essentially representing the root of the Trie structure.
+A classe `TrieRouter` age como um gerente para a estrutura de dados Trie. Quando uma instância dessa classe é criada, um `rootNode` é inicializado. Esse nó root age como o ponto de entrada para qualquer operação que necessite atravessar a Trie, representando essencialmente a raiz da estrutura Trie.
 
 ```js
 addRoute(path, handler) {
-    // Validate input types
+    // Valida os tipos de entrada
     if (typeof path != "string" || typeof handler != "function") {
         throw new Error("Invalid params ...");
     }
 }
 ```
 
-The `addRoute` method is responsible for adding URL patterns and their corresponding handlers to the Trie. The method starts by validating the inputs, ensuring that `path` is a string and `handler` is a function. If either of these conditions isn't met, an error is thrown.
+O método `addRoute` é responsável por adicionar modelos de URL e seus handlers correspondentes à Trie. O método começa ao validar os inputs, garantindo que `path` é uma string e que `handler` é uma função. Se uma dessas condições não for correspondida, um erro é exibido.
 
 ```js
 addRoute(path, handler) {
     ...
-    // Normalize the path by removing consecutive slashes
-    // and breaking it down into its segments
+    // Normaliza o path ao remover barras consecutivas
+    // e o divide em segmentos
     let routeParts = path.replace(/\/{2,}/g, "/").split("/").map((curr) => curr.toLowerCase().trim());
     if (routeParts[routeParts.length - 1] == "") {
         routeParts = routeParts.slice(0, routeParts.length - 1);
@@ -290,90 +290,90 @@ addRoute(path, handler) {
 }
 ```
 
-The next part of the `addRoute` method preprocesses the path. First, consecutive slashes are replaced with a single slash. Then, the path is split into its segments (parts between slashes), and each segment is converted to lowercase and trimmed of any leading or trailing spaces. Finally, if the last segment is empty, which can happen if the path has a trailing slash, it's removed from the array of segments.
+A próxima parte do método pré-processa o path. Primeiramente, barras consecutivas são substituídas por uma única barra. Então, o path é dividido em segmentos (partes entre as barras), e cada segmento é convertido em caixa baixa e quaisquer espaços são retirados. Finalmente, se o último segmento está vazio, o que pode acontecer se o path tem uma barra final, ele é removido do array de segmentos.
 
 ```js
 addRoute(path, handler) {
     ...
-    // Delegate the actual Trie insertion to a helper method
+    // Delega a real inserção na Trie para um método auxiliar
     this.addRouteParts(routeParts, handler);
 }
 ```
 
-The final action in the `addRoute` method is to call a helper function named `addRouteParts`, passing the preprocessed segments (`routeParts`) and the `handler`. This modularizes the code, separating the preprocessing and validation logic from the Trie insertion logic.
+A ação final no método `addRoute` é chamar uma função auxiliar chamada `addRouteParts`, passando os segmentos pré-processados (`routeParts`) e o `handler`. Isso modulariza o código, separando o pré-processamento e a lógica de validação da lógica de inserção da Trie.
 
 ```js
 addRouteParts(routeParts, handler) {
-    // Start at the rootNode of the Trie
+    // Começa no rootNode da Trie
     let node = this.rootNode;
 
-    // Loop through all segments of the route
+    // Itera por todos os segmentos da rota
     for (let idx = 0; idx < routeParts.length; idx++) {
         let currPart = routeParts[idx];
 
-        // Attempt to find the next node in the Trie
+        // Tenta encontrar o próximo nó na Trie
         let nextNode = node.children.get(currPart);
         ...
 }
 ```
 
-The `addRouteParts` method starts by setting `node` to the `rootNode` of the Trie. A `for` loop then iterates through each segment in the `routeParts` array. For each segment, the code checks if a child node with that segment as the key already exists in the `children` Map of the current node.
+O método `addRouteParts` inicia ao definir o `node` como o `rootNode` da Trie. Então, um loop `for` itera através de cada segmento do array `routeParts`. Para cada segmento, o código confere se um nó filho com aquele segmento como chave já existe no `children` Map do nó atual.
 
 ```js
 addRouteParts(routeParts, handler) {
     ...
 
-    // If the next node doesn't exist, create it
+    // Se o próximo nó não existir, ele é criado
     if (!nextNode) {
         nextNode = new RouteNode();
         node.children.set(currPart, nextNode);
     }
 
-    // If this is the last segment, assign the handler to this node
+    // Se esse for o último segmento, atribui o handler a este nó
     if (idx === routeParts.length - 1) {
         nextNode.handler = handler;
     }
     
-    // Move to the next node for the next iteration
+    // Se move para o próximo nó para a próxima iteração
     node = nextNode;
 }
 ```
 
-If a child node for the current segment does not exist, a new `RouteNode` is instantiated, and it's added to the `children` Map of the current node with the segment as the key. Then, if the current segment is the last in the `routeParts` array, the handler function is associated with this new node. Finally, the current node is updated to this new node, ready for the next iteration or to end the loop.
+Se um nó filho para o segmento atual não existir, um novo `RouteNode` é instanciado e adicionado ao `children` Map do nó atual, com o segmento como a chave. Então, se o atual segmento for o último no array `routeParts`, a função handler é associada com esse novo nó. Finalmente, o nó atual é atualizado para esse novo nó, pronto para a próxima iteração ou para o fim do loop.
 
-That's it. We now have a working implementation of our router, but does only support adding routes. The next challenge involves finding route and returning the handler associated with it
+É isso. Agora temos uma implementação do nosso roteador funcionando, mas ela suporta apenas adicionar rotas. O próximo desafio envolve encontrar a rota e retornar o handler associado com ela.
 
-## Challenge 2: Implementing the `findRoute` method
+## Desafio 2: Implementando o Método `findRoute`
 
-### Requirements
+### Requisitos
 
-You've successfully implemented the `addRoute` method to build our `Trie`-based router. Now, lets extend our `TrieRouter` class by adding another method, `findRoute`. This method should take a URL pattern (e.g., `/home` or `/user/status/play`) as its parameter. Search the `TrieRouter` and find the handler function associated with the last node that matches the pattern.
+Você implementou o método `addRoute` com sucesso para construir nosso roteador baseado em `Trie`. Agora, vamos extender nossa classe `TrieRouter` adicionando outro método, `findRoute`. Esse método deve receber um modelo de URL ( tipo `/home` ou `/user/status/play`) como parâmetro. Buscar no `TrieRouter` e encontrar a função handler associada com o último nó que corresponda ao modelo.
 
-### More details
+### Mais Detalhes
 
-1. **Method - `findRoute`**: Add a method to your `TrieRouter` class called `findRoute`.
+1. **Método - `findRoute`**: Adicione um método chamado `findRoute` à sua classe `TrieRouter`.
 
--   This method should take a single parameter, `path`, which is a string representing the URL pattern to find in the Trie.
+-   Esse método deve receber um único parâmetro, o `path`, que é uma string, representando o modelo de URL para encontrar na Trie.
 
--   Return the handler function associated with the last node of the matching URL pattern.
+-   Retorne a função handler associada com o último nó do modelo de URL correspondente.
 
--   If the URL pattern is not found, return `null` or some indication that the route does not exist.
+-   Se o modelo de URL não for encontrado, retorne `null` ou alguma indicação de que a rota não existe.
 
-2. **Path Normalization**: Before searching for the route in the Trie, normalize the path similar to what you did in `addRoute`.
+1. **Normalização de Path**: Antes de buscar pela rota na Trie, normalize o path de maneira similar ao que você fez em `addRoute`.
 
--   Remove trailing slashes.
+-   Remova as barras finais.
 
--   Handle repeated slashes.
+-   Remova barras repetidas.
 
--   Remove whitespaces before and after each URL segment.
+-   Remova espaços em branco antes e depois de cada segmento de URL.
 
-3. **Traversal**: Start from the root node and traverse the Trie based on the URL segments. Retrieve the handler function from the last node if the path exists.
+1. **Travessia**: Comece do nó raiz e atravesse a Trie com base nos segmentos de URL. Recupere a função handler do último nó se o path existir.
 
-4. **Route Matching**: The Trie should now allow for a partial match. For instance, if a handler is set for `/user/status`, a request for `/user/status/play` should return null if `/user/status/play` has not been set!
+2. **Correspondência de Rotas**: Agora a Trie deve permitir uma correspondência parcial. Por exemplo, se um handler está definido para `/user/status`, uma requisição para `/user/status/play` deve retornar null se `/user/status/play` não tiver sido definido!
 
-5. **Case Sensitivity**: Make sure to convert the url paths into lower-case before matching. So `/AbC` and `/abc` should result to the same handler.
+3. **Case Sensitivity**: Tenha certeza de converter os caminhos da URL para minúsculo antes da correspondência. Dessa forma, `/AbC` e `/abc` devem resultar no mesmo handler.
 
-Once implemented, we should be able to do something like this:
+Uma vez implementado, devemos ser capazes de fazer algo desse tipo:
 
 ```js
 const trieRouter = new TrieRouter();
@@ -384,16 +384,16 @@ function userHandler() {}
 trieRouter.addRoute("/home", homeHandler);
 trieRouter.addRoute("/user/status", userHandler);
 
-console.log(trieRouter.findRoute("/home")); // Should return homeHandler
-console.log(trieRouter.findRoute("/user/status")); // Should return userHandler
-console.log(trieRouter.findRoute("/user/status/play")); // Should return null
+console.log(trieRouter.findRoute("/home")); // Deve retornar homeHandler
+console.log(trieRouter.findRoute("/user/status")); // Deve retornar userHandler
+console.log(trieRouter.findRoute("/user/status/play")); // Deve retornar null
 ```
 
-Feel free to share your implementation or ask for feedback in the [Github discussions](https://github.com/ishtms/learn-nodejs-hard-way/discussions) section. I'll try to review all code submissions and provide feedback if required.
+Sinta-se livre para compartilhar sua implementação ou solicitar um feedback na seção de [Discussões do Github](https://github.com/ishtms/learn-nodejs-hard-way/discussions). Tentarei revisar todas os códigos de resposta e fornecer feedback se necessário.
 
-### Starting Boilerplate
+### Modelo Inicial
 
-Feel free to use the starting boilerplate below. If you are comfortable, you may proceed without it.
+Sinta-se livre para usar o modelo inicial a seguir. Se você estiver confortável, você pode prosseguir sem ele.
 
 ```js
 class TrieRouter {
@@ -402,34 +402,34 @@ class TrieRouter {
     }
 
     addRoute(path, handler) {
-        /* Your addRoute code */
+        /* Seu código para addRoute */
     }
 
     findRoute(path) {
-        /* Your findRoute code goes here */
+        /* Seu código para findRoute vem aqui */
     }
 }
 
 class RouteNode {
     constructor() {
-        /* Define handler and children map */
+        /* Defina o handler e o children map */
     }
 }
 ```
 
-### Hints
+### Dicas
 
-1. When traversing the Trie, you may find it beneficial to break down the URL pattern into segments just like you did while inserting the route.
+1. Ao atravessar a Trie, você pode achar benéfico quebrar o modelo de URL em segmentos, como você acabou de fazer ao inserir a rota.
 
-2. Be careful about the return values. Ensure you return the handler function if a match is found and a suitable indicator (like `null`) if no match exists.
+2. Seja cuidadoso com os valores de retorno. Garanta que você vai retornar a função handler se uma correspondência for encontrada, e um indicador adequado (como `null`) se nenhuma correspondência existir.
 
-3. For path normalization, you might want to reuse the functionality that we wrote for the `addRoute` method to handle things like trailing slashes and repeated slashes. Even better - extract it into it's own helper function (not method).
+3. Para a normalização de path, você pode querer reutilizar a funcionalidade que escrevemos para o método `addRoute`, para lidar com coisas como barras finais e barras repetidas. Ainda melhor - extraia isso para uma função auxiliar (não um método).
 
-4. While traversing, always check if you have reached a leaf node (the end node) or if the traversal needs to continue to find the appropriate handler.
+4. Ao atravessar a Trie, sempre confira se você já atingiu o nó-folha (nó final) ou se a travessia precisa continuar para encontrar o handler apropriado.
 
-### Solution
+### Solução
 
-Here's the solution that I came up with:
+Aqui está a solução que trouxe:
 
 ```js
 function getRouteParts(path) {
@@ -448,11 +448,11 @@ class Router {
         ...
 
         let routeParts = getRouteParts(path);
-        /** Rest unchanged **/
+        /** O resto está inalterado **/
     }
 
     addRouteParts(routeParts, handler) {
-        /** Nothing changed **/
+        /** Nada alterado **/
     }
 
     findRoute(path) {
@@ -480,16 +480,16 @@ class Router {
     }
 
     printTree(node = this.rootNode, indentation = 0) {
-       /** Nothing changed **/
+       /** Nada alterado **/
     }
 }
 
 class RouteNode {
-    /** same as before **/
+    /** o mesmo de antes **/
 }
 ```
 
-### Explanation
+### Explicação
 
 ```js
 function getRouteParts(path) {
@@ -500,25 +500,25 @@ function getRouteParts(path) {
 }
 ```
 
-I've extracted the path normalization logic into it's own helper function. Since we would need to use this functionality in the `findRoute` method as well, it seemed like a good idea to remove it from the `addRoute` method.
+Extrai a lógica de normalização de path para sua própria função auxiliar. Já que precisaríamos utilizar essa funcionalidade no método `findRoute` também, pareceu uma boa ideia removê-la do método `addRoute`.
 
 ```js
 addRoute(path, handler) {
     ...
 
     let routeParts = getRouteParts(path);
-    /** Rest unchanged **/
+    /** O resto está inalterado **/
 }
 ```
 
-We're using the newly created `getRouteParts` function to normalize and segment the path into `routeParts`. The rest of the implementation remains the same as before.
+Estamos utilizando a recém criada função `getRouteParts` para normalizar e segmentar o path em `routeParts`. O resto da implementação permanece como antes.
 
 ```js
     findRoute(path) {
-        // removes the trailing forward slash
+        // remove a barra final
         if (path.endsWith("/")) path = path.substring(0, path.length - 1);
 
-        // Initialize variables for route parts, current Trie node, and handler
+        // Inicializa as variáveis routeParts, node e handler.
         let routeParts = getRouteParts(path);
         let node = this.rootNode;
         let handler = null;
@@ -526,31 +526,31 @@ We're using the newly created `getRouteParts` function to normalize and segment 
     }
 ```
 
-We've initialized three key variables. The `routeParts` variable stores the normalized URL segments obtained from calling `getRouteParts()`. The `node` variable keeps track of our current position in the Trie and is initialized to the root node. The `handler` variable is initialized to `null` and will later store the handler function if a match is found.
+Inicializamos três variáveis chave. A variável `routeParts` armazena os segmentos de URL normalizados, obtidos ao chamar `getRouteParts()`. A variável `node` monitora nossa posição atual na Trie e é inicializada como o nó root. A variável `handler` é inicializada como `null` e mais tarde armazenará a função handler se uma correspondência for encontrada.
 
 ```js
 findRoute(path) {
     ...
 
-    // Traverse the Trie based on the URL segments
+    // Atravessa a Trie com base nos segmentos de URL
     for (let idx = 0; idx < routeParts.length; idx++) {
         let currPart = routeParts[idx];
 
-        // Retrieve the child node corresponding to the current URL segment
+        // Recupera o nó filho correspondente ao segmento de URL atual
         let nextNode = node.children.get(currPart);
     ...
 }
 ```
 
-We loop through each segment of the `routeParts` array. Within the loop, `currPart` holds the current URL segment, and `nextNode` is obtained from the `children` map of the current `node` based on this segment. This part is crucial because we're determining if a child node exists for the current URL segment in our Trie.
+Iteramos através de cada segmento do array `routeParts`. Dentro do loop, `currPart` armazena o segmento de URL atual e `nextNode` é obtido através do `children` map no `node` atual com base neste segmento. Essa parte é crucial, porque estamos determinando se um nó filho já existe em nossa Trie para o atual segmento de URL.
 
 ```js
 findRoute(path) {
     ...
-    // If the next node doesn't exist, exit the loop
+    // Se o próximo nó não existir, sai do loop
     if (!nextNode) break;
 
-    // If this is the last segment, grab the handler if exists
+    // Se esse for o último segmento, pega o handler se existir
     if (idx == routeParts.length - 1) {
         handler = nextNode ? nextNode.handler : null;
     }
@@ -558,27 +558,27 @@ findRoute(path) {
 }
 ```
 
-First, the method checks whether `nextNode` exists. If it doesn't, the loop is immediately exited using `break`. This means that the Trie doesn't contain a matching route for the given URL, and there's no need to continue searching.
+Primeiro o método confere se `nextNode` já existe. Se não existir, o loop é terminado imediatamente utilizando `break`. Isso significa que a Trie não contém uma rota correspondente para a URL fornecida, e não há necessidade de continuar procurando.
 
-Then, we check whether the loop has reached the last segment (leaf node) of the URL (`routeParts.length - 1`). If it has, we attempt to retrieve the `handler` function associated with the `nextNode`. If `nextNode` doesn't exist, `handler` remains null.
+Então, checamos se o loop já atingiu o último segmento (nó-folha) da URL (`routeParts.length - 1`). Se tiver atingido, tentamos recuperar a função `handler` associada com o `nextNode`. Se o `nextNode` não existir, o `handler` permanece null.
 
 ```js
 findRoute(path) {
     ...
     for(...) {
         ...
-        // Update the current Trie node for the next iteration
+        // Atualiza o nó atual da Trie para a próxima iteração
         node = nextNode;
     }
 
-    // Return the handler if found, otherwise null will be returned
+    // Retorna o handler se encontrado, caso contrário será retornado null
     return handler;
 }
 ```
 
-Firstly, we update `node` to `nextNode` for the next iteration. This allows the loop to move deeper into the Trie as it iterates through each URL segment. After the loop, the method returns the `handler` that was found. If no handler is found during the Trie traversal, the return value will be `null`.
+Primeiramente, atualizamos nosso `node` como `nextNode` para a próxima iteração. Isso permite que o loop se mova mais profundamente na Trie conforme itera através de cada segmento de URL. Depois do loop, o método retorna o `handler` se for encontrado. Se nenhum handler for encontrado durante a travessia da Trie, o valor de retorno será `null`.
 
-Let's test our code:
+Vamos testar nosso código:
 
 ```js
 const trieRouter = new TrieRouter();
@@ -598,7 +598,7 @@ console.log(trieRouter.findRoute("/user/status/play"));
 console.log(trieRouter.findRoute("/user/status/play/"));
 ```
 
-This outputs:
+Isso exibe:
 
 ```bash
 [Function: ref]
@@ -609,6 +609,8 @@ null
 [Function: inline]
 ```
 
-Everything seems to be working well. This is it for the `findRoute` method. This was much easier than our `addRoute` implementation, since we only cared about searching. Excellent, we've grasped the basics well! Now let's move on to the more advanced features in the next chapter, ie Implementing HTTP methods with our router.
+Tudo parece estar funcionando bem. E é só isso para o método `findRoute`. Isso foi muito mais fácil do que a nossa implementação de `addRoute`, já que nos importamos apenas com a busca. Excelente, entendemos bem o básico! Agora vamos partir para funcionalidades mais avançadas no próximo capítulo, como implementar métodos HTTP com nosso roteador.
+
+[![Read Next](/assets/imgs/next.png)](/chapters/ch09-ex-adding-http-methods.md)
 
 ![](https://uddrapi.com/api/img?page=ex2)
