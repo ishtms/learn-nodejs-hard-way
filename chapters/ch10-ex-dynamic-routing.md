@@ -1,19 +1,19 @@
-# Exercise 4 - Implementing Dynamic Routing
+# Exercício 4 - Implementando o Roteamento Dinâmico
 
-When we're building a server application, dynamic routing is an essential feature for creating flexible and scalable applications. To fully grasp its significance and how we can enhance our router to support dynamic routes like `/users/:id`, let's delve into the concept of dynamic routing.
+Quando estamos construindo uma aplicação de servidor, roteamento dinâmico é uma funcionalidade essencial para criar aplicações flexíveis e escaláveis. Para entender completamente o seu significado e como podemos aprimorar nosso roteador para dar suporte à rotas dinâmicas, como `/users/:id`, vamos nos aprofundar no conceito de roteamento dinâmico.
 
-## Why Dynamic Routing?
+## Por Que Roteamento Dinâmico?
 
-At its core, dynamic routing refers to the ability of a web application (not just server) to handle requests to URLs that are not predetermined but rather, are defined by patterns. It allows developers to create routes that can match a range of URL structures, often using parameters. For instance, a URL like `/users/:user_id` can handle requests for any user ID, where `:user_id` is a variable part of the URL.
+Em sua essência, roteamento dinâmico se refere a habilidade de uma aplicação web (não apenas de servidor) de lidar com requisições para URLs que não são pré-determinadas, mas ainda mais, são definidas por padrões. Isso permite que desenvolvedores criem rotas que podem corresponder a uma gama de estruturas URL, geralmente usando parâmetros. Por exemplo, uma URL como `/users/:user_id` pode lidar com requisições para qualquer ID de usuário, onde `:user_id` é a parte variável da URL.
 
-### Flexibility
+### Flexibilidade
 
-Dynamic routing introduces a level of flexibility that static routing cannot match. As applications grow and become more complex, new routes often need to be added. With dynamic routing, you can handle a vast number of routes with just a few route patterns, making the application more scalable and easier to maintain. For example, imagine having to define a route for every kind of asset your website serves.
+Roteamento dinâmico introduz um nível de flexibilidade que o roteamento estático não consegue oferecer. Conforme aplicações crescem e se tornam mais complexas, geralmente novas rotas precisam ser adicionadas. Com roteamento dinâmico, você pode lidar com um vasto número de rotas com apenas alguns padrões de rota, tornando a aplicação mais escalável e mais fácil de manter. Por exemplo, imagine ter que definir uma rota para todo tipo de asset que o seu site oferece.
 
-You may do something like this
+Você teria que fazer algo assim:
 
 ```js
-// images
+// imagens
 app.get('/static/imgs/img1.png', img_handler);
 app.get('/static/imgs/img2.png', img_handler);
 app.get('/static/imgs/img3.png', img_handler);
@@ -23,107 +23,106 @@ app.get('/static/imgs/img4.png', img_handler);
 app.get('/static/js/main.js', script_handler);
 app.get('/static/js/third_party.js', script_handler);
 
-/** And so on**/
+/** e assim por diante**/
 ```
 
-This is quite tedious, and you cannot expect an application like this to scale. What if we had a dynamic route to serve all the assets?
+Isso é bem entediante e você não pode esperar que uma aplicação como essa seja escalável. E se tivéssemos um roteamento dinâmico para servir todos os assets?
 
 ```js
 app.get('/static/img/:image_file_name', img_handler)
 app.get('/static/js/:javascript_file_name', img_handler)
 ```
 
-This is somewhat better than the previous. 
+Isso é algo muito melhor que o anterior.
 
-> However, this is still not the best way to handle assets. You may have subdirectories - i.e `/img/compressed/webps/img.webp`. You will get a route not found while doing the method above. To solve this issue, we have a concept of wildcards. You don't need to worry about wildcards just yet. We'll cover them in the next chapter.
+> Porém, essa ainda não é a melhor maneira de lidar com assets. Você pode ter sub-diretórios, como `/img/compressed/webps/img.webp`. Você vai obter uma rota não encontrada (not found) ao realizar o método acima. Para solucionar esse problema, temos o conceito de curingas. Você ainda não precisa se preocupar com curingas. Vamos cobrir esse assunto no próximo capítulo.
 
-### Better User Experience
+### Melhor Experiência do Usuário
 
-Dynamic routes allow for creating more personalized user experiences. For example, in a blog application, a dynamic route like `/posts/:postId` can display a specific post based on the ID in the URL. This approach makes it straightforward to link to specific content, improving the navigability and user engagement.
+Rotas dinâmicas permitem a criação de experiências de usuário mais personalizadas. Por exemplo, em uma aplicação de um blog, um roteamento dinâmico como `/posts/:postId`, pode exibir um post específico com base no ID na URL. Essa abordagem torna direta a ligação com um conteúdo específico, aprimorando a navegabilidade e envolvimento do usuário.
 
-### Better Developer Experience
+### Melhor Experiência de Desenvolvimento
 
-By using dynamic routes, developers of our framework can avoid the tedium of defining every possible URL path in their application. This not only saves time but also reduces the risk of errors. A single dynamic route can replace dozens, if not hundreds, of static routes, streamlining the development process.
+Ao usar rotas dinâmicas, desenvolvedores do nosso framework podem evitar o tédio de definir cada possível path de URL em suas aplicações. Isso não apenas economiza tempo, mas reduz o risco de erros. Uma única rota dinâmica pode substituir dezenas, se não centenas, de rotas estáticas, simplificando o processo de desenvolvimento.
 
-### Better SEO
+### Melhor SEO
 
-Dynamic routing can also contribute to better Search Engine Optimization (SEO). With the ability to generate clean and meaningful URLs (e.g., `/game/dota2` instead of `/game?uid=dota2`), dynamic routes make URLs more understandable to both users and search engines, potentially improving search rankings.
+Roteamento dinâmico também pode contribuir para um melhor SEO (Search Engine Optimization). Com a habilidade de gerar URLs claras e com significado (por exemplo, `/game/dota2` ao invés de `/game?uid=dota2`), rotas dinâmicas tornam URLs mais compreensíveis para ambos, usuários e motores de busca, potencialmente aprimorando a colocação na busca.
 
-## Anatomy of a dynamic route
+## Anatomia de Uma Rota Dinâmica
 
-A dynamic route follows a structure where certain parts of the URL path are variable, known as dynamic segments. 
+Uma rota dinâmica segue uma estrutura, onde certas partes do caminho da URL são variáveis, conhecidas como segmentos dinâmicos.
 
 ```
-/[Static Path Segment]/[Dynamic Segment]/[More Static or Dynamic Segments]
+/[Segmento de Path Estático]/[Segmento Dinâmico]/[Mais Segmentos Dinâmicos ou Estáticos]
 ```
 
-Example URL: https://github.com/:user_id/repos
+Exemplo de URL: https://github.com/:user_id/repos
 
-1. Static Path Segment: 'repos'
+1. Segmento de Path Estático: 'repos'
    
-   - A fixed part of the URL path that doesn't change.
+   - Uma parte fixa do path da URL que não é alterada.
 
-2. Dynamic Segment: `:user_id`
+2. Segmento Dinâmico: `:user_id`
    
-   - A variable part of the URL. The `user_id` can be any value, representing a specific user.
+   - Uma parte variável da URL. O `user_id` pode ter qualquer valor, representando um usuário específico.
 
-## Challenge 1: Update the `getRouteParts()` function
+## Desafio 1: Atualize a Função `getRouteParts()`
 
-Initially, our `getRouteParts` function converted all parts of the route to lowercase. To support dynamic routes, we have to modify this function to keep dynamic segments (indicated by a colon `:`) as they are, without converting them to lowercase. This is crucial for recognizing dynamic parts in a route.
+Inicialmente, nossa função `getRouteParts` convertia todas as partes da rota para minúsculo. Para dar suporte à rotas dinâmicas, temos que modificar essa função para manter segmentos dinâmicos (indicados por um dois pontos `:`) da forma que estão, sem convertê-los para minúsculo. Isso é crucial para reconhecer partes dinâmicas em uma rota.
 
-For example, we should give the developers the flexibility they want with naming their dynamic parameters. 
+Por exemplo, devemos dar aos desenvolvedores a flexibilidade que eles querem para nomear seus parâmetros dinâmicos.
 
 ```js
 /account/:UserId
 /account/:user_id
 ```
 
-### Requirement
+### Requisitos
 
-Currently, the function normalizes the URL path and converts all segments to lowercase. Your goal is to modify the function to identify and preserve dynamic parameter placeholders marked with ":" (e.g., `:id`) while still normalizing other segments.
+Atualmente, a função normaliza o path da URL e converte todos os segmentos para caixa baixa. Seu objetivo é modificar a função para identificar e preservar modelos de parâmetros dinâmicos marcados com ":" (como `:id`), enquanto ainda normaliza os outros segmentos.
 
-**More Details:**
+**Mais Detalhes:**
 
-1. The `path` parameter passed to the `getRouteParts` function is a string representing a URL path.
+1. O parâmetro `path`, passado para a função `getRouteParts`, é uma string representando um path de URL.
 
-2. The function should first replace any consecutive forward slashes (`//`) with a single forward slash (`/`) to ensure proper path normalization.
+2. A função deve primeiro substituir quaisquer barras consecutivas (`/`) para garantir uma normalização de path apropriada.
 
-3. It should then split the path into segments based on the forward slashes (`/`).
+3. Deve então dividir o path em segmentos com base nas barras (`/`).
 
-4. For each segment:
+4. Para cada segmento:
    
-   - If the segment starts with a ":" (e.g., `:id`), it should be treated as a dynamic parameter and preserved as is.
-   - If the segment does not start with a ":", it should be converted to lowercase and trimmed of any leading or trailing whitespace.
+   - Se o segmento começar com um ":" (como `:id`), ele deve ser tratado como um parâmetro dinâmico e preservado como está.
+   - Se o segmento não começar com um ":", deve ser convertido para minúsculo e ter quaisquer espaços em branco removidos.
 
-5. The function should return an array of path segments with dynamic parameters intact and other segments normalized.
+5. A função deve retornar um array de segmentos de path, com os parâmetros dinâmicos intactos e com os outros segmentos normalizados.
 
-6. Example:
+6. Exemplo:
    
    - Input: `"/api/user/:id/profile"`
    - Output: `["api", "user", ":id", "profile"]`
 
-7. Another example:
+7. Outro Exemplo:
    
    - Input: `"/api/user/:ID/profile"`
-   
    - Output: `["api", "user", ":ID", "profile"]`
 
-8. Ensure that your solution is efficient and follows modern JavaScript programming practices.
+8. Garanta que sua solução seja eficiente e siga as práticas modernas de programação JavaScript.
 
-9. Update the provided `getRouteParts` function to implement this behavior. Make changes only within the function while keeping the function signature the same.
+9. Atualize a função `getRouteParts` para implementar esse comportamento. Faça mudanças apenas dentro da função, enquanto mantém a mesma assinatura para a função.
 
-### Solution
+### Solução
 
-Here's the solution I came up with:
+Aqui está a solução que eu trouxe:
 
 ```js
 function getRouteParts(path) {
     return path
         .replace(/\/{2,}/g, "/")
         .split("/")
-        /* If the segment starts with a semi-colon, return as it is */
+        /* Se o segmento começar com um dois pontos, retorna ele do mesmo jeito */
         .map((curr) => (curr.startsWith(":") ? curr : curr.toLowerCase().trim()));
 }
 ```
 
-## Challenge 2: Add the dynamic routing functionality in `Router` class
+## Desafio 2: Adicione a Funcionalidade de Roteamento Dinâmico na Classe `Router`
