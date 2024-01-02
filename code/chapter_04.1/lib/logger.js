@@ -8,7 +8,7 @@ class Logger {
     #config;
 
     /**
-     * @returns {Logger} A new instance of Logger with default config.
+     * @returns {Logger} Uma nova instância de Logger com os valores padrão.
      */
     static with_defaults() {
         return new Logger();
@@ -17,7 +17,7 @@ class Logger {
     /**
      * 
      * @param {LogConfig} log_config 
-     * @returns {Logger} A new instance of Logger with the given config.
+     * @returns {Logger} Uma nova instância de Logger com a configuração fornecida.
      */
     static with_config(log_config) {
         return new Logger(log_config);
@@ -33,7 +33,7 @@ class Logger {
     }
 
     /**
-     * @returns {LogLevel} The current log level.
+     * @returns {LogLevel} O log level atual.
      */
     get level() {
         return this.#config.level;
