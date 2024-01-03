@@ -27,7 +27,7 @@ class Logger {
     }
 
     /**
-     * Initializes the logger by creating the log file, and directory if they don't exist.
+     * Inicializa o logger criando um arquivo de log, e o diretório se não existir.
      */
     async init() {
         const log_dir_path = check_and_create_dir("logs");
@@ -37,7 +37,7 @@ class Logger {
     }
 
     /**
-     * @returns {Logger} A new instance of Logger with default config.
+     * @returns {Logger} Uma nova instância de Logger com os valores padrão.
      */
     static with_defaults() {
         return new Logger();
@@ -46,14 +46,14 @@ class Logger {
     /**
      *
      * @param {LogConfig} log_config
-     * @returns {Logger} A new instance of Logger with the given config.
+     * @returns {Logger} Uma nova instância de Logger com a configuração fornecida.
      */
     static with_config(log_config) {
         return new Logger(log_config);
     }
 
     /**
-     * Writes the given message to the log file.
+     * Escreve a mensagem fornecida no arquivo de log.
      * @private
      * @param {string} message
      * @param {number} log_level
@@ -68,7 +68,7 @@ class Logger {
     }
 
     /**
-     * Checks if the current log file needs to be rolled over.
+     * Checa se o atual arquivo de log precisa ser rotacionado.
      */
     async #rolling_check() {
         const { size_threshold, time_threshold } = this.#config.rolling_config;
@@ -83,7 +83,7 @@ class Logger {
     }
 
     /**
-     * Writes the given message to the log file.
+     * Escreve a mensagem fornecida no arquivo de log.
      * @private
      * @param {string} message
      * @param {LogLevel} log_level
@@ -135,14 +135,14 @@ class Logger {
     /** Getters */
 
     /**
-     * @returns {LogLevel} The current log level.
+     * @returns {LogLevel} O log level atual.
      */
     get level() {
         return this.#config.level;
     }
 
     /**
-     * @returns {string} The log file prefix
+     * @returns {string} O prefixo do arquivo de log.
      */
     get file_prefix() {
         return this.#config.file_prefix;
