@@ -2,7 +2,7 @@ const { RollingTimeOptions, RollingSizeOptions } = require("../utils/rolling-opt
 
 class RollingConfig {
     /**
-     * Roll/Create new file every time the current file size exceeds this threshold in `seconds`.
+     * Rotaciona/Cria um novo arquivo toda vez que o tamanho atual do arquivo exceder este limite em `segundos`.
      *
      * @type {RollingTimeOptions}
      * @private
