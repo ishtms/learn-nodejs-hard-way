@@ -28,18 +28,18 @@ class Logger {
     }
 
     /**
-     * Initializes the logger by setting up the process exit handlers.
+     * Inicializa o logger configurando os handlers de saída de processo.
      */
     #init() {
         process.on("exit", this.#setup_for_process_exit.bind(this));
         process.on("SIGINT", this.#setup_for_process_exit.bind(this));
         process.on("SIGTERM", this.#setup_for_process_exit.bind(this));
-        // you can't catch SIGKILL
+        // você não pode pegar o SIGKILL
         //process.on("SIGKILL", this.#setup_for_process_exit.bind(this));
     }
 
     /**
-     * Initializes the logger by creating the log file, and directory if they don't exist.
+     * Inicializa o logger criando um arquivo de log, e o diretório se não existir.
      */
     async init() {
         const log_dir_path = check_and_create_dir("logs");
@@ -49,7 +49,7 @@ class Logger {
     }
 
     /**
-     * @param {number} signal The exit signal received by the process.
+     * @param {number} signal O sinal de saída recebido pelo processo.
      */
     async #setup_for_process_exit(signal) {
         if (this.#log_file_handle.fd <= 0) return;
@@ -61,7 +61,7 @@ class Logger {
     }
 
     /**
-     * @returns {Logger} A new instance of Logger with default config.
+     * @returns {Logger} Uma nova instância de Logger com os valores padrão.
      */
     static with_defaults() {
         return new Logger();
@@ -70,14 +70,14 @@ class Logger {
     /**
      *
      * @param {LogConfig} log_config
-     * @returns {Logger} A new instance of Logger with the given config.
+     * @returns {Logger} Uma nova instância de Logger com a configuração fornecida.
      */
     static with_config(log_config) {
         return new Logger(log_config);
     }
 
     /**
-     * Writes the given message to the log file.
+     * Escreve a mensagem fornecida no arquivo de log.
      * @private
      * @param {string} message
      * @param {number} log_level
@@ -132,14 +132,14 @@ class Logger {
     /** Getters */
 
     /**
-     * @returns {LogLevel} The current log level.
+     * @returns {LogLevel} O log level atual.
      */
     get level() {
         return this.#config.level;
     }
 
     /**
-     * @returns {string} The log file prefix
+     * @returns {string} O prefixo do arquivo de log.
      */
     get file_prefix() {
         return this.#config.file_prefix;
