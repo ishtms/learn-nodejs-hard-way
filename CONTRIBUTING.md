@@ -1,40 +1,40 @@
-# Contribution Guidelines
-I'm thrilled that you're interested in contributing to this open-source book! Your contributions will help improve the quality and impact of the content for the benefit of the community. Please take a moment to read through the guidelines outlined below before you start contributing.
+# Diretrizes de Contribuição
+Estou muito feliz que você esteja interessado em contribuir com este livro de código aberto! Suas contribuições ajudarão a melhorar a qualidade e o impacto do conteúdo em benefício da comunidade. Por favor, reserve um momento para ler as diretrizes descritas abaixo antes de começar a contribuir.
 
-## How to Contribute
-You can contribute to this open-source book by submitting Pull Requests (PRs) for various improvements, such as code snippets, explanations, clarifications, and more. We appreciate your efforts in helping to make this resource better.
+## Como Contribuir
+Você pode contribuir com esse livro de código aberto submetendo Pull Requests (PRs) para várias melhorias, como trechos de código, explicações, esclarecimentos e mais. Agradecemos seus esforços para ajudar a tornar esse recurso melhor.
 
-If you're unsure about a particular word, phrase, or concept used in the book, or if you have any doubts, please consider opening an issue to discuss it before creating a PR. We believe that collaboration and open communication lead to better results.
+Se você não está certo a respeito de uma palavra em particular, ou conceito utilizado neste livro, ou se você tiver quaisquer outras dúvidas, por favor considere abrir uma issue para discutir antes de criar um PR. Acreditamos que a colaboração e comunicação abertas levam a melhores resultados.
 
-## Content Contributions
-By contributing content to this repository, you acknowledge and agree to the following:
+## Contribuições de Conteúdo
+Ao contribuir com esse repositório, você está ciente e concorda com:
 
-**License**: Any content you contribute to this repository is provided under the terms of the MIT license. This means that you grant the repository owner a non-exclusive license to use, modify, and distribute your contributed content for the purposes of the book.
+**Licença**: Qualquer conteúdo que você contribua para este repositório está sob os termos da licensa MIT. Isso significa que você concede ao proprietário do repositório uma licença não exclusiva para usar, modificar e distribuir o conteúdo contribuído para propósitos do livro.
 
-**Non-Exclusive**: This license is non-exclusive, which means you retain the right to use your contributed content elsewhere.
+**Não Exclusiva**: Essa licença é não exclusiva, o que significa que você mantém o direito de usar o conteúdo contribuído em outro lugar.
 
-**Attribution**: Your contributions will be appropriately attributed to you within the book, in the contributors section.
+**Referência**: Suas contribuições serão referenciadas a você apropriadamente no livro, na seção de contribuidores.
 
-## Getting Started
-1. Fork the repository to your GitHub account.
+## Começando
+1. Dê um fork no repositório para sua conta no GitHub.
 
-2. Create a new branch for your contributions. This helps in isolating changes and making your PRs more manageable.
+2. Crie uma nova branch para suas contribuições. Isso ajuda a isolar alterações e tornar seus PRs mais gerenciáveis.
 
-3. Make your desired changes or additions to the content.
+3. Faça as alterações ou adições que deseja no conteúdo.
 
-4. Test your changes to ensure they fit seamlessly with the existing content. For example, hyperlinks.
+4. Teste suas alterações para garantir que elas se encaixam perfeitamente com o conteúdo existente. Por exemplo, hyperlinks.
 
-5. Commit your changes with clear and descriptive commit messages.
+5. Comite suas alterações com mensagens de commit claras e descritivas.
 
-6. Create a Pull Request (PR) from your forked repository's branch to the main repository's branch.
+6. Crie um Pull Request (PR) da nova branch criada no seu fork para branch main do repositório principal.
 
-7. Provide a (somewhat) detailed description of your changes in the PR, along with any relevant context.
+7. Forneça uma descrição detalhada (de alguma forma) das suas alterações no PR, acompanhada de qualquer contexto relevante.
 
-8. Engage in any discussions or feedback related to your PR. Be open to suggestions and improvements.
+8. Se envolva em quaisquer discussões ou feedbacks relacionados ao seu PR. Esteja aberto à sugestões e melhorias.
 
-9. Once your PR is approved, it will be merged into the main repository.
+9. Uma vez que o seu PR estiver aprovado, ele será "mergeado" (merged) no repositório principal.
 
-## Code of Conduct
-By participating in this project, you agree to adhere to the [Code of Conduct](/CODE_OF_CONDUCT.md). We aim to maintain a respectful and inclusive environment for all contributors.
+## Código de Conduta
+Ao participar deste projeto, você concorda em aderir ao [Código de Conduta](/CODE_OF_CONDUCT.md). Focamos em manter um ambiente respeitoso e inclusivo para todos os contribuidores.
 
-Thank you for being a part of Learn Nodejs the Hard way! Your contributions make a difference in the community.
+Obrigado por fazer parte do Learn Nodejs the Hard way (Aprenda Nodejs do Jeito Difícil)! Suas contribuições fazem diferença na comunidade.

@@ -24,7 +24,7 @@ class RollingSizeOptions {
 }
 
 class RollingTimeOptions {
-    static Minutely = 60; // Every 60 seconds
+    static Minutely = 60; // A cada 60 segundos
     static Hourly = 60 * this.Minutely;
     static Daily = 24 * this.Hourly;
     static Weekly = 7 * this.Daily;
