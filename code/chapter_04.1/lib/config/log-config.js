@@ -12,7 +12,7 @@ class LogConfig {
     #level = LogLevel.Info;
 
     /**
-     * @type RollingConfig
+     * @type {RollingConfig}
      * @private
      */
     #rolling_config;
