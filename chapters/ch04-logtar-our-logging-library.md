@@ -943,5 +943,3 @@ Everything works as expected.
 > Note: The entire code we write here can be found [at the code/chapter_04.0 directory](/code/chapter_04.0). This will be a single file, and we'll refactor in subsequent chapters.
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch04.1-refactoring-the-code.md)
-
-![](https://uddrapi.com/api/img?page=ch04)

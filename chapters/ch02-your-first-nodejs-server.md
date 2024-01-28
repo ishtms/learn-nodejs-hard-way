@@ -190,5 +190,3 @@ Working with **`process.stdout`** can be rather cumbersome, and in practice, you
 > **_Warning_**: The ways of the global console object are not always synchronous like the browser APIs they resemble, nor are they always asynchronous like all other Node.js streams. For more information, please see the [note on process I/O](https://nodejs.org/api/process.html#a-note-on-process-io).
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch03-working-with-files.md)
-
-![](https://uddrapi.com/api/img?page=ch02)

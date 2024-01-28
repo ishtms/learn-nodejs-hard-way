@@ -26,15 +26,15 @@ Protocols extend beyond web browsing too. Email, file sharing, and even the way 
 
 Like I explained above, to re-iterate - Protocols are like the rules that enable devices to communicate effectively on the internet. They define how data is formatted, transmitted, and understood by different systems. Just as people follow social etiquette during conversations, devices follow protocols to ensure smooth communication. Here's a glimpse into some major types of protocols:
 
-- **TCP/IP (Transmission Control Protocol/Internet Protocol):** a set of rules for exchanging data over a network.
-- **HTTP (Hypertext Transfer Protocol):** a protocol for transmitting data between a web server and a web client.
-- **HTTPS (Hypertext Transfer Protocol Secure):** an extension of HTTP that encrypts data in transit.
-- **UDP (User Datagram Protocol):** a protocol for transmitting data between networked devices without requiring a connection or reliability guarantees.
-- **FTP (File Transfer Protocol):** a protocol for transferring files between computers on a network.
-- **SMTP (Simple Mail Transfer Protocol):** a protocol for sending email messages between servers.
-- **POP3 (Post Office Protocol 3) and IMAP (Internet Message Access Protocol):** protocols for retrieving email messages from a server.
-- **DNS (Domain Name System):** a protocol for translating domain names into IP addresses.
-- **DHCP (Dynamic Host Configuration Protocol):** a protocol for automatically assigning IP addresses to devices on a network.
+-   **TCP/IP (Transmission Control Protocol/Internet Protocol):** a set of rules for exchanging data over a network.
+-   **HTTP (Hypertext Transfer Protocol):** a protocol for transmitting data between a web server and a web client.
+-   **HTTPS (Hypertext Transfer Protocol Secure):** an extension of HTTP that encrypts data in transit.
+-   **UDP (User Datagram Protocol):** a protocol for transmitting data between networked devices without requiring a connection or reliability guarantees.
+-   **FTP (File Transfer Protocol):** a protocol for transferring files between computers on a network.
+-   **SMTP (Simple Mail Transfer Protocol):** a protocol for sending email messages between servers.
+-   **POP3 (Post Office Protocol 3) and IMAP (Internet Message Access Protocol):** protocols for retrieving email messages from a server.
+-   **DNS (Domain Name System):** a protocol for translating domain names into IP addresses.
+-   **DHCP (Dynamic Host Configuration Protocol):** a protocol for automatically assigning IP addresses to devices on a network.
 
 In order to become a proficient backend engineer, it is important to have a solid understanding of different networking protocols. While HTTP(s) is the main focus of this guide, having knowledge of other protocols such as FTP, SMTP, and DNS can prove beneficial in the long run. FTP (File Transfer Protocol) is commonly used for transferring files between servers, while SMTP (Simple Mail Transfer Protocol) is used for sending emails. DNS (Domain Name System) is responsible for translating domain names into IP addresses.
 
@@ -113,5 +113,3 @@ Your computer receives the response from the web server. Your browser interprets
 > A quick disclaimer: our learning approach will prioritize clarity and thoroughness. I will introduce a topic, break it down, and if we come across any unfamiliar concepts, we will explore them until everything is fully understood.
 
 [![Read Prev](/assets/imgs/next.png)](/chapters/ch02-your-first-nodejs-server.md)
-
-![](https://uddrapi.com/api/img?page=ch01)

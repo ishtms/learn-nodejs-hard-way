@@ -4,7 +4,7 @@
 
 **"Node.js is slow."** This is a statement you may have heard often, perhaps whispered in developer circles or debated on online forums. Node.js has been unfairly criticized for not being suitable for high-performance applications. This chapter aims to disprove that myth permanently.
 
-The tech community often praises languages like Go or Rust for their ***blazing fast*** ™ execution, and often doubt whether JavaScript and its server-side partner, Node.js, can keep up. Common criticisms range from Node.js being single-threaded to the fundamental limitations of JavaScript itself. But what if I told you that these critiques are not just overly simplistic, but often misleading?
+The tech community often praises languages like Go or Rust for their **_blazing fast_** ™ execution, and often doubt whether JavaScript and its server-side partner, Node.js, can keep up. Common criticisms range from Node.js being single-threaded to the fundamental limitations of JavaScript itself. But what if I told you that these critiques are not just overly simplistic, but often misleading?
 
 Why is Node.js perceived as slow? Is it the single-threaded architecture? Or perhaps the fact that it uses JavaScript - a language originally designed for client-side web development - as its backbone? These are just a couple of the many misconceptions that contribute to the underestimation of Node.js. But as you'll soon discover, Node.js can not only stand toe-to-toe with competing backend technologies but, under the right circumstances, can even perform as good as other "fast" languages.
 
@@ -37,7 +37,7 @@ The question is, how are we going to benchmark? Let's take `bun`'s approach. If 
 ```tex
 Why "hello world" benchmarking?
 
-Contrary to popular belief, "hello world benchmarks" are the most accurate and realistic gauges of performance 
+Contrary to popular belief, "hello world benchmarks" are the most accurate and realistic gauges of performance
 for the kind of applications µWebSockets is designed for:
 
 IO-gaming (latency)
@@ -54,17 +54,17 @@ Since "hello world" benchmarks test the absolute bare minimum, they can sometime
 
 But nevertheless, we're going to use the elysia/`bun`'s way of benchmarking -
 
-- Get the path parameter i.e extracting `name` from the endpoint `/bench/:name`
+-   Get the path parameter i.e extracting `name` from the endpoint `/bench/:name`
 
-- Get the query parameter i.e extracting `id` from the endpoint `/bench/:name?id=10`
+-   Get the query parameter i.e extracting `id` from the endpoint `/bench/:name?id=10`
 
-- Set a couple of headers on the response.
+-   Set a couple of headers on the response.
 
-- Set a custom header on the response.
+-   Set a custom header on the response.
 
-- Set the `content-type`, `connection` and `keep-alive` headers explicitly, so the response headers are the same for every framework.
+-   Set the `content-type`, `connection` and `keep-alive` headers explicitly, so the response headers are the same for every framework.
 
-- Serializing. It is a bit more cpu-intensive task than doing something like IO. For that reason, instead of returning an Javascript object, we're going to return a JSON response (serialized) back to the client. Bun claims that the [JSON.stringify() in bun is 3.5x faster than Node.js](https://twitter.com/jarredsumner/status/1552409321245265920/photo/1). That should also give our Node.js servers a significant performance hit, right?
+-   Serializing. It is a bit more cpu-intensive task than doing something like IO. For that reason, instead of returning an Javascript object, we're going to return a JSON response (serialized) back to the client. Bun claims that the [JSON.stringify() in bun is 3.5x faster than Node.js](https://twitter.com/jarredsumner/status/1552409321245265920/photo/1). That should also give our Node.js servers a significant performance hit, right?
 
 ## Source code
 
@@ -168,11 +168,11 @@ const express = require("express");
 const app = express();
 
 const headers = {
-        "x-powered-by": "benchmark",
-        "content-type": "application/json",
-        connection: "keep-alive",
-        "keep-alive": "timeout=5",
-}
+    "x-powered-by": "benchmark",
+    "content-type": "application/json",
+    connection: "keep-alive",
+    "keep-alive": "timeout=5",
+};
 
 // We want to make sure that the the response body is same, to make it fair.
 app.disable("x-powered-by");
@@ -181,7 +181,7 @@ app.disable("etag");
 app.get("/bench/:name", (req, res) => {
     const { name } = req.params;
     const id = req.query.id;
-    
+
     // res.end() does not set the content-length implicitly, so the `transfer-encoding: chunked` is assumed.
     // Manually setting the `content-length` to get rid of it.
     const response = JSON.stringify({ name, id });
@@ -233,7 +233,7 @@ Testing machine - Macbook, M1 Max
 
 Testing tool - [`wrk`](https://github.com/wg/wrk)
 
-Testing method - 
+Testing method -
 
 ```bash
 wrk -t1 -c256 -d30s --latency http://localhost:3000/bench/testing?id=10
@@ -360,7 +360,7 @@ While you could run multiple Bun instances and set up a load balancer, that's no
 
 #### Axum
 
-Axum remains unchanged. Axum runs on top of the tokio runtime which by default creates a thread-pool, and work on with new connections/request using a work-stealing algorithm. 
+Axum remains unchanged. Axum runs on top of the tokio runtime which by default creates a thread-pool, and work on with new connections/request using a work-stealing algorithm.
 
 ### Elysia
 
@@ -412,7 +412,6 @@ if (cluster.isMaster) {
 
     app.listen(3000);
 }
-
 ```
 
 ## Velocy
@@ -529,14 +528,12 @@ This is due to 3 separate processes consuming the memory - One master node, and 
 
 If you need speed - for both - CPU and IO/resource intensive tasks, you're better off working with languages like Rust, GoLang, C++ (Drogon) or Zig directly. Node.js is perfect for demanding IO workloads and is not slow at all. We just saw, how a small, immature web framework, almost achieved the same speed of Bun, that claimed to be orders of magnitude faster than Node.js counterparts. Stop looking at benchmarks. They're hardly a valid reason to choose a particular tool.
 
-The things that's important is - the tooling, the community, library ecosystem, job market and the list goes on. Node.js can be thought of as #1 on this list as far as server side programming is concerned. Axum is my go-to framework if I want to build something which involves security heavy things like managing a wallet system, or sub microsecond latency - and that's it. 
+The things that's important is - the tooling, the community, library ecosystem, job market and the list goes on. Node.js can be thought of as #1 on this list as far as server side programming is concerned. Axum is my go-to framework if I want to build something which involves security heavy things like managing a wallet system, or sub microsecond latency - and that's it.
 
 On the other hand, you can work both on server and client applications by knowing just one language. This is the most under-rated part of working with Node.js.
 
-Node.js does use a threadpool internally, through **libuv**. Libuv is the underlying C library that powers Node.js's event loop and non-blocking I/O operations. The use of a thread pool in Node.js is primarily for tasks that are not suitable for non-blocking, asynchronous processing. These tasks include, but are not limited to, file I/O, DNS queries, and certain types of network operations. 
+Node.js does use a threadpool internally, through **libuv**. Libuv is the underlying C library that powers Node.js's event loop and non-blocking I/O operations. The use of a thread pool in Node.js is primarily for tasks that are not suitable for non-blocking, asynchronous processing. These tasks include, but are not limited to, file I/O, DNS queries, and certain types of network operations.
 
 > TBD: Create benchmarks using `rewrk` too.
 
 [![Read Prev](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
-
-![](https://uddrapi.com/api/img?page=nodejs_way_faster)

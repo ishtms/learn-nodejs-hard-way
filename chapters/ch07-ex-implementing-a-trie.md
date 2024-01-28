@@ -302,5 +302,3 @@ search(word) {
 Awesome work. Now you know the basics of the `Trie` data structure and how to implement it. In the next exercise, we'll implement our `Router` from scratch! The next exercise will be more challenging and exhaustive.
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch08-ex-implementing-router.md)
-
-![](https://uddrapi.com/api/img?page=ch7.0_exer)

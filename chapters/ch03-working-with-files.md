@@ -6,14 +6,14 @@ Now that we've covered the basics of logging in Node.js, let's explore a real-wo
 
 ### What will the logging library do
 
-- Log messages to a file
-- Choose log location, or simply generate a new file
-- Support for log levels (debug, info, warning, error, critical)
-- Timestamps on log messages
-- Customizable log message format
-- Automatic log rotation based on file size or time interval
-- Support for console output in addition to log files
-- Simple and easy-to-use API for logging messages
+-   Log messages to a file
+-   Choose log location, or simply generate a new file
+-   Support for log levels (debug, info, warning, error, critical)
+-   Timestamps on log messages
+-   Customizable log message format
+-   Automatic log rotation based on file size or time interval
+-   Support for console output in addition to log files
+-   Simple and easy-to-use API for logging messages
 
 ### How do you work with files anyway?
 
@@ -350,8 +350,8 @@ export type PathLike = string | Buffer | URL;
 
 1. String **Paths:**
    The most common way to represent file paths is as strings. A string path can be either a relative or an absolute path. It's simply a sequence of characters that specifies the location of a file on the computer.
-   - Example of relative string path: **`"./calculator.js"`**
-   - Example of absolute string path: **`"/Users/ishtmeet/Code/intro-to-node/calculator.js"`**
+    - Example of relative string path: **`"./calculator.js"`**
+    - Example of absolute string path: **`"/Users/ishtmeet/Code/intro-to-node/calculator.js"`**
 2. **Buffer Paths:**
    While strings are the most common way to represent paths, Node.js also allows you to use **`Buffer`** objects to represent paths. A **`Buffer`** is a low-level data structure that can hold binary data. In reality, using **`Buffer`** objects for paths is less common. Read about [Buffers](#buffers) here
 3. **URL Paths:**
@@ -366,20 +366,20 @@ const url_path = new URL("file:///home/user/projects/calculator.js");
 
 The `flag` argument indicates the mode (not to confused by `mode` argument) in which you wish to open the file. Here are the supported values as a `flag` -
 
-- `'a'`: Open file for appending. The file is created if it does not exist.
-- `'ax'`: Like `'a'` but fails if the path exists.
-- `'a+'`: Open file for reading and appending. The file is created if it does not exist.
-- `'ax+'`: Like `'a+'` but fails if the path exists.
-- `'as'`: Open file for appending in synchronous mode. The file is created if it does not exist.
-- `'as+'`: Open file for reading and appending in synchronous mode. The file is created if it does not exist.
-- `'r'`: Open file for reading. An exception occurs if the file does not exist.
-- `'rs'`: Open file for reading in synchronous mode. An exception occurs if the file does not exist.
-- `'r+'`: Open file for reading and writing. An exception occurs if the file does not exist.
-- `'rs+'`: Open file for reading and writing in synchronous mode. Instructs the operating system to bypass the local file system cache.
-- `'w'`: Open file for writing. The file is created (if it does not exist) or truncated (if it exists).
-- `'wx'`: Like `'w'` but fails if the path exists.
-- `'w+'`: Open file for reading and writing. The file is created (if it does not exist) or truncated (if it exists).
-- `'wx+'`: Like `'w+'` but fails if the path exists.
+-   `'a'`: Open file for appending. The file is created if it does not exist.
+-   `'ax'`: Like `'a'` but fails if the path exists.
+-   `'a+'`: Open file for reading and appending. The file is created if it does not exist.
+-   `'ax+'`: Like `'a+'` but fails if the path exists.
+-   `'as'`: Open file for appending in synchronous mode. The file is created if it does not exist.
+-   `'as+'`: Open file for reading and appending in synchronous mode. The file is created if it does not exist.
+-   `'r'`: Open file for reading. An exception occurs if the file does not exist.
+-   `'rs'`: Open file for reading in synchronous mode. An exception occurs if the file does not exist.
+-   `'r+'`: Open file for reading and writing. An exception occurs if the file does not exist.
+-   `'rs+'`: Open file for reading and writing in synchronous mode. Instructs the operating system to bypass the local file system cache.
+-   `'w'`: Open file for writing. The file is created (if it does not exist) or truncated (if it exists).
+-   `'wx'`: Like `'w'` but fails if the path exists.
+-   `'w+'`: Open file for reading and writing. The file is created (if it does not exist) or truncated (if it exists).
+-   `'wx+'`: Like `'w+'` but fails if the path exists.
 
 > You do not need to remember all of these, but it can be useful to write consistent APIs to ensure that no undefined behavior occurs.
 
@@ -412,9 +412,9 @@ It’s a good practice to specify the `flag` argument.
 
 The `mode` argument specifies the permissions to set for the file when its created. `mode`s are always interpreted **in octal.** For example,
 
-- **`0o400`** (read-only for the owner)
-- **`0o600`** (read and write for the owner)
-- **`0o644`** (read for everyone, write only for the owner)
+-   **`0o400`** (read-only for the owner)
+-   **`0o600`** (read and write for the owner)
+-   **`0o644`** (read for everyone, write only for the owner)
 
 You don’t need to remember the octal representation. Simply use the `fs.constants.your_mode` to access it.
 
@@ -526,30 +526,30 @@ One import thing to note is, `open`ing a file can fail, and will throw an except
 
 `fs.open()` can throw errors in various scenarios, including:
 
-- `EACCES`: Access to the file is denied or permission is lacking, or the file doesn't exist and parent directory isn't writable.
-- `EBADF`: The directory file descriptor is invalid.
-- `EBUSY`: The file is a block device in use or mounted.
-- `EDQUOT`: Disk quota for user is exceeded when creating a file.
-- `EEXIST`: File already exists while trying to create it exclusively.
-- `EFAULT`: Path is outside accessible memory.
-- `EFBIG` / `EOVERFLOW`: File is too large to open.
-- `EINTR`: Opening a slow device is interrupted by a signal.
-- `EINVAL`: Invalid flags or unsupported operations.
-- `EISDIR`: Attempting to write to a directory, or using `O_TMPFILE` on a version that doesn't support it.
-- `ELOOP`: Too many symbolic links encountered.
-- `EMFILE`: Process reached its limit of open file descriptors.
-- `ENAMETOOLONG`: Pathname is too long.
-- `ENFILE`: System-wide limit on open files is reached.
-- `ENOENT`: File or component in path doesn't exist.
-- `ENOMEM`: Insufficient memory for FIFO buffer or kernel memory.
-- `ENOSPC`: No space left on device.
-- `ENOTDIR`: Component in path is not a directory.
-- `ENXIO`: File doesn't correspond to device, socket, or FIFO.
-- `EOPNOTSUPP`: Filesystem doesn't support `O_TMPFILE`.
-- `EROFS`: File is on read-only filesystem.
-- `ETXTBSY`: File is being executed, used as swap, or read by kernel.
-- `EPERM`: Operation prevented by file seal or mismatched privileges.
-- `EWOULDBLOCK`: `O_NONBLOCK` specified, incompatible lease held on the file.
+-   `EACCES`: Access to the file is denied or permission is lacking, or the file doesn't exist and parent directory isn't writable.
+-   `EBADF`: The directory file descriptor is invalid.
+-   `EBUSY`: The file is a block device in use or mounted.
+-   `EDQUOT`: Disk quota for user is exceeded when creating a file.
+-   `EEXIST`: File already exists while trying to create it exclusively.
+-   `EFAULT`: Path is outside accessible memory.
+-   `EFBIG` / `EOVERFLOW`: File is too large to open.
+-   `EINTR`: Opening a slow device is interrupted by a signal.
+-   `EINVAL`: Invalid flags or unsupported operations.
+-   `EISDIR`: Attempting to write to a directory, or using `O_TMPFILE` on a version that doesn't support it.
+-   `ELOOP`: Too many symbolic links encountered.
+-   `EMFILE`: Process reached its limit of open file descriptors.
+-   `ENAMETOOLONG`: Pathname is too long.
+-   `ENFILE`: System-wide limit on open files is reached.
+-   `ENOENT`: File or component in path doesn't exist.
+-   `ENOMEM`: Insufficient memory for FIFO buffer or kernel memory.
+-   `ENOSPC`: No space left on device.
+-   `ENOTDIR`: Component in path is not a directory.
+-   `ENXIO`: File doesn't correspond to device, socket, or FIFO.
+-   `EOPNOTSUPP`: Filesystem doesn't support `O_TMPFILE`.
+-   `EROFS`: File is on read-only filesystem.
+-   `ETXTBSY`: File is being executed, used as swap, or read by kernel.
+-   `EPERM`: Operation prevented by file seal or mismatched privileges.
+-   `EWOULDBLOCK`: `O_NONBLOCK` specified, incompatible lease held on the file.
 
 Make sure to handle errors gracefully. There may be cases where you don't need to handle the errors and want the program to fail, exit, or throw an error to the client. For example, if you're writing a CLI application that compresses an image using the `path/to/image` provided as an argument, you want it to fail to let the user know that there is an issue with the file/path provided.
 
@@ -673,11 +673,11 @@ If there's an error while reading the file, the function shows an error message 
 
 One thing to note is that we used string substitution `%s` instead of template literals. When passing a string to one of the methods of the `console` object that accepts a string, you may use these substitution strings:
 
-- `%o` or `%O`: Outputs a JavaScript object. Clicking the object name opens more information about it in the inspector (browser).
-- `%d`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %d", 1)` will output the number as an number (will retain floating point value).
-- `%i`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %i", 1.1)` will output the number as an integer (will truncate the floating point value).
-- `%s`: Outputs a string.
-- `%f`: Outputs a floating-point value. Formatting is supported. For example, `console.log("Foo %f", 1.1)` will output "Foo 1.1".
+-   `%o` or `%O`: Outputs a JavaScript object. Clicking the object name opens more information about it in the inspector (browser).
+-   `%d`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %d", 1)` will output the number as an number (will retain floating point value).
+-   `%i`: Outputs an integer. Number formatting is supported. For example, `console.log("Foo %i", 1.1)` will output the number as an integer (will truncate the floating point value).
+-   `%s`: Outputs a string.
+-   `%f`: Outputs a floating-point value. Formatting is supported. For example, `console.log("Foo %f", 1.1)` will output "Foo 1.1".
 
 > Using `%o` to show the output on terminal, just prints the whole object as a string, this is something that the string substitution has an advantage over template literals.
 
@@ -727,7 +727,7 @@ Let's look at the syntax:
 
 ```js
 for (const element of iterable) {
-  // Code to be executed for each element
+    // Code to be executed for each element
 }
 ```
 
@@ -741,10 +741,10 @@ Here's an overview of how the **`for..of`** loop works:
 Here's an example of using **`for..of`** to loop through an array:
 
 ```jsx
-const fruits = ['apple', 'banana', 'orange', 'grape'];
+const fruits = ["apple", "banana", "orange", "grape"];
 
 for (const fruit of fruits) {
-  console.log(fruit);
+    console.log(fruit);
 }
 ```
 
@@ -769,7 +769,7 @@ Here's how the **`for await..of`** loop works:
 
 ```jsx
 for await (const element of async_iterable) {
-  // Asynchronous code to be executed for each element
+    // Asynchronous code to be executed for each element
 }
 ```
 
@@ -783,14 +783,14 @@ Here's an example of using **`for await..of`** to loop through an asynchronous i
 
 ```jsx
 async function fetch_fruits() {
-  const fruits = ['apple', 'banana', 'orange', 'grape'];
+    const fruits = ["apple", "banana", "orange", "grape"];
 
-  for await (const fruit of fruits) {
-    console.log(fruit);
+    for await (const fruit of fruits) {
+        console.log(fruit);
 
-    // a dummy async operation simulation
-    await new Promise(resolve => setTimeout(resolve, 1000)); 
-  }
+        // a dummy async operation simulation
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
 }
 
 fetch_fruits();
@@ -965,5 +965,3 @@ async function read_file() {
 Now you can run the code from whatever directory, no matter how much deeply nested it is, it is going to work fine unless you move the `files.js` file to a different location.
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch04-logtar-our-logging-library.md)
-
-![](https://uddrapi.com/api/img?page=ch03)
