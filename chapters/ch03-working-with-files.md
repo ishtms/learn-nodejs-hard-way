@@ -340,7 +340,7 @@ fs.open("calculator.js", "r", fs.constants.O_RDONLY);
 
 The **`fs.open`** function is used to open a file. It takes three arguments - file’s `path`, `flag`, and a `mode`.
 
-The `path` takes an argument of type **`PathLike`** which is a type that represents a file path. It's a concept used in Node.js API to indicate that a value should be a string representing a valid file path. Let’s the see type definition of `PathLike`
+The `path` takes an argument of type **`PathLike`** which is a type that represents a file path. It's a concept used in Node.js API to indicate that a value should be a string representing a valid file path. Let’s see the type definition of `PathLike`
 
 ```jsx
 export type PathLike = string | Buffer | URL;
