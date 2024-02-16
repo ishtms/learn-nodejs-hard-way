@@ -386,7 +386,7 @@ The `flag` argument indicates the mode (not to confused by `mode` argument) in w
 Let’s use `wx+` to show a small example. `wx+` will open a file for read and write, but fail to open a file if it already exists. If the file doesn’t exists it will create a file and work just fine.
 
 ```jsx
-// calculator.js
+// files.js
 const file_handle = await fs.open(
     "calculator.js",
     "wx+",
