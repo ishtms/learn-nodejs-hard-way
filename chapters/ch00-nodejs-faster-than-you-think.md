@@ -54,17 +54,17 @@ Since "hello world" benchmarks test the absolute bare minimum, they can sometime
 
 But nevertheless, we're going to use the elysia/`bun`'s way of benchmarking -
 
--   Get the path parameter i.e extracting `name` from the endpoint `/bench/:name`
+- Get the path parameter i.e extracting `name` from the endpoint `/bench/:name`
 
--   Get the query parameter i.e extracting `id` from the endpoint `/bench/:name?id=10`
+- Get the query parameter i.e extracting `id` from the endpoint `/bench/:name?id=10`
 
--   Set a couple of headers on the response.
+- Set a couple of headers on the response.
 
--   Set a custom header on the response.
+- Set a custom header on the response.
 
--   Set the `content-type`, `connection` and `keep-alive` headers explicitly, so the response headers are the same for every framework.
+- Set the `content-type`, `connection` and `keep-alive` headers explicitly, so the response headers are the same for every framework.
 
--   Serializing. It is a bit more cpu-intensive task than doing something like IO. For that reason, instead of returning an Javascript object, we're going to return a JSON response (serialized) back to the client. Bun claims that the [JSON.stringify() in bun is 3.5x faster than Node.js](https://twitter.com/jarredsumner/status/1552409321245265920/photo/1). That should also give our Node.js servers a significant performance hit, right?
+- Serializing. It is a bit more cpu-intensive task than doing something like IO. For that reason, instead of returning an Javascript object, we're going to return a JSON response (serialized) back to the client. Bun claims that the [JSON.stringify() in bun is 3.5x faster than Node.js](https://twitter.com/jarredsumner/status/1552409321245265920/photo/1). That should also give our Node.js servers a significant performance hit, right?
 
 ## Source code
 
@@ -78,19 +78,19 @@ Bun version - `0.8.1`
 import { Elysia } from "elysia";
 
 const headers = {
-    "x-powered-by": "benchmark",
-    "content-type": "application/json",
-    connection: "keep-alive",
-    "keep-alive": "timeout=5",
+  "x-powered-by": "benchmark",
+  "content-type": "application/json",
+  connection: "keep-alive",
+  "keep-alive": "timeout=5",
 };
 
 const app = new Elysia().get("/bench/:name", (c) => {
-    c.set.headers = headers;
+  c.set.headers = headers;
 
-    return JSON.stringify({
-        name: c.params.name,
-        id: c.query.id,
-    });
+  return JSON.stringify({
+    name: c.params.name,
+    id: c.query.id,
+  });
 });
 
 app.listen(3000);
@@ -168,10 +168,10 @@ const express = require("express");
 const app = express();
 
 const headers = {
-    "x-powered-by": "benchmark",
-    "content-type": "application/json",
-    connection: "keep-alive",
-    "keep-alive": "timeout=5",
+  "x-powered-by": "benchmark",
+  "content-type": "application/json",
+  connection: "keep-alive",
+  "keep-alive": "timeout=5",
 };
 
 // We want to make sure that the the response body is same, to make it fair.
@@ -179,17 +179,17 @@ app.disable("x-powered-by");
 app.disable("etag");
 
 app.get("/bench/:name", (req, res) => {
-    const { name } = req.params;
-    const id = req.query.id;
+  const { name } = req.params;
+  const id = req.query.id;
 
-    // res.end() does not set the content-length implicitly, so the `transfer-encoding: chunked` is assumed.
-    // Manually setting the `content-length` to get rid of it.
-    const response = JSON.stringify({ name, id });
-    headers["content-length"] = response.length;
+  // res.end() does not set the content-length implicitly, so the `transfer-encoding: chunked` is assumed.
+  // Manually setting the `content-length` to get rid of it.
+  const response = JSON.stringify({ name, id });
+  headers["content-length"] = response.length;
 
-    res.writeHead(200, headers);
+  res.writeHead(200, headers);
 
-    res.end(response);
+  res.end(response);
 });
 
 app.listen(3000);
@@ -204,22 +204,22 @@ const { createServer, Router } = require("velocy");
 const router = new Router();
 
 const headers = {
-    "x-powered-by": "benchmark",
-    "content-type": "application/json",
-    connection: "keep-alive",
-    "keep-alive": "timeout=5",
+  "x-powered-by": "benchmark",
+  "content-type": "application/json",
+  connection: "keep-alive",
+  "keep-alive": "timeout=5",
 };
 
 router.get("/bench/:name", (req, res) => {
-    const { name } = req.params;
-    const id = req.queryParams.get("id");
+  const { name } = req.params;
+  const id = req.queryParams.get("id");
 
-    // Same, setting content-length to get rid of `transfer-encoding: chunked`.
-    const response = JSON.stringify({ name, id });
-    headers["content-length"] = response.length;
+  // Same, setting content-length to get rid of `transfer-encoding: chunked`.
+  const response = JSON.stringify({ name, id });
+  headers["content-length"] = response.length;
 
-    res.writeHead(200, headers);
-    res.end(response);
+  res.writeHead(200, headers);
+  res.end(response);
 });
 
 createServer(router).listen(3000);
@@ -382,35 +382,35 @@ const express = require("express");
 const cluster = require("cluster");
 
 if (cluster.isMaster) {
-    for (let i = 0; i < 2; i++) {
-        cluster.fork();
-    }
+  for (let i = 0; i < 2; i++) {
+    cluster.fork();
+  }
 } else {
-    const headers = {
-        "x-powered-by": "benchmark",
-        "content-type": "application/json",
-        connection: "keep-alive",
-        "keep-alive": "timeout=5",
-    };
+  const headers = {
+    "x-powered-by": "benchmark",
+    "content-type": "application/json",
+    connection: "keep-alive",
+    "keep-alive": "timeout=5",
+  };
 
-    const app = express();
+  const app = express();
 
-    app.disable("x-powered-by");
-    app.disable("etag");
+  app.disable("x-powered-by");
+  app.disable("etag");
 
-    app.get("/bench/:name", (req, res) => {
-        const { name } = req.params;
-        const id = req.query.id;
+  app.get("/bench/:name", (req, res) => {
+    const { name } = req.params;
+    const id = req.query.id;
 
-        const response = JSON.stringify({ name, id });
-        headers["content-length"] = response.length;
+    const response = JSON.stringify({ name, id });
+    headers["content-length"] = response.length;
 
-        res.writeHead(200, headers);
+    res.writeHead(200, headers);
 
-        res.end(response);
-    });
+    res.end(response);
+  });
 
-    app.listen(3000);
+  app.listen(3000);
 }
 ```
 
@@ -422,31 +422,31 @@ const { createServer, Router } = require("velocy");
 const cluster = require("cluster");
 
 if (cluster.isMaster) {
-    for (let i = 0; i < 2; i++) {
-        cluster.fork();
-    }
+  for (let i = 0; i < 2; i++) {
+    cluster.fork();
+  }
 } else {
-    const router = new Router();
+  const router = new Router();
 
-    const headers = {
-        "x-powered-by": "benchmark",
-        "content-type": "application/json",
-        connection: "keep-alive",
-        "keep-alive": "timeout=5",
-    };
+  const headers = {
+    "x-powered-by": "benchmark",
+    "content-type": "application/json",
+    connection: "keep-alive",
+    "keep-alive": "timeout=5",
+  };
 
-    router.get("/bench/:name", (req, res) => {
-        const { name } = req.params;
-        const id = req.queryParams.get("id");
+  router.get("/bench/:name", (req, res) => {
+    const { name } = req.params;
+    const id = req.queryParams.get("id");
 
-        const response = JSON.stringify({ name, id });
-        headers["content-length"] = response.length;
+    const response = JSON.stringify({ name, id });
+    headers["content-length"] = response.length;
 
-        res.writeHead(200, headers);
-        res.end(response);
-    });
+    res.writeHead(200, headers);
+    res.end(response);
+  });
 
-    createServer(router).listen(3000);
+  createServer(router).listen(3000);
 }
 ```
 
@@ -536,4 +536,4 @@ Node.js does use a threadpool internally, through **libuv**. Libuv is the underl
 
 > TBD: Create benchmarks using `rewrk` too.
 
-[![Read Prev](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
+[![Read Next](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
