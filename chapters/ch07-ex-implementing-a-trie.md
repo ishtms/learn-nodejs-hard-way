@@ -24,13 +24,13 @@ The Trie starts with a root node that doesn't hold any character. It serves as t
     T   O   C
 ```
 
--   **Level 1**: You have the characters "O", "T", and "C" branching from the root node.
--   **Level 2 and Beyond**: These nodes further branch out to form the words.
-    -   "O" branches to "K", completing the word "OK".
-    -   "T" branches to "O", completing the word "TO".
-    -   "C" branches to "A" and "U":
-        -   "A" further branches to "R" for "CAR" and "T" for "CAT".
-        -   "U" further branches to "P", completing the word "CUP".
+- **Level 1**: You have the characters "O", "T", and "C" branching from the root node.
+- **Level 2 and Beyond**: These nodes further branch out to form the words.
+  - "O" branches to "K", completing the word "OK".
+  - "T" branches to "O", completing the word "TO".
+  - "C" branches to "A" and "U":
+    - "A" further branches to "R" for "CAR" and "T" for "CAT".
+    - "U" further branches to "P", completing the word "CUP".
 
 ## End of the word
 
@@ -61,9 +61,9 @@ In this first challenge, your task is to implement a Trie data structure with on
 
 3. **Node Creation**: If a character in the word doesn't match any child node of the current node:
 
-    - Create a new node for that character.
-    - Link this new node to the current one.
-    - Move down to this new node and continue with the next character in the word.
+   - Create a new node for that character.
+   - Link this new node to the current one.
+   - Move down to this new node and continue with the next character in the word.
 
 4. **End-of-Word**: When you've inserted all the characters for a particular word, mark the last node in some way to indicate that it's the end of a valid word. This could be a boolean property in the node object, for example.
 
@@ -73,21 +73,21 @@ Here's the boilerplate to get you started.
 
 ```js
 class TrieNode {
-    constructor() {
-        this.children = {}; // To store TrieNode children with char keys
-        // this.children = new Map(); You may also use a Map instead.
-        this.isEndOfWord = false; // To mark the end of a word
-    }
+  constructor() {
+    this.children = new Map(); // To store TrieNode children with char keys
+    // this.children = new Map(); You may also use a Map instead.
+    this.isEndOfWord = false; // To mark the end of a word
+  }
 }
 
 class Trie {
-    constructor() {
-        this.root = new TrieNode();
-    }
+  constructor() {
+    this.root = new TrieNode();
+  }
 
-    insert(word) {
-        // Your code here
-    }
+  insert(word) {
+    // Your code here
+  }
 }
 ```
 
@@ -108,43 +108,43 @@ Great. You just implemented a `Trie` which is a Tree data structure. You've also
 
 ```js
 class Trie {
-    constructor() {
-        this.root = new TrieNode();
+  constructor() {
+    this.root = new TrieNode();
+  }
+
+  insert(wordToInsert, node = this.root) {
+    let length = wordToInsert.length;
+    if (length == 0) return;
+
+    const letters = wordToInsert.split("");
+
+    const foundNode = node.children.get(wordToInsert[0]);
+
+    if (foundNode) {
+      this.insert(letters.slice(1).join(""), foundNode);
+    } else {
+      let insertedNode = node.add(letters[0], length == 1);
+      this.insert(letters.slice(1).join(""), insertedNode);
     }
-
-    insert(wordToInsert, node = this.root) {
-        let length = wordToInsert.length;
-        if (length == 0) return;
-
-        const letters = wordToInsert.split("");
-
-        const foundNode = node.children.get(wordToInsert[0]);
-
-        if (foundNode) {
-            this.insert(letters.slice(1).join(""), foundNode);
-        } else {
-            let insertedNode = node.add(letters[0], length == 1);
-            this.insert(letters.slice(1).join(""), insertedNode);
-        }
-    }
+  }
 }
 
 class TrieNode {
-    constructor() {
-        /**
-         * Children will be Map<key(String), node(TrieNode)>
-         */
-        this.isEndOfWord = false;
-        this.children = new Map();
-    }
+  constructor() {
+    /**
+     * Children will be Map<key(String), node(TrieNode)>
+     */
+    this.isEndOfWord = false;
+    this.children = new Map();
+  }
 
-    add(letter, _isLastCharacter) {
-        let newNode = new TrieNode();
-        this.children.set(letter, newNode);
+  add(letter, _isLastCharacter) {
+    let newNode = new TrieNode();
+    this.children.set(letter, newNode);
 
-        if (_isLastCharacter) newNode.isEndOfWord = true;
-        return newNode;
-    }
+    if (_isLastCharacter) newNode.isEndOfWord = true;
+    return newNode;
+  }
 }
 
 const trie = new Trie();
@@ -157,17 +157,17 @@ Let's take a look at the code:
 
 ```js
 class TrieNode {
-    constructor() {
-        this.isEndOfWord = false;
-        this.children = new Map();
-    }
+  constructor() {
+    this.isEndOfWord = false;
+    this.children = new Map();
+  }
 }
 ```
 
 Initializes an instance of the `TrieNode` class. A TrieNode has two properties:
 
--   `isEndOfWord`: A boolean flag that denotes whether the node is the last character of a word in the Trie. Initially set to `false`.
--   `children`: A Map to store the children nodes. The keys are letters, and the values are TrieNode objects.
+- `isEndOfWord`: A boolean flag that denotes whether the node is the last character of a word in the Trie. Initially set to `false`.
+- `children`: A Map to store the children nodes. The keys are letters, and the values are TrieNode objects.
 
 ```js
 add(letter, _isLastCharacter) {
@@ -183,35 +183,85 @@ I've created a utility method on `TrieNode` to extract some logic from the `Trie
 
 ```js
 class Trie {
-    insert(wordToInsert, node = this.root) {
-        let length = wordToInsert.length;
+  insert(wordToInsert, node = this.root) {
+    let length = wordToInsert.length;
 
-        // Exit condition: If the word to insert is empty, terminate the recursion.
-        if (length == 0) return;
+    // Exit condition: If the word to insert is empty, terminate the recursion.
+    if (length == 0) return;
 
-        // Convert the string into an array of its individual characters.
-        const letters = wordToInsert.split("");
+    // Convert the string into an array of its individual characters.
+    const letters = wordToInsert.split("");
 
-        // Attempt to retrieve the TrieNode corresponding to the first letter
-        // of the word from the children of the current node.
-        const foundNode = node.children.get(wordToInsert[0]);
+    // Attempt to retrieve the TrieNode corresponding to the first letter
+    // of the word from the children of the current node.
+    const foundNode = node.children.get(wordToInsert[0]);
 
-        if (foundNode) {
-            // The first letter already exists as a child of the current node.
-            // Continue inserting the remaining substring (sans the first letter)
-            // starting from this found node.
-            this.insert(letters.slice(1).join(""), foundNode);
-        } else {
-            // The first letter doesn't exist in the children of the current node.
-            // Create a new TrieNode for this letter and insert it as a child of the current node.
-            // Also, set the node's 'isEndOfWord' flag if this is the last character of the word.
-            let insertedNode = node.add(letters[0], length == 1);
+    if (foundNode) {
+      // The first letter already exists as a child of the current node.
+      // Continue inserting the remaining substring (sans the first letter)
+      // starting from this found node.
+      this.insert(letters.slice(1).join(""), foundNode);
+    } else {
+      // The first letter doesn't exist in the children of the current node.
+      // Create a new TrieNode for this letter and insert it as a child of the current node.
+      // Also, set the node's 'isEndOfWord' flag if this is the last character of the word.
+      let insertedNode = node.add(letters[0], length == 1);
 
-            // Continue inserting the remaining substring (without the first letter)
-            // starting from this new node.
-            this.insert(letters.slice(1).join(""), insertedNode);
-        }
+      // Continue inserting the remaining substring (without the first letter)
+      // starting from this new node.
+      this.insert(letters.slice(1).join(""), insertedNode);
     }
+  }
+}
+```
+
+The previous code looks fine. However, as our backend library/framework prioritizes performance, we will optimize the code we write in the upcoming exercises to improve efficiency.
+
+The code above is acceptable, and not a bad implementation. But we can do better.
+
+### Using a `for` loop instead of recursion
+
+I am not a big fan of recursion, and I prefer using loops over recursion most of the time. For loop is much easier to reason about and as someone who's reading the code, it's easier to understand what's going on.
+
+Let's update our submission to use a `for` loop instead of recursion.
+
+```js
+/** this class remains identical **/
+class TrieNode {
+  isEndOfWord = false;
+  children = new Map();
+}
+
+class Trie {
+  constructor() {
+    // The root node is an empty TrieNode.
+    this.root = new TrieNode();
+  }
+
+  insert(word, node = this.root) {
+    const wordLength = word.length;
+    if (wordLength === 0) return;
+
+    // Iterate over each character in the word.
+    for (let idx = 0; idx < wordLength; idx++) {
+      // Get the current character.
+      let char = word[idx];
+
+      // Check if the current node has a child node for the current character.
+      if (!node.children.has(char)) {
+        // If not, create a new TrieNode for this character and add it to the children of the current node.
+        node.children.set(char, new TrieNode());
+      }
+
+      // Move to the child node corresponding to the current character.
+      node = node.children.get(char);
+
+      // If this is the last character of the word, mark the node as the end of a word.
+      if (idx === word.length - 1) {
+        node.isEndOfWord = true;
+      }
+    }
+  }
 }
 ```
 
@@ -254,15 +304,15 @@ If you are having trouble or are stuck, here are some hints to help you with the
 
 2. **Character Check**: For each character in the word, check if there's a child node for that character from the current node you're at.
 
-    - **If Yes**: Move to that child node.
-    - **If No**: Return `false`, as the word can't possibly exist in the Trie.
+   - **If Yes**: Move to that child node.
+   - **If No**: Return `false`, as the word can't possibly exist in the Trie.
 
 3. **End-of-Word Check**: If you've reached the last character of the word, check the `isEndOfWord` property of the current node. If it's `true`, the word exists in the Trie; otherwise, it doesn't.
 
 4. **Recursion or Loop**: You can choose to implement this method either recursively or iteratively.
 
-    - **Recursion**: If you opt for recursion, you might want to include an additional parameter in the `search` method for the current node, similar to how you did it for the `insert` method.
-    - **Loop**: If you prefer loops, you can use a `for` loop to go through each character in the word, updating your current node as you go along.
+   - **Recursion**: If you opt for recursion, you might want to include an additional parameter in the `search` method for the current node, similar to how you did it for the `insert` method.
+   - **Loop**: If you prefer loops, you can use a `for` loop to go through each character in the word, updating your current node as you go along.
 
 5. **Return Value**: Don't forget to return `true` or `false` to indicate whether the word exists in the Trie.
 
@@ -270,7 +320,7 @@ Good luck!
 
 ### Solution
 
-I chose to implement tree traversal using a for loop this time, to showcase different ways of doing things. I usually prefer for-loops over recursion most of the time, due to the over head of function calls.
+Again, I chose to implement tree traversal using a for loop instead of recursion.
 
 ```js
 search(word) {
