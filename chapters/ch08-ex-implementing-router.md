@@ -95,7 +95,7 @@ You may then share your code to help others or to receive feedback in the [Githu
 ```js
 class TrieRouter {
   constructor() {
-    this.rootNode = new RouteNode();
+    this.root = new RouteNode();
   }
 
   addRoute(path, handler) {
@@ -134,54 +134,36 @@ For those who found this challenge particularly challenging, don't get discourag
 ```js
 class RouteNode {
   constructor() {
-    this.handler = null;
     this.children = new Map();
+    this.handler = null;
   }
 }
 
 class TrieRouter {
   constructor() {
-    this.rootNode = new RouteNode();
+    this.root = new RouteNode();
   }
 
   addRoute(path, handler) {
-    if (typeof path != "string" || typeof handler != "function") {
-      throw new Error(
-        "Invalid params sent to the `addRoute` method. `path` should be of the type `string` and `handler` should be of the type `function`"
-      );
-    }
+    if (typeof path !== "string" || path[0] !== "/") throw new Error("Malformed path provided.");
+    if (typeof handler !== "function") throw new Error("Handler should be a function");
 
-    let routeParts = path
-      .replace(/\/{2,}/g, "/")
-      .split("/")
-      .map((curr) => curr.toLowerCase().trim());
-
-    if (routeParts[routeParts.length - 1] == "") {
-      routeParts = routeParts.slice(0, routeParts.length - 1);
-    }
-
-    this.addRouteParts(routeParts, handler);
-  }
-
-  addRouteParts(routeParts, handler) {
-    let node = this.rootNode;
+    let currentNode = this.root;
+    let routeParts = path.split("/").filter(Boolean);
 
     for (let idx = 0; idx < routeParts.length; idx++) {
-      let currPart = routeParts[idx];
+      const segment = routeParts[idx].toLowerCase();
+      if (segment.includes(" ")) throw new Error("Malformed path parameter");
 
-      let nextNode = node.children.get(currPart);
-
-      if (!nextNode) {
-        nextNode = new RouteNode();
-        node.children.set(currPart, nextNode);
+      let childNode = currentNode.children.get(segment);
+      if (!childNode) {
+        childNode = new RouteNode();
+        currentNode.children.set(segment, childNode);
       }
 
-      if (idx === routeParts.length - 1) {
-        nextNode.handler = handler;
-      }
-
-      node = nextNode;
+      currentNode = childNode;
     }
+    currentNode.handler = handler;
   }
 }
 
@@ -190,26 +172,27 @@ const trieRouter = new TrieRouter();
 function ref() {}
 
 trieRouter.addRoute("/home/", ref);
-trieRouter.addRoute("/  user/  status/play", function inline() {});
-trieRouter.addRoute("/home/id", ref);
+trieRouter.addRoute("/user/status/play", function inline() {});
+
+trieRouter.printTree();
 ```
 
-Let's visualize our tree. I've created a new method inside the `TrieRouter` class, which prints all the nodes of our `TrieRouter` recursively:
+Let's visualize our tree. I've included a new `printTree` method inside the `TrieRouter` class prints all the nodes of our `TrieRouter` recursively:
 
 ```js
 class TrieRouter {
-    ...
+  ...
 
-    printTree(node = this.rootNode, indentation = 0) {
-        const indent = "-".repeat(indentation);
+  printTree(node = this.root, indentation = 0) {
+    const indent = "-".repeat(indentation);
 
-        node.children.forEach((childNode, segment) => {
-            console.log(`${indent}${segment}`);
-            this.printTree(childNode, indentation + 1);
-        });
-    }
+    node.children.forEach((childNode, segment) => {
+      console.log(`${indent}${segment}`);
+      this.printTree(childNode, indentation + 1);
+    });
+  }
 
-    ...
+  ...
 }
 ```
 
@@ -221,8 +204,7 @@ const trieRouter = new TrieRouter();
 function ref() {}
 
 trieRouter.addRoute("/home/", ref);
-trieRouter.addRoute("/  user/  status/play", function inline() {});
-trieRouter.addRoute("/home/id", ref);
+trieRouter.addRoute("/user/status/play", function inline() {});
 trieRouter.printTree();
 ```
 
@@ -233,7 +215,6 @@ $node trie_router.js
 
 # OUTPUT
 -home
---id
 -user
 --status
 ---play
@@ -246,11 +227,11 @@ Looks perfect. Let's go through the code and understand what's going on.
 ```js
 class RouteNode {
   constructor() {
-    // Initialize the handler to null
-    this.handler = null;
-
     // Create a Map to store children nodes
     this.children = new Map();
+
+    // Initialize the handler to null
+    this.handler = null;
   }
 }
 ```
@@ -260,89 +241,83 @@ In the `RouteNode` class, each node is initialized with a `handler` set to `null
 ```js
 class TrieRouter {
   constructor() {
-    // Create a rootNode upon TrieRouter instantiation
-    this.rootNode = new RouteNode();
+    // Create a root node upon TrieRouter instantiation
+    this.root = new RouteNode();
   }
 }
 ```
 
-The `TrieRouter` class acts as a manager for the Trie data structure. When an instance of this class is created, a `rootNode` is initialized. This root node acts as the entry point for any operation that needs to traverse the Trie, essentially representing the root of the Trie structure.
+The `TrieRouter` class acts as a manager for the Trie data structure. When an instance of this class is created, a `root` node is initialized. This root node acts as the entry point for any operation that needs to traverse the Trie, essentially representing the root of the Trie structure.
 
 ```js
 addRoute(path, handler) {
     // Validate input types
-    if (typeof path != "string" || typeof handler != "function") {
-        throw new Error("Invalid params ...");
-    }
+    if (typeof path !== "string" || path[0] !== "/") throw new Error("Malformed path provided.");
+    if (typeof handler !== "function") throw new Error("Handler should be a function");
 }
 ```
 
-The `addRoute` method is responsible for adding URL patterns and their corresponding handlers to the Trie. The method starts by validating the inputs, ensuring that `path` is a string and `handler` is a function. If either of these conditions isn't met, an error is thrown.
+The `addRoute` method is responsible for adding URL patterns and their corresponding handlers to the Trie. The method starts by validating the inputs, ensuring that `path` is a string that starts with a slash and `handler` is a function. If either of these conditions isn't met, an error is thrown.
 
 ```js
 addRoute(path, handler) {
     ...
-    // Normalize the path by removing consecutive slashes
-    // and breaking it down into its segments
-    let routeParts = path.replace(/\/{2,}/g, "/").split("/").map((curr) => curr.toLowerCase().trim());
-    if (routeParts[routeParts.length - 1] == "") {
-        routeParts = routeParts.slice(0, routeParts.length - 1);
-    }
+    // Split the path into segments and filter out empty segments
+    let routeParts = path.split("/").filter(Boolean);
 }
 ```
 
-The next part of the `addRoute` method preprocesses the path. First, consecutive slashes are replaced with a single slash. Then, the path is split into its segments (parts between slashes), and each segment is converted to lowercase and trimmed of any leading or trailing spaces. Finally, if the last segment is empty, which can happen if the path has a trailing slash, it's removed from the array of segments.
+The next part of the `addRoute` method preprocesses the path. The path is split into its segments (parts between slashes), and any empty segments are filtered out.
 
 ```js
 addRoute(path, handler) {
     ...
-    // Delegate the actual Trie insertion to a helper method
-    this.addRouteParts(routeParts, handler);
-}
-```
-
-The final action in the `addRoute` method is to call a helper function named `addRouteParts`, passing the preprocessed segments (`routeParts`) and the `handler`. This modularizes the code, separating the preprocessing and validation logic from the Trie insertion logic.
-
-```js
-addRouteParts(routeParts, handler) {
-    // Start at the rootNode of the Trie
-    let node = this.rootNode;
+    // Start at the root node of the Trie
+    let currentNode = this.root;
 
     // Loop through all segments of the route
     for (let idx = 0; idx < routeParts.length; idx++) {
-        let currPart = routeParts[idx];
+        const segment = routeParts[idx].toLowerCase();
+        if (segment.includes(" ")) throw new Error("Malformed path parameter");
 
         // Attempt to find the next node in the Trie
-        let nextNode = node.children.get(currPart);
+        let childNode = currentNode.children.get(segment);
         ...
 }
 ```
 
-The `addRouteParts` method starts by setting `node` to the `rootNode` of the Trie. A `for` loop then iterates through each segment in the `routeParts` array. For each segment, the code checks if a child node with that segment as the key already exists in the `children` Map of the current node.
+The `addRoute` method continues by setting `currentNode` to the `root` of the Trie. A `for` loop then iterates through each segment in the `routeParts` array. For each segment, the code checks if a child node with that segment as the key already exists in the `children` Map of the current node. If the segment contains spaces, an error is thrown.
+
+We're also converting the segment to lowercase to ensure case-insensitivity in our router. This means that `/home` and `/Home` will be treated as the same route.
 
 ```js
-addRouteParts(routeParts, handler) {
+addRoute(path, handler) {
     ...
 
     // If the next node doesn't exist, create it
-    if (!nextNode) {
-        nextNode = new RouteNode();
-        node.children.set(currPart, nextNode);
+    if (!childNode) {
+        childNode = new RouteNode();
+        currentNode.children.set(segment, childNode);
     }
 
-    // If this is the last segment, assign the handler to this node
-    if (idx === routeParts.length - 1) {
-        nextNode.handler = handler;
-    }
-    
-    // Move to the next node for the next iteration
-    node = nextNode;
+    // Move to the next node for the next iteration
+    currentNode = childNode;
 }
 ```
 
-If a child node for the current segment does not exist, a new `RouteNode` is instantiated, and it's added to the `children` Map of the current node with the segment as the key. Then, if the current segment is the last in the `routeParts` array, the handler function is associated with this new node. Finally, the current node is updated to this new node, ready for the next iteration or to end the loop.
+If a child node for the current segment does not exist, a new `RouteNode` is instantiated, and it's added to the `children` Map of the current node with the segment as the key. The current node is then updated to this new node, ready for the next iteration or to end the loop.
 
-That's it. We now have a working implementation of our router, but does only support adding routes. The next challenge involves finding route and returning the handler associated with it
+```js
+addRoute(path, handler) {
+    ...
+    // Assign the handler to the last node
+    currentNode.handler = handler;
+}
+```
+
+After the loop completes, the handler function is associated with the last node in the path.
+
+That's it. We now have a working implementation of our router that supports adding routes. The next challenge involves finding a route and returning the handler associated with it.
 
 ## Challenge 2: Implementing the `findRoute` method
 
@@ -360,13 +335,7 @@ You've successfully implemented the `addRoute` method to build our `Trie`-based 
 
 - If the URL pattern is not found, return `null` or some indication that the route does not exist.
 
-2. **Path Normalization**: Before searching for the route in the Trie, normalize the path similar to what you did in `addRoute`.
-
-- Remove trailing slashes.
-
-- Handle repeated slashes.
-
-- Reject any path which includes a whitespace.
+2. **Path Normalization**: We do not need to worry about path normalization. We are searching for a route, not adding one. So, we expect the client to make a request with a path identical to the one configured in the router. For checks like - Whether the path starts with `/`? We do't need to worry about these is because Node.js's HTTP server will provide the URL path in this format.
 
 3. **Traversal**: Start from the root node and traverse the Trie based on the URL segments. Retrieve the handler function from the last node if the path exists.
 
@@ -399,7 +368,7 @@ Feel free to use the starting boilerplate below. If you are comfortable, you may
 ```js
 class TrieRouter {
   constructor() {
-    this.rootNode = new RouteNode();
+    this.root = new RouteNode();
   }
 
   addRoute(path, handler) {
@@ -410,12 +379,6 @@ class TrieRouter {
     /* Your findRoute code goes here */
   }
 }
-
-class RouteNode {
-  constructor() {
-    /* Define handler and children map */
-  }
-}
 ```
 
 ### Hints
@@ -424,63 +387,43 @@ class RouteNode {
 
 2. Be careful about the return values. Ensure you return the handler function if a match is found and a suitable indicator (like `null`) if no match exists.
 
-3. For path normalization, you might want to reuse the functionality that we wrote for the `addRoute` method to handle things like trailing slashes and repeated slashes. Even better - extract it into it's own helper function (not method).
-
-4. While traversing, always check if you have reached a leaf node (the end node) or if the traversal needs to continue to find the appropriate handler.
-
 ### Solution
 
 Here's the solution that I came up with:
 
 ```js
-function getRouteParts(path) {
-    return path
-        .replace(/\/{2,}/g, "/")
-        .split("/")
-        .map((curr) => curr.toLowerCase().trim());
-}
-
 class Router {
     constructor() {
-        this.rootNode = new RouteNode();
+        this.root = new RouteNode();
     }
 
     addRoute(path, handler) {
         ...
-
-        let routeParts = getRouteParts(path);
-        /** Rest unchanged **/
-    }
-
-    addRouteParts(routeParts, handler) {
         /** Nothing changed **/
     }
 
+
+
     findRoute(path) {
-        if (path.endsWith("/")) path = path.substring(0, path.length - 1);
+        let segments = path.split("/").filter(Boolean);
+        let currentNode = this.root;
 
-        let routeParts = getRouteParts(path);
-        let node = this.rootNode;
-        let handler = null;
+        for (let idx = 0; idx < segments.length; idx++) {
+            const segment = segments[idx];
 
-        for (let idx = 0; idx < routeParts.length; idx++) {
-            let currPart = routeParts[idx];
-
-            let nextNode = node.children.get(currPart);
-
-            if (!nextNode) break;
-
-            if (idx == routeParts.length - 1) {
-                handler = nextNode.handler;
+            let childNode = currentNode.children.get(segment);
+            if (childNode) {
+                currentNode = childNode;
+            } else {
+                return null;
             }
-
-            node = nextNode;
         }
 
-        return handler;
+        return currentNode.handler;
     }
 
-    printTree(node = this.rootNode, indentation = 0) {
+
+    printTree(node = this.root, indentation = 0) {
        /** Nothing changed **/
     }
 }
@@ -493,91 +436,55 @@ class RouteNode {
 ### Explanation
 
 ```js
-function getRouteParts(path) {
-  return path
-    .replace(/\/{2,}/g, "/")
-    .split("/")
-    .map((curr) => curr.toLowerCase().trim());
-}
-```
-
-I've extracted the path normalization logic into it's own helper function. Since we would need to use this functionality in the `findRoute` method as well, it seemed like a good idea to remove it from the `addRoute` method.
-
-```js
-addRoute(path, handler) {
-    ...
-
-    let routeParts = getRouteParts(path);
-    /** Rest unchanged **/
-}
-```
-
-We're using the newly created `getRouteParts` function to normalize and segment the path into `routeParts`. The rest of the implementation remains the same as before.
-
-```js
     findRoute(path) {
-        // removes the trailing forward slash
-        if (path.endsWith("/")) path = path.substring(0, path.length - 1);
+       // Split the path into segments and filter out empty segments
+       let segments = path.split("/").filter(Boolean);
 
-        // Initialize variables for route parts, current Trie node, and handler
-        let routeParts = getRouteParts(path);
-        let node = this.rootNode;
-        let handler = null;
-        ...
+       // Start at the root node of the Trie
+       let currentNode = this.root;
+       ...
     }
 ```
 
-We've initialized three key variables. The `routeParts` variable stores the normalized URL segments obtained from calling `getRouteParts()`. The `node` variable keeps track of our current position in the Trie and is initialized to the root node. The `handler` variable is initialized to `null` and will later store the handler function if a match is found.
+We've initialized two key variables. The `segments` variable stores the differet parts of the URL split by `/`. That is, if the path is `/home/users`, the segments array will contain `["home", "users"]`. The `currentNode` variable keeps track of our current position in the Trie and is initialized to the root node.
 
 ```js
 findRoute(path) {
     ...
 
     // Traverse the Trie based on the URL segments
-    for (let idx = 0; idx < routeParts.length; idx++) {
-        let currPart = routeParts[idx];
+    for (let idx = 0; idx < segments.length; idx++) {
+        // Retrieve the current URL segment
+        let segment = segments[idx];
 
         // Retrieve the child node corresponding to the current URL segment
-        let nextNode = node.children.get(currPart);
+        let childNode = node.children.get(currPart);
     ...
 }
 ```
 
-We loop through each segment of the `routeParts` array. Within the loop, `currPart` holds the current URL segment, and `nextNode` is obtained from the `children` map of the current `node` based on this segment. This part is crucial because we're determining if a child node exists for the current URL segment in our Trie.
+We loop through each segment of the `segments` array. Within the loop, `segment` holds the current URL segment, and `childNode` is obtained from the `children` map of the current `node` based on this segment. This part is crucial because we're determining if a child node exists for the current URL segment in our Trie.
 
 ```js
 findRoute(path) {
     ...
-    // If the next node doesn't exist, exit the loop
-    if (!nextNode) break;
+     // If the next node exists, update the current node
+     if (childNode) {
+        currentNode = childNode;
+     } else {
+    // If the next node doesn't exist, exit the function with null to indicate no matching route
+        return null;
+     }
 
-    // If this is the last segment, grab the handler if exists
-    if (idx == routeParts.length - 1) {
-        handler = nextNode ? nextNode.handler : null;
-    }
+     // Since we've reached the end of the URL, return the handler if found, otherwise `null`
+     return currentNode.handler;
     ...
 }
 ```
 
-First, the method checks whether `nextNode` exists. If it doesn't, the loop is immediately exited using `break`. This means that the Trie doesn't contain a matching route for the given URL, and there's no need to continue searching.
+First, this portio of the code checks whether `childNode` exists. If it doesn't, the function immediately returns `null`. This means that the Trie doesn't contain a matching route for the given URL, and there's no need to continue searching.
 
-Then, we check whether the loop has reached the last segment (leaf node) of the URL (`routeParts.length - 1`). If it has, we attempt to retrieve the `handler` function associated with the `nextNode`. If `nextNode` doesn't exist, `handler` remains null.
-
-```js
-findRoute(path) {
-    ...
-    for(...) {
-        ...
-        // Update the current Trie node for the next iteration
-        node = nextNode;
-    }
-
-    // Return the handler if found, otherwise null will be returned
-    return handler;
-}
-```
-
-Firstly, we update `node` to `nextNode` for the next iteration. This allows the loop to move deeper into the Trie as it iterates through each URL segment. After the loop, the method returns the `handler` that was found. If no handler is found during the Trie traversal, the return value will be `null`.
+This allows us to move deeper into the Trie as we iterate through each URL segment. After the loop, the method returns the `handler` that was found. If no handler is found during the Trie traversal, the return value will be `null`.
 
 Let's test our code:
 
