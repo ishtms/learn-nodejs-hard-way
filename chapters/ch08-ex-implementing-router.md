@@ -18,40 +18,40 @@ Create a new class, `TrieRouter`, similar to what we had earlier - `Trie`. Add a
 
 1. **Class Definition**: Define a class named `TrieRouter`. This class should contain:
 
-    - A root node, which is the starting point of the Trie.
-    - A method called `addRoute`.
+   - A root node, which is the starting point of the Trie.
+   - A method called `addRoute`.
 
 2. **Route Node**: Define a class named `RouteNode` which will represent all the nodes.
 
-    1. `RouteNode` should contain the handler function, which will be `null` or `undefined` for all nodes except the end nodes of each URL pattern.
+   1. `RouteNode` should contain the handler function, which will be `null` or `undefined` for all nodes except the end nodes of each URL pattern.
 
-    2. `RouteNode` should also contain a `Map` to store its children nodes, where the key will be the URL segment eg "home" or "user", and the value will be another `RouteNode`
+   2. `RouteNode` should also contain a `Map` to store its children nodes, where the key will be the URL segment eg "home" or "user", and the value will be another `RouteNode`
 
 3. **Root Node**: The root node is an empty node of the type `RouteNode`, that serves as the starting point for inserting new URL patterns into the Trie. Initialize it in the constructor of `TrieRouter`.
 
 4. **Method - `addRoute`**: This method takes in two parameters:
 
-    - `path`: A string representing the URL pattern to add to the Trie. The URL pattern will be segmented by forward slashes `/`.
+   - `path`: A string representing the URL pattern to add to the Trie. The URL pattern will be segmented by forward slashes `/`.
 
-    - `handler`: A function that should be called when the URL pattern is matched.
+   - `handler`: A function that should be called when the URL pattern is matched.
 
-    - Remove the trailing slash `/` from the `path` if it exists.
+   - Remove the trailing slash `/` from the `path` if it exists.
 
-    - The method should insert the `path` into the `TrieRouter`, associating the `handler` function with the last node of that pattern.
+   - The method should insert the `path` into the `TrieRouter`, associating the `handler` function with the last node of that pattern.
 
 5. **Trailing forward-slashes**: You should treat routes that end with a forward slash `/` the same as those that don't, so that `/home/` and `/home` point to the same handler.
 
 6. **Repeated forward-slashes**: You should remove all the repeated `/` in the path.
 
-    1. `/user//hello////` should resolve as `/user/hello`
+   1. `/user//hello////` should resolve as `/user/hello`
 
-    2. `/user//////////` should resolve as `/user`
+   2. `/user//////////` should resolve as `/user`
 
-7. **Remove whitespaces** before and after all the url segments. For example `/   user/ node  /` should resolve as `/user/node`
+7. **Reject URLs** that contain any kind of white space. For example `/   user/ node  /` should throw an error.
 
 8. **Reject URLs** that do not start with `/`
 
-    1. If someone uses `trieRouter.addRoute("hi/something")`, your code should throw an error.
+   1. If someone uses `trieRouter.addRoute("hi/something")`, your code should throw an error.
 
 Once implemented, we should be able to do something like this:
 
@@ -94,19 +94,19 @@ You may then share your code to help others or to receive feedback in the [Githu
 
 ```js
 class TrieRouter {
-    constructor() {
-        this.rootNode = new RouteNode();
-    }
+  constructor() {
+    this.rootNode = new RouteNode();
+  }
 
-    addRoute(path, handler) {
-        /* Add route code goes here */
-    }
+  addRoute(path, handler) {
+    /* Add route code goes here */
+  }
 }
 
 class RouteNode {
-    constructor() {
-        /** Define handler and children map **/
-    }
+  constructor() {
+    /** Define handler and children map **/
+  }
 }
 ```
 
@@ -122,7 +122,8 @@ class RouteNode {
 
 5. Use the `Map` in each node to store its children. When adding a new route, check if a node for a segment exists; if it does, traverse to it. Otherwise, create a new node.
 
-6. To deal with trailing slashes, repeated slashes, and whitespaces, you could write utility functions that normalize the path before processing it.
+6. To deal with trailing slashes, and repeated slashes, you could write utility functions that normalize the path before processing it.
+7. You should throw an error if the path contains any whitespace.
 
 ### Solution
 
@@ -132,56 +133,56 @@ For those who found this challenge particularly challenging, don't get discourag
 
 ```js
 class RouteNode {
-    constructor() {
-        this.handler = null;
-        this.children = new Map();
-    }
+  constructor() {
+    this.handler = null;
+    this.children = new Map();
+  }
 }
 
 class TrieRouter {
-    constructor() {
-        this.rootNode = new RouteNode();
+  constructor() {
+    this.rootNode = new RouteNode();
+  }
+
+  addRoute(path, handler) {
+    if (typeof path != "string" || typeof handler != "function") {
+      throw new Error(
+        "Invalid params sent to the `addRoute` method. `path` should be of the type `string` and `handler` should be of the type `function`"
+      );
     }
 
-    addRoute(path, handler) {
-        if (typeof path != "string" || typeof handler != "function") {
-            throw new Error(
-                "Invalid params sent to the `addRoute` method. `path` should be of the type `string` and `handler` should be of the type `function`"
-            );
-        }
+    let routeParts = path
+      .replace(/\/{2,}/g, "/")
+      .split("/")
+      .map((curr) => curr.toLowerCase().trim());
 
-        let routeParts = path
-            .replace(/\/{2,}/g, "/")
-            .split("/")
-            .map((curr) => curr.toLowerCase().trim());
-
-        if (routeParts[routeParts.length - 1] == "") {
-            routeParts = routeParts.slice(0, routeParts.length - 1);
-        }
-
-        this.addRouteParts(routeParts, handler);
+    if (routeParts[routeParts.length - 1] == "") {
+      routeParts = routeParts.slice(0, routeParts.length - 1);
     }
 
-    addRouteParts(routeParts, handler) {
-        let node = this.rootNode;
+    this.addRouteParts(routeParts, handler);
+  }
 
-        for (let idx = 0; idx < routeParts.length; idx++) {
-            let currPart = routeParts[idx];
+  addRouteParts(routeParts, handler) {
+    let node = this.rootNode;
 
-            let nextNode = node.children.get(currPart);
+    for (let idx = 0; idx < routeParts.length; idx++) {
+      let currPart = routeParts[idx];
 
-            if (!nextNode) {
-                nextNode = new RouteNode();
-                node.children.set(currPart, nextNode);
-            }
+      let nextNode = node.children.get(currPart);
 
-            if (idx === routeParts.length - 1) {
-                nextNode.handler = handler;
-            }
+      if (!nextNode) {
+        nextNode = new RouteNode();
+        node.children.set(currPart, nextNode);
+      }
 
-            node = nextNode;
-        }
+      if (idx === routeParts.length - 1) {
+        nextNode.handler = handler;
+      }
+
+      node = nextNode;
     }
+  }
 }
 
 const trieRouter = new TrieRouter();
@@ -244,13 +245,13 @@ Looks perfect. Let's go through the code and understand what's going on.
 
 ```js
 class RouteNode {
-    constructor() {
-        // Initialize the handler to null
-        this.handler = null;
+  constructor() {
+    // Initialize the handler to null
+    this.handler = null;
 
-        // Create a Map to store children nodes
-        this.children = new Map();
-    }
+    // Create a Map to store children nodes
+    this.children = new Map();
+  }
 }
 ```
 
@@ -258,10 +259,10 @@ In the `RouteNode` class, each node is initialized with a `handler` set to `null
 
 ```js
 class TrieRouter {
-    constructor() {
-        // Create a rootNode upon TrieRouter instantiation
-        this.rootNode = new RouteNode();
-    }
+  constructor() {
+    // Create a rootNode upon TrieRouter instantiation
+    this.rootNode = new RouteNode();
+  }
 }
 ```
 
@@ -353,19 +354,19 @@ You've successfully implemented the `addRoute` method to build our `Trie`-based 
 
 1. **Method - `findRoute`**: Add a method to your `TrieRouter` class called `findRoute`.
 
--   This method should take a single parameter, `path`, which is a string representing the URL pattern to find in the Trie.
+- This method should take a single parameter, `path`, which is a string representing the URL pattern to find in the Trie.
 
--   Return the handler function associated with the last node of the matching URL pattern.
+- Return the handler function associated with the last node of the matching URL pattern.
 
--   If the URL pattern is not found, return `null` or some indication that the route does not exist.
+- If the URL pattern is not found, return `null` or some indication that the route does not exist.
 
 2. **Path Normalization**: Before searching for the route in the Trie, normalize the path similar to what you did in `addRoute`.
 
--   Remove trailing slashes.
+- Remove trailing slashes.
 
--   Handle repeated slashes.
+- Handle repeated slashes.
 
--   Remove whitespaces before and after each URL segment.
+- Reject any path which includes a whitespace.
 
 3. **Traversal**: Start from the root node and traverse the Trie based on the URL segments. Retrieve the handler function from the last node if the path exists.
 
@@ -397,23 +398,23 @@ Feel free to use the starting boilerplate below. If you are comfortable, you may
 
 ```js
 class TrieRouter {
-    constructor() {
-        this.rootNode = new RouteNode();
-    }
+  constructor() {
+    this.rootNode = new RouteNode();
+  }
 
-    addRoute(path, handler) {
-        /* Your addRoute code */
-    }
+  addRoute(path, handler) {
+    /* Your addRoute code */
+  }
 
-    findRoute(path) {
-        /* Your findRoute code goes here */
-    }
+  findRoute(path) {
+    /* Your findRoute code goes here */
+  }
 }
 
 class RouteNode {
-    constructor() {
-        /* Define handler and children map */
-    }
+  constructor() {
+    /* Define handler and children map */
+  }
 }
 ```
 
@@ -493,10 +494,10 @@ class RouteNode {
 
 ```js
 function getRouteParts(path) {
-    return path
-        .replace(/\/{2,}/g, "/")
-        .split("/")
-        .map((curr) => curr.toLowerCase().trim());
+  return path
+    .replace(/\/{2,}/g, "/")
+    .split("/")
+    .map((curr) => curr.toLowerCase().trim());
 }
 ```
 
@@ -587,8 +588,9 @@ function ref() {}
 function refs() {}
 
 trieRouter.addRoute("/home/", ref);
-trieRouter.addRoute("/  user/  status/play", function inline() {});
+trieRouter.addRoute("/user/status/play", function inline() {});
 trieRouter.addRoute("/home/id", refs);
+// trieRouter.addRoute("/throw/   error", function throwError() {}) // Should not let the program to run.
 
 console.log(trieRouter.findRoute("/home/"));
 console.log(trieRouter.findRoute("/home"));
