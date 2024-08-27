@@ -2,7 +2,7 @@
 
 # [`logtar`](https://github.com/ishtms/logtar) our own logging library
 
-> Note: The entire code we write here can be found [at the code/chapter_04.0 directory](/code/chapter_04.0). This will be a single file, and we'll refactor in subsequent chapters.
+> Note: The entire code we write here can be found [at the src/chapter_04.0 directory](/src/chapter_04.0). This will be a single file, and we'll refactor in subsequent chapters.
 
 Logging is an important part of creating robust and scaleable application. It helps developers find and fix problems, keep an eye on how the application is working, and see what users are doing.
 
@@ -73,15 +73,15 @@ Let’s create a new file `index.js` inside the `logtar` directory, and add a ne
 // index.js
 
 class LogLevel {
-    static Debug = 0;
-    static Info = 1;
-    static Warn = 2;
-    static Error = 3;
-    static Critical = 4;
+  static Debug = 0;
+  static Info = 1;
+  static Warn = 2;
+  static Error = 3;
+  static Critical = 4;
 }
 
 module.exports = {
-    LogLevel,
+  LogLevel,
 };
 ```
 
@@ -298,42 +298,40 @@ It's always a good practice to allow clients create an object without specifying
 // index.js
 
 class LogLevel {
-    static Debug = 0;
-    static Info = 1;
-    static Warn = 2;
-    static Error = 3;
-    static Critical = 4;
+  static Debug = 0;
+  static Info = 1;
+  static Warn = 2;
+  static Error = 3;
+  static Critical = 4;
 
-    static assert(log_level) {
-        if (![LogLevel.Debug, LogLevel.Info, LogLevel.Warn, LogLevel.Error, LogLevel.Critical].includes(log_level)) {
-            throw new Error(
-                `log_level must be an instance of LogLevel. Unsupported param ${JSON.stringify(log_level)}`
-            );
-        }
+  static assert(log_level) {
+    if (![LogLevel.Debug, LogLevel.Info, LogLevel.Warn, LogLevel.Error, LogLevel.Critical].includes(log_level)) {
+      throw new Error(`log_level must be an instance of LogLevel. Unsupported param ${JSON.stringify(log_level)}`);
     }
+  }
 }
 
 class Logger {
-    // set a default value for the log level
-    #level = LogLevel.Info;
+  // set a default value for the log level
+  #level = LogLevel.Info;
 
-    constructor(log_level) {
-        // only set/check the log level if the client has provided it
-        // otherwise use the default value, i.e `LogLevel.Info`
-        if (arguments.length > 0) {
-            LogLevel.assert(log_level);
-            this.#level = log_level;
-        }
+  constructor(log_level) {
+    // only set/check the log level if the client has provided it
+    // otherwise use the default value, i.e `LogLevel.Info`
+    if (arguments.length > 0) {
+      LogLevel.assert(log_level);
+      this.#level = log_level;
     }
+  }
 
-    get level() {
-        return this.#level;
-    }
+  get level() {
+    return this.#level;
+  }
 }
 
 module.exports = {
-    Logger,
-    LogLevel,
+  Logger,
+  LogLevel,
 };
 ```
 
@@ -365,44 +363,42 @@ Let's start refactoring now. Create a new class `LogConfig` that will contain al
 // index.js
 
 class LogConfig {
-    /** Define necessary member variables, and make them private. */
+  /** Define necessary member variables, and make them private. */
 
-    // log level will live here, instead of the `Logger` class.
-    #level = LogLevel.Info;
+  // log level will live here, instead of the `Logger` class.
+  #level = LogLevel.Info;
 
-    // We do not initialise it here, we'll do it inside the constructor.
-    #rolling_config;
+  // We do not initialise it here, we'll do it inside the constructor.
+  #rolling_config;
 
-    // the prefix to be added to new files.
-    #file_prefix = "Logtar_";
+  // the prefix to be added to new files.
+  #file_prefix = "Logtar_";
 
-    /**
-     * We're going to follow the convention of creating a static assert
-     * method wherver we deal with objects. This is one way to write
-     * safe code in vanilla javascript.
-     */
-    static assert(log_config) {
-        // if there's an argument, check whether the `log_config` is an instance
-        // of the `LogConfig` class? If there's no argument, no checks required
-        // as we'll be using defaults.
-        if (arguments.length > 0 && !(log_config instanceof LogConfig)) {
-            throw new Error(
-                `log_config must be an instance of LogConfig. Unsupported param ${JSON.stringify(log_config)}`
-            );
-        }
+  /**
+   * We're going to follow the convention of creating a static assert
+   * method wherver we deal with objects. This is one way to write
+   * safe code in vanilla javascript.
+   */
+  static assert(log_config) {
+    // if there's an argument, check whether the `log_config` is an instance
+    // of the `LogConfig` class? If there's no argument, no checks required
+    // as we'll be using defaults.
+    if (arguments.length > 0 && !(log_config instanceof LogConfig)) {
+      throw new Error(`log_config must be an instance of LogConfig. Unsupported param ${JSON.stringify(log_config)}`);
     }
+  }
 
-    get level() {
-        return this.#level;
-    }
+  get level() {
+    return this.#level;
+  }
 
-    get rolling_config() {
-        return this.#rolling_config;
-    }
+  get rolling_config() {
+    return this.#rolling_config;
+  }
 
-    get file_prefix() {
-        return this.#file_prefix;
-    }
+  get file_prefix() {
+    return this.#file_prefix;
+  }
 }
 ```
 
@@ -469,9 +465,9 @@ Doesn't this look so natural? Having to specify steps, without any specific orde
 
 ```js
 const user = create_profile({
-    name: "Alice",
-    age: 25,
-    description: "Loves hiking and painting",
+  name: "Alice",
+  age: 25,
+  description: "Loves hiking and painting",
 });
 ```
 
@@ -536,19 +532,17 @@ Our current `LogConfig` class looks like this
 // index.js
 
 class LogConfig {
-    #level = LogLevel.Info;
+  #level = LogLevel.Info;
 
-    // We'll talk about rolling config in just a bit.
-    #rolling_config = RollingConfig.Hourly;
-    #file_prefix = "Logtar_";
+  // We'll talk about rolling config in just a bit.
+  #rolling_config = RollingConfig.Hourly;
+  #file_prefix = "Logtar_";
 
-    static assert(log_config) {
-        if (arguments.length > 0 && !(log_config instanceof LogConfig)) {
-            throw new Error(
-                `log_config must be an instance of LogConfig. Unsupported param ${JSON.stringify(log_config)}`
-            );
-        }
+  static assert(log_config) {
+    if (arguments.length > 0 && !(log_config instanceof LogConfig)) {
+      throw new Error(`log_config must be an instance of LogConfig. Unsupported param ${JSON.stringify(log_config)}`);
     }
+  }
 }
 ```
 
@@ -596,9 +590,9 @@ class LogConfig {
 >
 > ```jsx
 > class MyClass {
->     static my_static_method() {
->         console.log("This is a static method.");
->     }
+>   static my_static_method() {
+>     console.log("This is a static method.");
+>   }
 > }
 >
 > MyClass.my_static_method();
@@ -677,28 +671,26 @@ Before creating the `RollingConfig` class. Let's create 2 utility helper classes
 // index.js
 
 class RollingSizeOptions {
-    static OneKB = 1024;
-    static FiveKB = 5 * 1024;
-    static TenKB = 10 * 1024;
-    static TwentyKB = 20 * 1024;
-    static FiftyKB = 50 * 1024;
-    static HundredKB = 100 * 1024;
+  static OneKB = 1024;
+  static FiveKB = 5 * 1024;
+  static TenKB = 10 * 1024;
+  static TwentyKB = 20 * 1024;
+  static FiftyKB = 50 * 1024;
+  static HundredKB = 100 * 1024;
 
-    static HalfMB = 512 * 1024;
-    static OneMB = 1024 * 1024;
-    static FiveMB = 5 * 1024 * 1024;
-    static TenMB = 10 * 1024 * 1024;
-    static TwentyMB = 20 * 1024 * 1024;
-    static FiftyMB = 50 * 1024 * 1024;
-    static HundredMB = 100 * 1024 * 1024;
+  static HalfMB = 512 * 1024;
+  static OneMB = 1024 * 1024;
+  static FiveMB = 5 * 1024 * 1024;
+  static TenMB = 10 * 1024 * 1024;
+  static TwentyMB = 20 * 1024 * 1024;
+  static FiftyMB = 50 * 1024 * 1024;
+  static HundredMB = 100 * 1024 * 1024;
 
-    static assert(size_threshold) {
-        if (typeof size_threshold !== "number" || size_threshold < RollingSizeOptions.OneKB) {
-            throw new Error(
-                `size_threshold must be at-least 1 KB. Unsupported param ${JSON.stringify(size_threshold)}`
-            );
-        }
+  static assert(size_threshold) {
+    if (typeof size_threshold !== "number" || size_threshold < RollingSizeOptions.OneKB) {
+      throw new Error(`size_threshold must be at-least 1 KB. Unsupported param ${JSON.stringify(size_threshold)}`);
     }
+  }
 }
 ```
 
@@ -710,20 +702,20 @@ I've set some defaults, to make it easy for the clients of our library to use th
 // index.js
 
 class RollingTimeOptions {
-    static Minutely = 60; // Every 60 seconds
-    static Hourly = 60 * this.Minutely;
-    static Daily = 24 * this.Hourly;
-    static Weekly = 7 * this.Daily;
-    static Monthly = 30 * this.Daily;
-    static Yearly = 12 * this.Monthly;
+  static Minutely = 60; // Every 60 seconds
+  static Hourly = 60 * this.Minutely;
+  static Daily = 24 * this.Hourly;
+  static Weekly = 7 * this.Daily;
+  static Monthly = 30 * this.Daily;
+  static Yearly = 12 * this.Monthly;
 
-    static assert(time_option) {
-        if (![this.Minutely, this.Hourly, this.Daily, this.Weekly, this.Monthly, this.Yearly].includes(time_option)) {
-            throw new Error(
-                `time_option must be an instance of RollingConfig. Unsupported param ${JSON.stringify(time_option)}`
-            );
-        }
+  static assert(time_option) {
+    if (![this.Minutely, this.Hourly, this.Daily, this.Weekly, this.Monthly, this.Yearly].includes(time_option)) {
+      throw new Error(
+        `time_option must be an instance of RollingConfig. Unsupported param ${JSON.stringify(time_option)}`
+      );
     }
+  }
 }
 ```
 
@@ -734,59 +726,57 @@ It's time to create our `RollingConfig` class. Let's add some basic functionalit
 ```js
 // index.js
 class RollingConfig {
-    #time_threshold = RollingTimeOptions.Hourly;
-    #size_threshold = RollingSizeOptions.FiveMB;
+  #time_threshold = RollingTimeOptions.Hourly;
+  #size_threshold = RollingSizeOptions.FiveMB;
 
-    static assert(rolling_config) {
-        if (!(rolling_config instanceof RollingConfig)) {
-            throw new Error(
-                `rolling_config must be an instance of RollingConfig. Unsupported param ${JSON.stringify(
-                    rolling_config
-                )}`
-            );
-        }
+  static assert(rolling_config) {
+    if (!(rolling_config instanceof RollingConfig)) {
+      throw new Error(
+        `rolling_config must be an instance of RollingConfig. Unsupported param ${JSON.stringify(rolling_config)}`
+      );
     }
+  }
 
-    // Provide a helper method for the clients, so instead of doing `new RollingConfig()`
-    // they can simply use `RollingConfig.with_defaults()` that too without specifying the
-    // `new` keyword.
-    static with_defaults() {
-        return new RollingConfig();
-    }
+  // Provide a helper method for the clients, so instead of doing `new RollingConfig()`
+  // they can simply use `RollingConfig.with_defaults()` that too without specifying the
+  // `new` keyword.
+  static with_defaults() {
+    return new RollingConfig();
+  }
 
-    // Utilizing the `Builder` pattern here, to first verify that the size is valid.
-    // If yes, set the size, and return the current instance of the class.
-    // If it's not valid, throw an error.
-    with_size_threshold(size_threshold) {
-        RollingSizeOptions.assert(size_threshold);
-        this.#size_threshold = size_threshold;
-        return this;
-    }
+  // Utilizing the `Builder` pattern here, to first verify that the size is valid.
+  // If yes, set the size, and return the current instance of the class.
+  // If it's not valid, throw an error.
+  with_size_threshold(size_threshold) {
+    RollingSizeOptions.assert(size_threshold);
+    this.#size_threshold = size_threshold;
+    return this;
+  }
 
-    // Same like above, but with `time`.
-    with_time_threshold(time_threshold) {
-        RollingTimeOptions.assert(time_threshold);
-        this.#time_threshold = time_threshold;
-        return this;
-    }
+  // Same like above, but with `time`.
+  with_time_threshold(time_threshold) {
+    RollingTimeOptions.assert(time_threshold);
+    this.#time_threshold = time_threshold;
+    return this;
+  }
 
-    // Build from a `json` object instead of the `Builder`
-    static from_json(json) {
-        let rolling_config = new RollingConfig();
+  // Build from a `json` object instead of the `Builder`
+  static from_json(json) {
+    let rolling_config = new RollingConfig();
 
-        Object.keys(json).forEach((key) => {
-            switch (key) {
-                case "size_threshold":
-                    rolling_config = rolling_config.with_size_threshold(json[key]);
-                    break;
-                case "time_threshold":
-                    rolling_config = rolling_config.with_time_threshold(json[key]);
-                    break;
-            }
-        });
+    Object.keys(json).forEach((key) => {
+      switch (key) {
+        case "size_threshold":
+          rolling_config = rolling_config.with_size_threshold(json[key]);
+          break;
+        case "time_threshold":
+          rolling_config = rolling_config.with_time_threshold(json[key]);
+          break;
+      }
+    });
 
-        return rolling_config;
-    }
+    return rolling_config;
+  }
 }
 ```
 
@@ -794,17 +784,17 @@ The `RollingConfig` class is ready to be used. It has no functionality, and is m
 
 ### Let's recap
 
--   `RollingConfig` - A class that maintains the configuration on how often a new log file file should be rolled out. It is based on the `RollingTimeOptions` and `RollingSizeOptions` utility classes which define some useful constants as well as an `assert()` method for the validation.
+- `RollingConfig` - A class that maintains the configuration on how often a new log file file should be rolled out. It is based on the `RollingTimeOptions` and `RollingSizeOptions` utility classes which define some useful constants as well as an `assert()` method for the validation.
 
--   `LogConfig` - A class that groups all other configurations into one giant class. This has a couple of private member variables - `#level` which is going to be of type `LogLevel` and keeps track of what logs should be written and what ignored; `#rolling_config` which is going to store the `RolllingConfig` for our logger; `#file_prefix` will be used to prefix log files.
+- `LogConfig` - A class that groups all other configurations into one giant class. This has a couple of private member variables - `#level` which is going to be of type `LogLevel` and keeps track of what logs should be written and what ignored; `#rolling_config` which is going to store the `RolllingConfig` for our logger; `#file_prefix` will be used to prefix log files.
 
-    -   `with_defaults` constructs and returns a new `LogConfig` object with some default values.
+  - `with_defaults` constructs and returns a new `LogConfig` object with some default values.
 
-    -   `with_log_level`, `with_file_prefix` and `with_rolling_config` mutates the current object after testing whether the input provided is valid. The example of what we learnt above - a `Builder` pattern.
+  - `with_log_level`, `with_file_prefix` and `with_rolling_config` mutates the current object after testing whether the input provided is valid. The example of what we learnt above - a `Builder` pattern.
 
-    -   `assert` validation for the `LogConfig` class.
+  - `assert` validation for the `LogConfig` class.
 
--   `Logger` - The backbone of our logger. It hardly has any functionality now, but this is the main class of our library. This is responsible to do all the hard work.
+- `Logger` - The backbone of our logger. It hardly has any functionality now, but this is the main class of our library. This is responsible to do all the hard work.
 
 ## Adding more useful methods in the `LogConfig` class
 
@@ -922,12 +912,12 @@ Let's test using a config file. Create a `config.demo.json` file with the follow
 
 ```json
 {
-    "level": 3,
-    "file_prefix": "My_Prefix_",
-    "rolling_config": {
-        "size_threshold": 1024,
-        "time_threshold": 3600
-    }
+  "level": 3,
+  "file_prefix": "My_Prefix_",
+  "rolling_config": {
+    "size_threshold": 1024,
+    "time_threshold": 3600
+  }
 }
 ```
 
@@ -940,6 +930,6 @@ const logger = Logger.with_config(config);
 
 Everything works as expected.
 
-> Note: The entire code we write here can be found [at the code/chapter_04.0 directory](/code/chapter_04.0). This will be a single file, and we'll refactor in subsequent chapters.
+> Note: The entire code we write here can be found [at the src/chapter_04.0 directory](/src/chapter_04.0). This will be a single file, and we'll refactor in subsequent chapters.
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch04.1-refactoring-the-code.md)
