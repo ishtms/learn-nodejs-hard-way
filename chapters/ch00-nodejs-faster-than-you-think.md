@@ -524,15 +524,13 @@ This is due to 3 separate processes consuming the memory - One master node, and 
 
 ![](/assets/imgs/mem_const_load_2.png)
 
-## Final verdict
+## Final Verdict
 
-If you need speed - for both - CPU and IO/resource intensive tasks, you're better off working with languages like Rust, GoLang, C++ (Drogon) or Zig directly. Node.js is perfect for demanding IO workloads and is not slow at all. We just saw, how a small, immature web framework, almost achieved the same speed of Bun, that claimed to be orders of magnitude faster than Node.js counterparts. Stop looking at benchmarks. They're hardly a valid reason to choose a particular tool.
+If you require high performance for both CPU and IO/resource-intensive tasks, languages like Rust, GoLang, C++ (with Drogon), or Zig are more suitable. Node.js excels in handling demanding IO workloads and is far from slow. We observed how a relatively new web framework nearly matched the speed of Bun, which claimed to be significantly faster than Node.js alternatives. Benchmarks should not be the sole factor in choosing a tool.
 
-The things that's important is - the tooling, the community, library ecosystem, job market and the list goes on. Node.js can be thought of as #1 on this list as far as server side programming is concerned. Axum is my go-to framework if I want to build something which involves security heavy things like managing a wallet system, or sub microsecond latency - and that's it.
+What truly matters are the tooling, community, library ecosystem, job market, and other factors. In terms of server-side programming, Node.js can be considered a top choice. For projects requiring high security, such as managing a wallet system or achieving sub-microsecond latency, Axum is my preferred framework.
 
-On the other hand, you can work both on server and client applications by knowing just one language. This is the most under-rated part of working with Node.js.
-
-Node.js does use a threadpool internally, through **libuv**. Libuv is the underlying C library that powers Node.js's event loop and non-blocking I/O operations. The use of a thread pool in Node.js is primarily for tasks that are not suitable for non-blocking, asynchronous processing. These tasks include, but are not limited to, file I/O, DNS queries, and certain types of network operations.
+Additionally, with Node.js, you can work on both server and client applications using a single language, which is an often-overlooked advantage.
 
 > TBD: Create benchmarks using `rewrk` too.
 
