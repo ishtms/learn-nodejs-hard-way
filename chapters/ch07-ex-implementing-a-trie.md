@@ -234,7 +234,6 @@ class TrieNode {
 
 class Trie {
   constructor() {
-    // The root node is an empty TrieNode.
     this.root = new TrieNode();
   }
 
@@ -242,9 +241,7 @@ class Trie {
     const wordLength = word.length;
     if (wordLength === 0) return;
 
-    // Iterate over each character in the word.
     for (let idx = 0; idx < wordLength; idx++) {
-      // Get the current character.
       let char = word[idx];
 
       // Check if the current node has a child node for the current character.
@@ -255,12 +252,9 @@ class Trie {
 
       // Move to the child node corresponding to the current character.
       node = node.children.get(char);
-
-      // If this is the last character of the word, mark the node as the end of a word.
-      if (idx === word.length - 1) {
-        node.isEndOfWord = true;
-      }
     }
+
+    node.isEndOfWord = true;
   }
 }
 ```
