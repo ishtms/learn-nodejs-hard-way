@@ -274,6 +274,7 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy). 
     - [Hints](/chapters/ch06.5-ex-implementing-a-trie.md#hints)
     - [Solution](/chapters/ch06.5-ex-implementing-a-trie.md#solution-1)
 - [Exercise 2 - Implementing our Trie based `Router`](/chapters/ch06.6-ex-implementing-router.md#exercise-2---implementing-our-trie-based-router)
+
   - [Challenge 1: Implementing the `addRoute` method](/chapters/ch06.6-ex-implementing-router.md#challenge-1-implementing-the-addroute-method)
     - [Requirements](/chapters/ch06.6-ex-implementing-router.md#requirements)
     - [More details](/chapters/ch06.6-ex-implementing-router.md#more-details)
@@ -293,7 +294,10 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy). 
     - [Example](/chapters/ch06.7-ex-adding-http-methods#example)
     - [Hints](/chapters/ch06.7-ex-adding-http-methods#hints)
     - [Solution](/chapters/ch06.7-ex-adding-http-methods#solution)
-- [Exercise 5 - Implementing Dynamic Routing](/chapters/ch06.9-ex-dynamic-routing#exercise-4-implementing-dynamic-routing)
+
+- [Adding HTTP methods to the Router](/chapters/ch06.8-adding-verbs-api.md)
+  - [Update the `TrieRouter` class](/chapters/ch06.8-adding-verbs-api.md#update-the-trierouter-class)
+- [Exercise 4 - Implementing Dynamic Routing](/chapters/ch06.9-ex-dynamic-routing#exercise-4-implementing-dynamic-routing)
   - [Why Dynamic Routing?](/chapters/ch06.9-ex-dynamic-routing#why-dynamic-routing)
     - [Flexibility](/chapters/ch06.9-ex-dynamic-routing#flexibility)
     - [Better User Experience](/chapters/ch06.9-ex-dynamic-routing#better-user-experience)
