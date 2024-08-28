@@ -1,6 +1,6 @@
 [![Read Prev](/assets/imgs/prev.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
 
-# Your first web server with [node.js](https://nodejs.org)
+# Your first web server with `node.js`
 
 The following section assumes that you have nodejs installed locally and are ready to follow along. You can check whether you have nodejs installed by running this command on your terminal -
 
@@ -84,8 +84,8 @@ The **`node:console`** module offers a wrapper around the standard console funct
 
 The module exports two specific components:
 
--   A `Console` class with methods like `console.log()`, `console.error()`, and `console.warn()`. These can be used to write to any Node.js **stream**.
--   A global `console` instance that is set up to write to `process.stdout` and `process.stderr`.
+- A `Console` class with methods like `console.log()`, `console.error()`, and `console.warn()`. These can be used to write to any Node.js **stream**.
+- A global `console` instance that is set up to write to `process.stdout` and `process.stderr`.
 
 (Note that `Console` is not `console` (lowercase). `console` is a special instance of `Console`)
 
