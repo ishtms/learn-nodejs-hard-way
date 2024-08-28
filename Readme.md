@@ -297,6 +297,7 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy). 
 
 - [Adding HTTP methods to the Router](/chapters/ch06.8-adding-verbs-api.md)
   - [Update the `TrieRouter` class](/chapters/ch06.8-adding-verbs-api.md#update-the-trierouter-class)
+    - [Explanation](/chapters/ch06.8-adding-verbs-api.md#explanation)
 - [Exercise 4 - Implementing Dynamic Routing](/chapters/ch06.9-ex-dynamic-routing#exercise-4-implementing-dynamic-routing)
   - [Why Dynamic Routing?](/chapters/ch06.9-ex-dynamic-routing#why-dynamic-routing)
     - [Flexibility](/chapters/ch06.9-ex-dynamic-routing#flexibility)
