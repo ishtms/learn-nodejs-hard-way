@@ -1,0 +1,34 @@
+{
+  "name": "learn-nodejs-hard-way",
+  "version": "1.0.0",
+  "description": "Learn and master NodeJS and backend development by creating a backend framework with 0 dependencies.",
+  "main": "genIndex.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishtms/learn-nodejs-hard-way.git"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript",
+    "api",
+    "learning",
+    "node",
+    "programming",
+    "server",
+    "backend",
+    "book"
+  ],
+  "author": "Ishtmeet Singh <ish@cachelane.com>",
+  "license": "CC-BY-NC-ND-4.0",
+  "bugs": {
+    "url": "https://github.com/ishtms/learn-nodejs-hard-way/issues"
+  },
+  "homepage": "https://github.com/ishtms/learn-nodejs-hard-way#readme",
+  "devDependencies": {
+    "husky": "^9.1.5"
+  }
+}
