@@ -2,8 +2,6 @@
 
 > For people who came here to read the book, you can safely skip to the [first chapter of this book](/chapters/ch01-what-is-a-web-server-anyway.md). If you still wish to read this, you may not understand a lot of terms mentioned here. Don't get overwhelmed, and take it as a small motivation on why "Learning Node.js is worth it".
 
-## No way!
-
 **"Node.js is slow."** This is a statement you may have heard often, perhaps whispered in developer circles or debated on online forums. Node.js has been unfairly criticized for not being suitable for high-performance applications. This chapter aims to disprove that myth permanently.
 
 The tech community often praises languages like Go or Rust for their **_blazing fast_** ™ execution, and often doubt whether JavaScript and its server-side partner, Node.js, can keep up. Common criticisms range from Node.js being single-threaded to the fundamental limitations of JavaScript itself. But what if I told you that these critiques are not just overly simplistic, but often misleading?
