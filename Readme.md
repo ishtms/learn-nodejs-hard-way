@@ -32,8 +32,6 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy). 
 
 # Table of contents
 
-# Table of contents
-
 - [(Optional) Node.js is way faster than you think](chapters/ch00-nodejs-faster-than-you-think.md#-optional-node-js-is-way-faster-than-you-think)
   - [Contenders for the test](chapters/ch00-nodejs-faster-than-you-think.md#contenders-for-the-test)
     - [Elysia - Bun](chapters/ch00-nodejs-faster-than-you-think.md#elysia-bun)
