@@ -1,0 +1,9 @@
+8238a34 adds chapter 06.11 - Buildling a web server
+41b1f62 updates `genIndex.js` to limit the readme depth to 3
+6bcda98 updates chapter naming if the sub-chapters are more than 10 for maintaining lexicographical ordering on github and generated files
+665c8a1 adds chapter 06.10 - running-our-server
+9816cbb adds chapter 06.10 - running-our-server
+e92e098 fixes #57
+7ca7243 fixes #57
+7718076 Update Readme.md
+bb43d1c adds automation
