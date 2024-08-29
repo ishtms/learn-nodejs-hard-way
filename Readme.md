@@ -100,7 +100,7 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy). 
     - [`for..of`](chapters/ch03-working-with-files.md#-for-of-)
     - [`for await..of`](chapters/ch03-working-with-files.md#-for-await-of-)
   - [Reading the `json` file](chapters/ch03-working-with-files.md#reading-the-json-file)
-- [Buffers](chapters/ch03-working-with-files.md#buffers)
+  - [Buffers](chapters/ch03-working-with-files.md#buffers)
     - [Parsing the `json` file](chapters/ch03-working-with-files.md#parsing-the-json-file)
 - [`logtar` our own logging library](chapters/ch04-logtar-our-logging-library.md#-logtar-our-own-logging-library)
   - [Initializing a new project](chapters/ch04-logtar-our-logging-library.md#initializing-a-new-project)
@@ -266,4 +266,7 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy). 
     - [Refactoring the `TrieRouter` class](chapters/ch06.10-running-our-server.md#refactoring-the-trierouter-class)
     - [Type Aliases](chapters/ch06.10-running-our-server.md#type-aliases)
     - [The `run` function](chapters/ch06.10-running-our-server.md#the-run-function)
+  - [Building our first web-server](chapters/ch06.11-building-a-web-server.md#building-our-first-web-server)
+    - [More refactoring](chapters/ch06.11-building-a-web-server.md#more-refactoring)
+    - [Your first web server](chapters/ch06.11-building-a-web-server.md#your-first-web-server)
 

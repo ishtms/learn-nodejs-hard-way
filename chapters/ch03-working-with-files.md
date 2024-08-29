@@ -849,7 +849,7 @@ Strangely, this outputs some weird looking stuff
 
 Why is it so? And what is a `Buffer`? This is one of the most unvisited topics of programming. Let’s take a minute to understand it.
 
-# Buffers
+## Buffers
 
 `Buffer` objects are used to represent a fixed-length sequence of bytes, in memory. **`Buffer`** objects are more memory-efficient compared to JavaScript strings when dealing with data, especially very large datasets. This is because strings in JavaScript are UTF-16 encoded, which can lead to higher memory consumption for certain types of data.
 
