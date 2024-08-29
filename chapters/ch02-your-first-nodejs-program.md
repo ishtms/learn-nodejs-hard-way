@@ -1,6 +1,6 @@
 [![Read Prev](/assets/imgs/prev.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
 
-# Your first web server with `node.js`
+# Your first `node.js` program
 
 The following section assumes that you have nodejs installed locally and are ready to follow along. You can check whether you have nodejs installed by running this command on your terminal -
 
