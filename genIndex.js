@@ -64,4 +64,4 @@ function formatHeadings(headings, relativePath) {
   return formatted;
 }
 
-generateTOC().catch((err) => console.error(err));
+generateTOC().catch(console.error);

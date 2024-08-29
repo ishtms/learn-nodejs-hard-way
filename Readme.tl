@@ -30,6 +30,4 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy). 
 
 [![Read Next](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
 
-# Table of contents
-
 {{toc}}
