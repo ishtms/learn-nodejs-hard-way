@@ -41,7 +41,7 @@ async function extractHeadings(filePath) {
     }
 
     if (!insideCodeBlock) {
-      const match = line.match(/^(#{1,6})\s+(.*)/);
+      const match = line.match(/^(#{1,3})\s+(.*)/);
       if (match) {
         const level = match[1].length;
         const text = match[2];
@@ -64,4 +64,4 @@ function formatHeadings(headings, relativePath) {
   return formatted;
 }
 
-generateTOC().catch(console.error);
+generateTOC().catch((err) => console.error(err));
