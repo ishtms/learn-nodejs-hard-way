@@ -376,7 +376,7 @@ class LogConfig {
 
   /**
    * We're going to follow the convention of creating a static assert
-   * method wherver we deal with objects. This is one way to write
+   * method wherever we deal with objects. This is one way to write
    * safe code in vanilla javascript.
    */
   static assert(log_config) {
