@@ -8,7 +8,7 @@ If you do not wish to read about the basics of web/http, you can safely jump to 
 
 Before diving straight into writing JavaScript code to create web servers, it's essential to grasp the fundamental concepts that are the basic building blocks of web server. Web servers are like the traffic controllers of the internet. They manage requests from users (like you!) and send back the right information. But what makes up a web server, and how does it even work? Let's break it down into simple terms.
 
-## Parts of a Web Server:
+## Parts of a Web Server
 
 Web servers are like friendly translators that help computers understand each other. Imagine if you and a friend speak different languages. To have a conversation, you'd need a common language that both of you understand. In the same way, web servers and computers need a common set of rules to talk to each other effectively. These rules are called protocols, which are like languages specifically designed for computers. When you type a website address in your browser and hit "Enter," your computer sends a message to the web server. This message follows the web's language rules, known as the HTTP protocol (Hypertext Transfer Protocol).
 
@@ -72,44 +72,44 @@ TCP adds some extra information to every message to make sure it gets to its des
 
 Imagine you're at home, sitting in front of your computer, and you decide to visit a website, let's say "example.com." This simple action initiates a series of events that highlight the "Asking and Getting" process in web communication.
 
-### The Request:
+### The Request
 
-#### Your Request:
+#### Your Request
 
 You type "example.com" into your browser's address bar and hit Enter. This is like you telling your computer, "Hey, I want to see what's on this website!"
 
-#### Finding the Address:
+#### Finding the Address
 
 Your computer knows the basics of websites, but it needs the exact address of "example.com" to connect to it. So, it reaches out to a special helper called a [DNS resolver](https://en.wikipedia.org/wiki/Domain_Name_System#Address_resolution_mechanism).
 
-#### Resolving the Address:
+#### Resolving the Address
 
 The DNS resolver is like a digital address book. It takes "example.com" and looks up the actual IP address associated with it. This IP address is like the specific coordinates of the website's location on the internet.
 
-> A website URL like https://google.com also be referred to as a **domain name**
+> A website URL like <https://google.com> also be referred to as a **domain name**
 
-### The Response:
+### The Response
 
-#### Return Address:
+#### Return Address
 
 The DNS resolver finds the IP address linked to "example.com" and sends it back to your computer. It's like the DNS resolver telling your computer, "The website is located at this IP address."
 
-#### Sending the Request:
+#### Sending the Request
 
 Now that your computer knows the IP address, it can send a request to the web server that holds the website's content. This request includes the IP address and a message saying, "Hey, can you please give me the content of your website?"
 
-#### Preparing the Content:
+#### Preparing the Content
 
 The web server receives your request and understands that you want to see the content of "example.com." It then gathers the necessary files – HTML, images, stylesheets, scripts – to create the webpage.
 
-#### Sending the Response:
+#### Sending the Response
 
 The web server packages the content into a response and sends it back to your computer through the internet. It's like the server sending a digital package to your doorstep.
 
-#### Enjoying the Content:
+#### Enjoying the Content
 
 Your computer receives the response from the web server. Your browser interprets the HTML, displays images, and applies styles, creating a complete webpage. This is what you see on your screen – the final result of your request.
 
 > A quick disclaimer: our learning approach will prioritize clarity and thoroughness. I will introduce a topic, break it down, and if we come across any unfamiliar concepts, we will explore them until everything is fully understood.
 
-[![Read Next](/assets/imgs/next.png)](/chapters/ch02-your-first-nodejs-server.md)
+[![Read Next](/assets/imgs/next.png)](/chapters/ch02-your-first-nodejs-program.md)
