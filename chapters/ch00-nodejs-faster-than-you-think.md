@@ -1,6 +1,8 @@
 # (Optional) Node.js is way faster than you think
 
-> For people who came here to read the book, you can safely skip to the [first chapter of this book](/chapters/ch01-what-is-a-web-server-anyway.md). If you still wish to read this, you may not understand a lot of terms mentioned here. Don't get overwhelmed, and take it as a small motivation on why "Learning Node.js is worth it".
+<!--We will be comparing the performance of Node.js with other server-side technologies by using a simple "hello world" benchmark. We will also be discussing the misconceptions about Node.js being slow and why it is not true.-->
+
+> For people who came here to read the book, you can safely skip to the [first chapter of this book](/chapters/ch01.0-what-is-a-web-server-anyway.md). If you still wish to read this, you may not understand a lot of terms mentioned here. Don't get overwhelmed, and take it as a small motivation on why "Learning Node.js is worth it".
 
 **"Node.js is slow."** This is a statement you may have heard often, perhaps whispered in developer circles or debated on online forums. Node.js has been unfairly criticized for not being suitable for high-performance applications. This chapter aims to disprove that myth permanently.
 
@@ -534,4 +536,4 @@ Additionally, with Node.js, you can work on both server and client applications 
 
 > TBD: Create benchmarks using `rewrk` too.
 
-[![Read Next](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
+[![Read Next](/assets/imgs/next.png)](/chapters/ch01.0-what-is-a-web-server-anyway.md)

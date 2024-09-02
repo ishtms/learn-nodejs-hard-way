@@ -28,6 +28,6 @@ I highly recommend actively coding alongside this guide, rather than just readin
 
 The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy). (W.I.P)
 
-[![Read Next](/assets/imgs/next.png)](/chapters/ch01-what-is-a-web-server-anyway.md)
+[![Read Next](/assets/imgs/next.png)](/chapters/ch01.0-what-is-a-web-server-anyway.md)
 
 {{toc}}
