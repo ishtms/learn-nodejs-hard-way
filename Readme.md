@@ -273,7 +273,6 @@ The repo for our backend framework- [Velocy](https://github.com/ishtms/velocy). 
   - [Ex. Query Parameters (Advanced)](chapters/ch06.12-query-parameters.md#ex-query-parameters-advanced-)
     - [Anatomy of a URL with Query Parameters](chapters/ch06.12-query-parameters.md#anatomy-of-a-url-with-query-parameters)
     - [Challenge 1: Implementing Basic Query Parameter Parsing](chapters/ch06.12-query-parameters.md#challenge-1-implementing-basic-query-parameter-parsing)
-    - [Let's talk about `decodeURIComponent`](chapters/ch06.12-query-parameters.md#let-s-talk-about-decodeuricomponent-)
+    - [We need to tackle more edge cases](chapters/ch06.12-query-parameters.md#we-need-to-tackle-more-edge-cases)
     - [Challenge 2: Parsing Query Parameters Manually](chapters/ch06.12-query-parameters.md#challenge-2-parsing-query-parameters-manually)
-    - [Benchmarks](chapters/ch06.12-query-parameters.md#benchmarks)
 

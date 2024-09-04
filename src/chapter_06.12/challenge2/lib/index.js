@@ -19,7 +19,7 @@ function run(router, port) {
 
     if (route?.handler) {
       req.params = route.params || {};
-      req.query = route.query || {};
+      req.query = route.query || new Map();
       route.handler(req, res);
     } else {
       res.writeHead(404, null, { "content-length": 9 });
