@@ -1,12 +1,15 @@
 # Learn Node.js by building a backend framework - [Velocy](https://github.com/ishtms/velocy)
 
+> [!IMPORTANT]
+> This repository is part of a larger, more in-depth, and advanced book: [NodeBook](https://www.thenodebook.com).
+>
+> This entire series will be included as a subchapter in the book. I recommend reading NodeBook on the [official website](https://www.thenodebook.com) or through its [GitHub repository](https://github.com/ishtms/nodebook).
+
 <p align="center">
   <img src="./assets/imgs/cover.jpg" alt="Learn nodejs the hard way" width="500">
 </p>
 
 You can access the current version of the book in the [chapters directory](/chapters) or in PDF format (both Light and Dark modes are available) by [clicking here](https://github.com/ishtms/learn-nodejs-hard-way/releases). Note that this version includes the current release of the content, and is not the final version.
-
-> This book is still in a very early stage. It contains an insignificant portion of the total content that the book is supposed to cover. There’s going to be 0 dependencies for our [backend framework](https://github.com/ishtms/velocy), as well as our [logging library](https://github.com/ishtms/logtar). Everything will be done using vanilla Node.js, the hard-way (the best way to learn).
 
 ---
 
